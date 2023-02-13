@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <title>Main</title>
+  </head>
+  <body>
+    <div id="root-div">
+        <header>
+            Calculator
+        </header>
+        <div class="content-div">
+            <form id="calculator-form">
+                <label for="first" class="form-label">num1</label>
+                <input type="number" class="form-control" value="0" id="first" />
+                <label for="second" class="form-label">num2</label>
+                <input type="number" class="form-control" value="0" id="second" />
+                <label for="operation" class="form-label">Operation</label>
+                <select class="form-select" id="operation">
+                    <option value="sum">+</option>
+                    <option value="difference">-</option>
+                    <option value="multiplication">*</option>
+                    <option value="division">/</option>
+                </select>
+                <button type="button" class="btn btn-primary" id="calculate-button">Calculate</button>
+                <button type="button" class="btn btn-primary" id="binary-button">Binary</button>
+                <div>
+                    <label for="result" class="form-label">Result</label>
+                    <input type="number" readonly class="form-control" id="result" />
+                </div>
+            </form>
+        </div>
+        <footer>
+            Footer
+        </footer>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

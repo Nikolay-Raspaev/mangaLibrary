@@ -50,7 +50,7 @@ public class AppApplication {
 
 	@GetMapping("/binary")
 	public String Binary(@RequestParam int result) {
-		return Double.toString(result);
+		return Integer.toBinaryString(result);
 	}
 
 }

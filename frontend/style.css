@@ -1,0 +1,39 @@
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    height: 100vh;
+    margin: 0;
+}
+
+#root-div {
+    height: 100vh;
+    max-width: 1000px;
+    margin: 0 auto 0 auto;
+
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+#calculate-button {
+    margin-top: 1em;
+}
+
+header {
+    padding: 1em;
+    background-color: gray;
+    color: white;
+    font-weight: 700;
+}
+
+footer {
+    padding: 1em;
+    background-color: gray;
+    color: white;
+    font-weight: 700;
+}
