@@ -30,22 +30,22 @@ public class AppApplication {
 	}
 
 	@CrossOrigin
-	@GetMapping("/ras")
-	public String Ras(@RequestParam(required = false, defaultValue = "0") double first,
+	@GetMapping("/difference")
+	public String Difference(@RequestParam(required = false, defaultValue = "0") double first,
 					  @RequestParam(required = false, defaultValue = "0") double second) {
 		return Double.toString(first - second);
 	}
 
 	@CrossOrigin
-	@GetMapping("/pros")
-	public String Pros(@RequestParam(required = false, defaultValue = "1") double first,
+	@GetMapping("/multiplication")
+	public String Multiplication(@RequestParam(required = false, defaultValue = "1") double first,
 					   @RequestParam(required = false, defaultValue = "1") double second) {
 		return Double.toString(first * second);
 	}
 
 	@CrossOrigin
-	@GetMapping("/del")
-	public String Del(@RequestParam(required = false, defaultValue = "1") double first,
+	@GetMapping("/division")
+	public String Division(@RequestParam(required = false, defaultValue = "1") double first,
 					  @RequestParam(required = false, defaultValue = "1") double second) {
 		if(second == 0)
 		{
