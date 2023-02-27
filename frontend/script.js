@@ -2,6 +2,7 @@ let calculateButton = document.getElementById("calculate-button");
 let binaryButton = document.getElementById("binary-button");
 let numberOneInput = document.getElementById("first");
 let numberTwoInput = document.getElementById("second");
+let operationType = document.getElementById("type");
 let select = document.getElementById("operation");
 let resultInput = document.getElementById("result");
 
@@ -17,9 +18,10 @@ binaryButton.onclick = function() {
 function executeRequest(address) {
     let first = numberOneInput.value;
     let second = numberTwoInput.value;
-    fetch(`http://localhost:8080/${address}?first=${first}&second=${second}`)
+    let type = operationType.value;
+    fetch(`http://localhost:8080/${address}?first=${first}&second=${second}&type=${type}`)
         .then(response => response.text())
-        .then(res => resultInput.value = res);
+        .then(res => resultInput.value = String(res) );
 }
 
 function executeBinaryRequest(result) {

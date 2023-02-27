@@ -21,18 +21,22 @@
                 <input type="number" class="form-control" value="0" id="first" />
                 <label for="second" class="form-label">num2</label>
                 <input type="number" class="form-control" value="0" id="second" />
+                <select class="form-select" id="type">
+                    <option value="int">Integer</option>
+                    <option value="string">String</option>
+                </select>
                 <label for="operation" class="form-label">Operation</label>
                 <select class="form-select" id="operation">
                     <option value="sum">+</option>
                     <option value="difference">-</option>
                     <option value="multiplication">*</option>
-                    <option value="division">/</option>
+                    <option value="cont">/</option>
                 </select>
                 <button type="button" class="btn btn-primary" id="calculate-button">Calculate</button>
                 <button type="button" class="btn btn-primary" id="binary-button">Binary</button>
                 <div>
                     <label for="result" class="form-label">Result</label>
-                    <input type="number" readonly class="form-control" id="result" />
+                    <input type="text" readonly class="form-control" id="result" />
                 </div>
             </form>
         </div>
