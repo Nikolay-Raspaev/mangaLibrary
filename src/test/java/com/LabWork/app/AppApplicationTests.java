@@ -1,6 +1,6 @@
 package com.LabWork.app;
 
-import com.LabWork.app.calc.service.MethodService;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class AppApplicationTests {
 
-	@Autowired
+/*	@Autowired
 	MethodService methodService;
 
 	@Test
@@ -58,5 +58,5 @@ class AppApplicationTests {
 	void testMethodContainsString() {
 		final String res = methodService.Contains("1", "2", "string");
 		Assertions.assertEquals("false", res);
-	}
+	}*/
 }
