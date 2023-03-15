@@ -97,7 +97,7 @@ public class ReMangaTest {
     }
 
     @Test
-    void testreader() {
+    void testReader() {
         readerService.deleteAllReaders();
         mangaService.deleteAllMangs();
         creatorService.deleteAllCreators();
@@ -113,7 +113,6 @@ public class ReMangaTest {
 
         Reader r1 = readerService.addReader("first_R", "1");
         Reader r2 = readerService.addReader("second_R", "2");
-        log.info("ХУЙ ХУЙ ХУЙ ХУЙ ХУЙ ХУЙ ХУЙ ХУЙ ХУЙ ХУЙ ХУЙ");
         readerService.addManga(m1, r1);
         readerService.addManga(m2, r2);
         log.info(r1.getMangas().get(0).getCreator().toString());
@@ -126,7 +125,6 @@ public class ReMangaTest {
 
         log.info(m1.getReaders().toString());
         log.info(c1.getId().toString());
-        log.info("ХУЙ ХУЙ ХУЙ ХУЙ ХУЙ ХУЙ ХУЙ ХУЙ ХУЙ ХУЙ ХУЙ");
         Assertions.assertEquals(r1, m1.getReaders().get(0));
 
         Reader r4 = readerService.updateReader(r3.getId(), "fourth_R", "3");
