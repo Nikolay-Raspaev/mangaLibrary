@@ -17,8 +17,8 @@ public class Creator {
     @Column
     private String hashedPassword;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "creator")
-    private List<Manga> mangs;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "creator", cascade = CascadeType.REMOVE)
+    private List<Manga> mangas;
 
     public Creator() {
     }
@@ -26,15 +26,15 @@ public class Creator {
     public Creator(String creatorName, String hashedPassword) {
         this.creatorName = creatorName;
         this.hashedPassword = hashedPassword;
-        this.mangs = new ArrayList<>();
+        this.mangas = new ArrayList<>();
     }
 
     public Long getId() {
         return id;
     }
 
-    public List<Manga> getMangs() {
-        return mangs;
+    public List<Manga> getMangas() {
+        return mangas;
     }
 
     public String getCreatorName() {
@@ -45,8 +45,8 @@ public class Creator {
         return hashedPassword;
     }
 
-    public void setMangs(List<Manga> mangs) {
-        this.mangs = mangs;
+    public void setMangas(List<Manga> mangas) {
+        this.mangas = mangas;
     }
 
     public void setCreatorName(String creatorName) {

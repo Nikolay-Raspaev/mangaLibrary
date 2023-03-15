@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,22 +32,22 @@ public class CreatorService {
     }
 
     @Transactional
-    public Creator addCreator(String username, String password) {
-        if (!StringUtils.hasText(username) || !StringUtils.hasText(password)) {
-            throw new IllegalArgumentException("Creator's username or password is empty");
+    public Creator addCreator(String readername, String password) {
+        if (!StringUtils.hasText(readername) || !StringUtils.hasText(password)) {
+            throw new IllegalArgumentException("Creator's readername or password is empty");
         }
-        final Creator creator = new Creator(username, password);
+        final Creator creator = new Creator(readername, password);
         em.persist(creator);
         return creator;
     }
 
     @Transactional
-    public Creator updateCreator(Long id, String username, String password) {
-        if (!StringUtils.hasText(username) || !StringUtils.hasText(password)) {
-            throw new IllegalArgumentException("Creator's username or password is empty");
+    public Creator updateCreator(Long id, String readername, String password) {
+        if (!StringUtils.hasText(readername) || !StringUtils.hasText(password)) {
+            throw new IllegalArgumentException("Creator's readername or password is empty");
         }
         final Creator customer = findCreator(id);
-        customer.setCreatorName(username);
+        customer.setCreatorName(readername);
         customer.setHashedPassword(password);
         return em.merge(customer);
     }
@@ -61,5 +62,16 @@ public class CreatorService {
     @Transactional
     public void deleteAllCreators() {
         em.createQuery("delete from Creator").executeUpdate();
+/*        List<Creator> creatorList = em.createQuery("select s from Creator s", Creator.class).getResultList();
+        List<Manga> mangaList = new ArrayList<>();*/
+/*        for (Creator creator: creatorList){
+            mangaList.addAll(creator.getMangas());
+        }*/
+/*        for (Manga manga: mangaList){
+            manga.getReaders().remove(manga);
+        }*/
+/*        for (Creator creator: creatorList){
+            creator.getMangas().clear();
+        }*/
     }
 }

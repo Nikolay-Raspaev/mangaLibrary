@@ -2,7 +2,7 @@ package com.LabWork.app.student.service;
 
 import com.LabWork.app.student.model.Creator;
 import com.LabWork.app.student.model.Manga;
-import com.LabWork.app.student.model.User;
+import com.LabWork.app.student.model.Reader;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
@@ -27,7 +27,7 @@ public class MangaService {
     }
 
     @Transactional
-    public List<Manga> findAllMangs() {
+    public List<Manga> findAllMangas() {
         return em.createQuery("select c from Manga c", Manga.class).getResultList();
     }
 
@@ -42,8 +42,8 @@ public class MangaService {
         if (!StringUtils.hasText(mangaName)) {
             throw new IllegalArgumentException("Invalid mangaName");
         }
-        final Manga manga = new Manga(chapterCount, mangaName, creator);
-        manga.getCreator().getMangs().add(manga);
+        final Manga manga = new Manga(creator, mangaName, chapterCount);
+        manga.getCreator().getMangas().add(manga);
         em.persist(manga);
         return manga;
     }
@@ -61,10 +61,6 @@ public class MangaService {
     @Transactional
     public Manga deleteManga(Long id) {
         final Manga currentManga = findManga(id);
-        List<User> userList= currentManga.getUsers();
-        for (User user : userList) {
-            user.getMangs().remove(currentManga);
-        }
         em.remove(currentManga);
         return currentManga;
     }
