@@ -18,6 +18,7 @@ public class Reader {
     @Column
     private String hashedPassword;
 
+
     @ManyToMany(mappedBy = "readers", fetch = FetchType.EAGER)
     private List<Manga> mangas;
 
@@ -59,5 +60,14 @@ public class Reader {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Reader{" +
+                "id=" + id +
+                ", readerName='" + readerName + '\'' +
+                ", hashedPassword='" + hashedPassword + '\'' +
+                '}';
     }
 }

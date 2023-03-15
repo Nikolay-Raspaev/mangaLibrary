@@ -22,10 +22,10 @@ public class Manga {
     @JoinColumn(name="creator_fk")
     private Creator creator;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "mangs_readers",
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinTable(name = "mangas_readers",
             joinColumns = @JoinColumn(name = "manga_fk"),
-            inverseJoinColumns = @JoinColumn(name = "user_fk"))
+            inverseJoinColumns = @JoinColumn(name = "reader_fk"))
     private List<Reader> readers;
 
     public Manga() {
@@ -70,6 +70,14 @@ public class Manga {
         this.readers = readers;
     }
 
+    @Override
+    public String toString() {
+        return "Manga{" +
+                "id=" + id +
+                ", firstName='" + mangaName + '\'' +
+                ", lastName='" + chapterCount + '\'' +
+                '}';
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -41,15 +41,16 @@ public class ReaderService {
     }
 
     @Transactional
-    public void addManga(Manga manga, Reader reader) {
-        if (manga == null || reader == null) {
-            throw new IllegalArgumentException("manga or reader null");
-        }
+    public void addManga(Manga manga, Long readerId) {
+        final Reader reader = findReader(readerId);
         reader.getMangas().add(manga);
-        em.merge(manga);
         manga.getReaders().add(reader);
-        em.merge(reader);
+        em.merge(manga);
+    }
 
+    @Transactional
+    public void removeManga(Manga manga, Long readerId) {
+        em.createNativeQuery("delete from Mangas_Readers where MANGA_FK = " + manga.getId() + " AND READER_FK = "+ readerId).executeUpdate();
     }
 
     @Transactional
@@ -60,14 +61,14 @@ public class ReaderService {
         final Reader reader = findReader(id);
         reader.setReaderName(readername);
         reader.setHashedPassword(password);
-        return reader;
+        return em.merge(reader);
     }
 
     @Transactional
     public Reader deleteReader(Long id) {
-        final Reader currentCustomer = findReader(id);
-        em.remove(currentCustomer);
-        return currentCustomer;
+        final Reader currentReader = findReader(id);
+        em.remove(currentReader);
+        return currentReader;
     }
 
     @Transactional

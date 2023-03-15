@@ -69,4 +69,13 @@ public class Creator {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    @Override
+    public String toString() {
+        return "Creator{" +
+                "id=" + id +
+                ", creatorName='" + creatorName + '\'' +
+                ", hashedPassword='" + hashedPassword + '\'' +
+                '}';
+    }
 }
