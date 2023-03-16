@@ -45,7 +45,7 @@ public class ReaderService {
         final Reader reader = findReader(readerId);
         reader.getMangas().add(manga);
         manga.getReaders().add(reader);
-        em.merge(manga);
+        em.merge(reader);
     }
 
     @Transactional
@@ -67,6 +67,10 @@ public class ReaderService {
     @Transactional
     public Reader deleteReader(Long id) {
         final Reader currentReader = findReader(id);
+        for (Manga manga : currentReader.getMangas()){
+            manga.getReaders().remove(currentReader);
+        }
+        em.merge(currentReader);
         em.remove(currentReader);
         return currentReader;
     }

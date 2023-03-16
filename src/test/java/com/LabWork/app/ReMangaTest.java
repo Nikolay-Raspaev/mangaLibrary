@@ -27,92 +27,177 @@ public class ReMangaTest {
     private static final Logger log = LoggerFactory.getLogger(ReMangaTest.class);
 
     @Test
-    void testCreator() {
+    void testCreatorAddAndFind() {
+        readerService.deleteAllReaders();
+        mangaService.deleteAllMangas();
+        creatorService.deleteAllCreators();
+        Creator c1 = creatorService.addCreator("first", "1");
+        Creator c2 = creatorService.addCreator("second", "2");
+        Assertions.assertEquals(c1.getCreatorName(), creatorService.findCreator(c1.getId()).getCreatorName());
+        Assertions.assertEquals(c1, creatorService.findCreator(c1.getId()));
+        Assertions.assertEquals(2, creatorService.findAllCreators().size());
+    }
+
+/*    @Test
+    void testCreatorAddManga() {
+        readerService.deleteAllReaders();
+        mangaService.deleteAllMangs();
+        creatorService.deleteAllCreators();
+        Creator c1 = creatorService.addCreator("first", "1");
+        Manga m1 = mangaService.addManga(c1, 0, "Vagabond");
+        Manga m2 = mangaService.addManga(c1, 10, "Berserk");
+        c1 = creatorService.findCreator(c1.getId());
+        creatorService.addManga(c1.getId(), m1);
+        creatorService.addManga(c1.getId(), m2);
+        log.info(c1.getMangas().toString());
+        Assertions.assertEquals(2, c1.getMangas().size());
+        log.info(m1.getCreator().toString());
+        log.info(c1.toString());
+        Assertions.assertEquals(c1.getCreatorName(), m1.getCreator().getCreatorName());
+    }*/
+
+/*    //бесполезня штука
+    @Test
+    void testCreatorDeleteManga() {
         readerService.deleteAllReaders();
         mangaService.deleteAllMangs();
         creatorService.deleteAllCreators();
 
         Creator c1 = creatorService.addCreator("first", "1");
         Creator c2 = creatorService.addCreator("second", "2");
-        Creator c3 = creatorService.addCreator("third", "3");
 
-        Assertions.assertEquals("first", c1.getCreatorName());
-        Assertions.assertEquals("second", c2.getCreatorName());
-        Assertions.assertEquals("third", c3.getCreatorName());
+        Manga m1 = mangaService.addManga(c1, 0, "Vagabond");
+        Manga m2 = mangaService.addManga(c1, 10, "Berserk");
+        Manga m3 = mangaService.addManga(c2, 0, "Manga_3");
 
-        Assertions.assertEquals(c1, creatorService.findCreator(c1.getId()));
+        creatorService.addManga(c1.getId(), m1);
+        creatorService.addManga(c1.getId(), m2);
 
-        creatorService.deleteCreator(c2.getId());
+        creatorService.deleteManga(c1.getId(), m2);
 
-        Assertions.assertEquals(2, creatorService.findAllCreators().size());
+        c1 = creatorService.findCreator(c1.getId());
 
-        Creator c4 = creatorService.updateCreator(c3.getId(), "fourth", "4");
+        log.info(c1.getMangas().toString());
+        log.info(mangaService.findAllMangas().toString());
 
-        Assertions.assertNotEquals(c3.getCreatorName(), c4.getCreatorName());
-        Assertions.assertNotEquals(c3.getHashedPassword(), c4.getHashedPassword());
+        Assertions.assertEquals(1, c1.getMangas().size());
+    }*/
 
+    @Test
+    void testCreatorUpdated() {
         readerService.deleteAllReaders();
-        mangaService.deleteAllMangs();
+        mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
+        Creator c1 = creatorService.addCreator("first", "1");
+        Creator c2 = creatorService.updateCreator(c1.getId(),"second", "1");
+        Creator c3 = creatorService.findCreator(c1.getId());
+        Assertions.assertNotEquals(c1.getCreatorName(), c2.getCreatorName());
+        Assertions.assertEquals(c1.getHashedPassword(), c2.getHashedPassword());
+        Assertions.assertEquals(c3.getCreatorName(), c2.getCreatorName());
     }
 
     @Test
-    void testManga() {
+    void testCreatorDelete() {
         readerService.deleteAllReaders();
-        mangaService.deleteAllMangs();
+        mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
-
         Creator c1 = creatorService.addCreator("first", "1");
         Creator c2 = creatorService.addCreator("second", "2");
+        creatorService.deleteCreator(c2.getId());
+        log.info(creatorService.findAllCreators().toString());
+        Assertions.assertEquals(1, creatorService.findAllCreators().size());
+    }
 
-        Manga m1 = mangaService.addManga(c1, 0, "vagabond");
-        Manga m2 = mangaService.addManga(c2, 10, "Berserk");
-
-        Assertions.assertEquals(2, mangaService.findAllMangas().size());
-
-        Assertions.assertEquals(m1.getCreator(), c1);
-        Assertions.assertEquals(m2.getCreator(), c2);
-
-        Assertions.assertEquals(c1.getMangas().get(0), m1);
-        Assertions.assertEquals(c2.getMangas().get(0), m2);
-
-        Assertions.assertEquals(m1, mangaService.findManga(m1.getId()));
-        Assertions.assertEquals(m2, mangaService.findManga(m2.getId()));
-
-        Manga p3 = mangaService.addManga(c1, 10, "Solo Leveling");
-        Manga test_manga = mangaService.deleteManga(m1.getId());
-        log.info(test_manga.toString());
-        log.info(test_manga.getMangaName());
-        log.info(creatorService.findCreator(c1.getId()).getMangas().toString());
-        Assertions.assertEquals(1, creatorService.findCreator(c1.getId()).getMangas().size());
-
-        Manga p4 = mangaService.updateManga(m2.getId(), 100);
-
-        Assertions.assertNotEquals(m2.getChapterCount(), p4.getChapterCount());
-
+    @Test
+    void testCreatorDeleteAll() {
         readerService.deleteAllReaders();
-        mangaService.deleteAllMangs();
+        mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
+        Creator c1 = creatorService.addCreator("first", "1");
+        Creator c2 = creatorService.addCreator("second", "2");
+        creatorService.deleteAllCreators();
+        Assertions.assertEquals(0, creatorService.findAllCreators().size());
+    }
 
+    @Test
+    void testMangaAddAndFind() {
+        readerService.deleteAllReaders();
+        mangaService.deleteAllMangas();
+        creatorService.deleteAllCreators();
+        Creator c1 = creatorService.addCreator("first", "1");
+        Manga m1 = mangaService.addManga(c1, 0, "Vagabond");
+        Manga m2 = mangaService.addManga(c1, 10, "Berserk");
+        c1 = creatorService.findCreator(c1.getId());
+        m1 = mangaService.findManga(m1.getId());
+        log.info(c1.getMangas().toString());
+        Assertions.assertEquals(2, c1.getMangas().size());
+        Assertions.assertEquals(c1.getCreatorName(), m1.getCreator().getCreatorName());
+    }
+
+    @Test
+    void testMangaUpdated() {
+        readerService.deleteAllReaders();
+        mangaService.deleteAllMangas();
+        creatorService.deleteAllCreators();
+        Creator c1 = creatorService.addCreator("first", "1");
+        Manga m1 = mangaService.addManga(c1, 0, "Vagabond");
+        Manga m2 = mangaService.updateManga(m1.getId(), 10);
+        m2 = mangaService.findManga(m2.getId());
+        c1 = creatorService.findCreator(c1.getId());
+        Assertions.assertEquals(m1.getMangaName(), m2.getMangaName());
+        Assertions.assertNotEquals(m1.getChapterCount(), m2.getChapterCount());
+        Assertions.assertEquals(c1.getMangas().get(0).getChapterCount(), m2.getChapterCount());
+    }
+
+    @Test
+    void testMangaDelete() {
+        readerService.deleteAllReaders();
+        mangaService.deleteAllMangas();
+        creatorService.deleteAllCreators();
+        Creator c1 = creatorService.addCreator("first", "1");
+        Manga m1 = mangaService.addManga(c1, 0, "Vagabond");
+        Manga m2 = mangaService.addManga(c1, 10, "Berserk");
+        Reader r1 = readerService.addReader("reader1", "password1");
+
+        readerService.addManga(m1, r1.getId());
+        readerService.addManga(m2, r1.getId());
+        mangaService.deleteManga(m1.getId());
+        r1 = readerService.findReader(r1.getId());
+
+        log.info(mangaService.findAllMangas().toString());
+        log.info(readerService.findAllReaders().toString());
+
+        Assertions.assertEquals(1, mangaService.findAllMangas().size());
+        Assertions.assertEquals(1, r1.getMangas().size());
+    }
+
+    @Test
+    void testMangaDeleteAll() {
+        readerService.deleteAllReaders();
+        mangaService.deleteAllMangas();
+        creatorService.deleteAllCreators();
+        Creator c1 = creatorService.addCreator("first", "1");
+        Manga m1 = mangaService.addManga(c1, 0, "Vagabond");
+        Manga m2 = mangaService.addManga(c1, 10, "Berserk");
+        mangaService.deleteAllMangas();
+        Assertions.assertEquals(0, mangaService.findAllMangas().size());
     }
 
     @Test
     void testAddToMangaReader() {
         readerService.deleteAllReaders();
-        mangaService.deleteAllMangs();
+        mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
-
         Creator c1 = creatorService.addCreator("first_C", "1");
-
         Manga m1 = mangaService.addManga(c1, 0, "vagabond");
         Manga m2 = mangaService.addManga(c1, 10, "Berserk");
-
         Reader r1 = readerService.addReader("first_R", "1");
-        log.info(r1.getMangas().size() + "");
+
         readerService.addManga(m1, r1.getId());
-        log.info(r1.getMangas().size() + "");
         readerService.addManga(m2, r1.getId());
+
         log.info(r1.getMangas().toString());
+
         Reader r2 = readerService.findReader(r1.getId());
         log.info(r2.getMangas().toString());
         Assertions.assertEquals(2, r2.getMangas().size());
@@ -120,98 +205,82 @@ public class ReMangaTest {
     }
 
     @Test
-    void testRemoveToMangaReader() {
+    void testReaderAddAndFind() {
         readerService.deleteAllReaders();
-        mangaService.deleteAllMangs();
+        mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
-
-        Creator c1 = creatorService.addCreator("first_C", "1");
-
-        Manga m1 = mangaService.addManga(c1, 0, "Vagabond");
-        Manga m2 = mangaService.addManga(c1, 10, "Berserk");
-
         Reader r1 = readerService.addReader("first_R", "1");
-
-        log.info(r1.getMangas().size() + "");
-        readerService.addManga(m1, r1.getId());
-        log.info(r1.getMangas().size() + "");
-        readerService.addManga(m2, r1.getId());
-        log.info(r1.getMangas().toString());
-        Reader r11 = readerService.findReader(r1.getId());
-        log.info(r11.getMangas().toString());
-        Assertions.assertEquals(2, r11.getMangas().size());
-        Assertions.assertEquals(1, m1.getReaders().size());
-
         Reader r2 = readerService.addReader("second_R", "2");
 
-        readerService.addManga(m1, r2.getId());
-        readerService.addManga(m2, r2.getId());
-        Reader r22 = readerService.findReader(r2.getId());
-        Assertions.assertEquals(2, r22.getMangas().size());
-        Assertions.assertEquals(2, m1.getReaders().size());
+        r1 = readerService.findReader(r1.getId());
+        r2 = readerService.findReader(r2.getId());
+        Assertions.assertEquals(2, readerService.findAllReaders().size());
 
-        log.info(r22.getMangas().toString());
-
-        readerService.removeManga(m1, r22.getId());
-
-        log.info(r22.getMangas().toString());
-        Reader r23 = readerService.findReader(r22.getId());
-        log.info(r23.getMangas().toString());
-        Manga m11 = mangaService.findManga(m1.getId());
-        log.info(m11.getReaders().toString());
-        log.info(m2.getReaders().toString());
-
-        Assertions.assertEquals(1, r23.getMangas().size());
-
-        log.info(mangaService.findAllMangas().toString());
-
-        readerService.deleteAllReaders();
-        mangaService.deleteAllMangs();
-        creatorService.deleteAllCreators();
-
+        Reader r3 = readerService.findReader(r2.getId());
+        Assertions.assertEquals(r2.getReaderName(), r3.getReaderName());
     }
 
     @Test
-    void testReader() {
+    void testRemoveToMangaReader() {
         readerService.deleteAllReaders();
-        mangaService.deleteAllMangs();
+        mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
-
-
         Creator c1 = creatorService.addCreator("first_C", "1");
-        Creator c2 = creatorService.addCreator("second_C", "2");
-
-        Manga m1 = mangaService.addManga(c1, 0, "vagabond");
-        Manga m2 = mangaService.addManga(c2, 10, "Berserk");
-
-        Assertions.assertEquals(2, mangaService.findAllMangas().size());
-
+        Manga m1 = mangaService.addManga(c1, 0, "Vagabond");
+        Manga m2 = mangaService.addManga(c1, 10, "Berserk");
         Reader r1 = readerService.addReader("first_R", "1");
-        Reader r2 = readerService.addReader("second_R", "2");
+
         readerService.addManga(m1, r1.getId());
-        readerService.addManga(m2, r2.getId());
-        r1 = readerService.findReader(r1.getId());
-        log.info(r1.getMangas().get(0).getCreator().toString());
-        log.info(c1.toString());
-        r2 = readerService.findReader(r2.getId());
-        Assertions.assertEquals(c1, r1.getMangas().get(0).getCreator());
-        Assertions.assertEquals(c2, r2.getMangas().get(0).getCreator());
+        readerService.addManga(m2, r1.getId());
 
+        Reader r11 = readerService.findReader(r1.getId());
+        readerService.removeManga(m1, r11.getId());
+        Reader r12 = readerService.findReader(r11.getId());
 
-        Reader r3 = readerService.addReader("third_R", "3");
+        Manga m11 = mangaService.findManga(m1.getId());
+        Assertions.assertEquals(1, r12.getMangas().size());
+        log.info(mangaService.findAllMangas().toString());
+    }
 
-        log.info(m1.getReaders().toString());
-        log.info(c1.getId().toString());
-        Assertions.assertEquals(r1, m1.getReaders().get(0));
-
-        Reader r4 = readerService.updateReader(r3.getId(), "fourth_R", "3");
-
-        Assertions.assertNotEquals(r3.getReaderName(), r4.getReaderName());
-        Assertions.assertEquals(r3.getHashedPassword(), r4.getHashedPassword());
-
-
+    @Test
+    void testReaderRemove() {
         readerService.deleteAllReaders();
-        mangaService.deleteAllMangs();
+        mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
+        Creator c1 = creatorService.addCreator("first_C", "1");
+        Manga m1 = mangaService.addManga(c1, 0, "Vagabond");
+        Manga m2 = mangaService.addManga(c1, 10, "Berserk");
+        Reader r1 = readerService.addReader("first_R", "1");
+
+        readerService.addManga(m1, r1.getId());
+        readerService.addManga(m2, r1.getId());
+
+        Reader r11 = readerService.findReader(r1.getId());
+        readerService.deleteReader(r11.getId());
+
+        Manga m11 = mangaService.findManga(m1.getId());
+        log.info(readerService.findAllReaders().toString());
+        log.info(m11.getReaders().toString());
+        Assertions.assertEquals(0, m11.getReaders().size());
+    }
+
+    @Test
+    void testReaderUpdate() {
+        readerService.deleteAllReaders();
+        mangaService.deleteAllMangas();
+        creatorService.deleteAllCreators();
+        Creator c1 = creatorService.addCreator("first_C", "1");
+        Manga m1 = mangaService.addManga(c1, 0, "Vagabond");
+        Manga m2 = mangaService.addManga(c1, 10, "Berserk");
+        Reader r1 = readerService.addReader("first_R", "1");
+
+        readerService.addManga(m1, r1.getId());
+        readerService.addManga(m2, r1.getId());
+
+        Reader r11 = readerService.updateReader(r1.getId(), "reader", "password");
+        r11 = readerService.findReader(r11.getId());
+        m1 = mangaService.findManga(m1.getId());
+        Assertions.assertNotEquals(r11.getReaderName(), r1.getReaderName());
+        Assertions.assertEquals(r11.getReaderName(), m1.getReaders().get(0).getReaderName());
     }
 }

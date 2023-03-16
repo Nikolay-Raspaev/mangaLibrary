@@ -55,7 +55,8 @@ public class MangaService {
         }
         final Manga manga = findManga(id);
         manga.setChapterCount(chapterCount);
-        return em.merge(manga);
+        em.merge(manga);
+        return manga;
     }
 
     @Transactional
@@ -66,7 +67,7 @@ public class MangaService {
     }
 
     @Transactional
-    public void deleteAllMangs() {
+    public void deleteAllMangas() {
         em.createQuery("delete from Manga").executeUpdate();
     }
 }

@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -16,6 +17,9 @@ import java.util.List;
 public class CreatorService {
     @PersistenceContext
     private EntityManager em;
+
+    @Autowired
+    MangaService mangaService;
 
     @Transactional
     public Creator findCreator(Long id) {
@@ -32,22 +36,22 @@ public class CreatorService {
     }
 
     @Transactional
-    public Creator addCreator(String readername, String password) {
-        if (!StringUtils.hasText(readername) || !StringUtils.hasText(password)) {
-            throw new IllegalArgumentException("Creator's readername or password is empty");
+    public Creator addCreator(String creatorName, String password) {
+        if (!StringUtils.hasText(creatorName) || !StringUtils.hasText(password)) {
+            throw new IllegalArgumentException("Creator's creatorName or password is empty");
         }
-        final Creator creator = new Creator(readername, password);
+        final Creator creator = new Creator(creatorName, password);
         em.persist(creator);
         return creator;
     }
 
     @Transactional
-    public Creator updateCreator(Long id, String readername, String password) {
-        if (!StringUtils.hasText(readername) || !StringUtils.hasText(password)) {
-            throw new IllegalArgumentException("Creator's readername or password is empty");
+    public Creator updateCreator(Long id, String creatorName, String password) {
+        if (!StringUtils.hasText(creatorName) || !StringUtils.hasText(password)) {
+            throw new IllegalArgumentException("Creator's creatorName or password is empty");
         }
         final Creator customer = findCreator(id);
-        customer.setCreatorName(readername);
+        customer.setCreatorName(creatorName);
         customer.setHashedPassword(password);
         return em.merge(customer);
     }
@@ -60,18 +64,27 @@ public class CreatorService {
     }
 
     @Transactional
-    public void deleteAllCreators() {
-        em.createQuery("delete from Creator").executeUpdate();
-/*        List<Creator> creatorList = em.createQuery("select s from Creator s", Creator.class).getResultList();
-        List<Manga> mangaList = new ArrayList<>();*/
-/*        for (Creator creator: creatorList){
-            mangaList.addAll(creator.getMangas());
-        }*/
-/*        for (Manga manga: mangaList){
-            manga.getReaders().remove(manga);
-        }*/
-/*        for (Creator creator: creatorList){
-            creator.getMangas().clear();
-        }*/
-    }
+    public void deleteAllCreators() { em.createQuery("delete from Creator").executeUpdate(); }
+
+/*
+      //бесполезная штука
+    @Transactional
+    public Creator addManga(Long creatorId, Manga manga) {
+        final Creator creator = findCreator(creatorId);
+        creator.getMangas().add(manga);
+        em.merge(creator);
+        return creator;
+    }*/
+
+/*    //бесполезная штука
+    @Transactional
+    public Manga deleteManga(Long creatorId, Manga manga) {
+        Creator creator = findCreator(creatorId);
+        if (creator.getMangas().contains(manga)){
+            final Manga currentManga = em.createQuery("select m from Manga m where m.id = " + manga.getId(), Manga.class).getSingleResult();
+            em.remove(currentManga);
+            return currentManga;
+        }
+        return null;
+    }*/
 }

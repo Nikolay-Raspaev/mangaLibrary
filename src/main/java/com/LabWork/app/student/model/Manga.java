@@ -22,7 +22,7 @@ public class Manga {
     @JoinColumn(name="creator_fk")
     private Creator creator;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "mangas_readers",
             joinColumns = @JoinColumn(name = "manga_fk"),
             inverseJoinColumns = @JoinColumn(name = "reader_fk"))
@@ -74,8 +74,8 @@ public class Manga {
     public String toString() {
         return "Manga{" +
                 "id=" + id +
-                ", firstName='" + mangaName + '\'' +
-                ", lastName='" + chapterCount + '\'' +
+                ", mangaName='" + mangaName + '\'' +
+                ", chapterCount='" + chapterCount + '\'' +
                 '}';
     }
     @Override
