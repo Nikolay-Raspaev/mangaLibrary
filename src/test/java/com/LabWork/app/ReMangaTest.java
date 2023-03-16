@@ -240,6 +240,7 @@ public class ReMangaTest {
         Manga m11 = mangaService.findManga(m1.getId());
         Assertions.assertEquals(1, r12.getMangas().size());
         log.info(mangaService.findAllMangas().toString());
+        log.info(r12.getMangas().toString());
     }
 
     @Test

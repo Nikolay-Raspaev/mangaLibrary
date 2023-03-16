@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -15,6 +16,8 @@ import java.util.List;
 public class ReaderService {
     @PersistenceContext
     private EntityManager em;
+    @Autowired
+    private MangaService mangaService;
 
     @Transactional
     public Reader findReader(Long id) {
@@ -50,7 +53,13 @@ public class ReaderService {
 
     @Transactional
     public void removeManga(Manga manga, Long readerId) {
-        em.createNativeQuery("delete from Mangas_Readers where MANGA_FK = " + manga.getId() + " AND READER_FK = "+ readerId).executeUpdate();
+        //em.createNativeQuery("delete from Mangas_Readers where MANGA_FK = " + manga.getId() + " AND READER_FK = "+ readerId).executeUpdate();
+        final Reader currentReader = findReader(readerId);
+        final Manga currentManga = em.find(Manga.class, manga.getId());
+        currentReader.getMangas().remove(currentManga);
+        currentManga.getReaders().remove(currentReader);
+        em.merge(currentReader);
+        em.merge(currentManga);
     }
 
     @Transactional

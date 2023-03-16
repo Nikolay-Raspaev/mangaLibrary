@@ -18,9 +18,6 @@ public class CreatorService {
     @PersistenceContext
     private EntityManager em;
 
-    @Autowired
-    MangaService mangaService;
-
     @Transactional
     public Creator findCreator(Long id) {
         final Creator creator = em.find(Creator.class, id);
