@@ -13,36 +13,60 @@
   <body>
     <div id="root-div">
         <header>
-            Calculator
-        </header>
-        <div class="content-div">
+            <div>
+                <a href="catalog.html" class="text-white">Creator</a>
+                <a href="search.html" class="text-white">Manga</a>
+                <a href="search.html" class="text-white">Reader</a>
+            </div>
+        </header>  
+        <div class="content">
+            <h1>Creator</h1>
             <form id="calculator-form">
-                <label for="first" class="form-label">num1</label>
-                <input type="number" class="form-control" value="0" id="first" />
-                <label for="second" class="form-label">num2</label>
-                <input type="number" class="form-control" value="0" id="second" />
-                <select class="form-select" id="type">
-                    <option value="int">Integer</option>
-                    <option value="string">String</option>
-                </select>
-                <label for="operation" class="form-label">Operation</label>
-                <select class="form-select" id="operation">
-                    <option value="sum">+</option>
-                    <option value="difference">-</option>
-                    <option value="multiplication">*</option>
-                    <option value="cont">/</option>
-                </select>
-                <button type="button" class="btn btn-primary" id="calculate-button">Calculate</button>
-                <button type="button" class="btn btn-primary" id="binary-button">Binary</button>
-                <div>
-                    <label for="result" class="form-label">Result</label>
-                    <input type="text" readonly class="form-control" id="result" />
+                <div class="d-flex justify-content-evenly mt-3">
+                    <div class="col-sm-2">
+                        <label for="creatorId" class="form-label">creatorId</label>
+                        <input type="number" class="form-control" value="0" id="creatorId" />
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="mangaId" class="form-label">mangaId</label>
+                        <input type="number" class="form-control" value="0" id="mangaId" />
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="creatorName" class="form-label">creatorName</label>
+                        <input type="text" class="form-control" value="0" id="creatorName" />
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="password" class="form-label">password</label>
+                        <input type="text" readonly class="form-control" id="password" />
+                    </div>
+                            
                 </div>
+                <div class="ms-5 me-5">
+                    <label for="operation" class="form-label">Operation</label>
+                    <select class="form-select" id="operation">
+                        <option value="getCreator">find</option>
+                        <option value="string">dinfAll</option>
+                        <option value="int">create</option>
+                        <option value="string">update</option>
+                        <option value="int">delete</option>
+                    </select>
+                    <button type="button" class="mt-3 btn btn-primary" id="apply-button">APPLY</button>
+                </div>               
             </form>
+            <div class="row table-responsive">
+                <table class="table mt-3">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">creatorName</th>
+                        <th scope="col">password</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbody">
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <footer>
-            Footer
-        </footer>
     </div>
     <script src="script.js"></script>
   </body>

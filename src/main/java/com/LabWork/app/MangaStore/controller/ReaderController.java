@@ -1,7 +1,7 @@
-/*
 package com.LabWork.app.MangaStore.controller;
 
-import com.LabWork.app.MangaStore.Dto.ReaderDto;
+
+import com.LabWork.app.MangaStore.model.Dto.ReaderDto;
 import com.LabWork.app.MangaStore.service.ReaderService;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,15 +41,15 @@ public class ReaderController {
         return new ReaderDto(readerService.updateReader(id, readerName, password));
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/{id}/manga/{manga_id}")
     public ReaderDto addManga(@PathVariable Long id,
-                              @RequestParam("mangaId") Long mangaId) {
+                              @PathVariable Long mangaId) {
         return new ReaderDto(readerService.addManga(mangaId, id));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/manga/{manga_id}")
     public ReaderDto removeManga(@PathVariable Long id,
-                              @RequestParam("mangaId") Long mangaId) {
+                              @PathVariable Long mangaId) {
         return new ReaderDto(readerService.removeManga(mangaId, id));
     }
 
@@ -57,4 +57,4 @@ public class ReaderController {
     public ReaderDto deleteReader(@PathVariable Long id) {
         return new ReaderDto(readerService.deleteReader(id));
     }
-}*/
+}

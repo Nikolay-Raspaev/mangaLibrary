@@ -1,8 +1,8 @@
-/*
 package com.LabWork.app.MangaStore.controller;
 
-import com.LabWork.app.MangaStore.Dto.MangaDto;
+
 import com.LabWork.app.MangaStore.model.Default.Creator;
+import com.LabWork.app.MangaStore.model.Dto.MangaDto;
 import com.LabWork.app.MangaStore.service.MangaService;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,4 +46,4 @@ public class MangaController {
     public MangaDto deleteManga(@PathVariable Long id) {
         return new MangaDto(mangaService.deleteManga(id));
     }
-}*/
+}

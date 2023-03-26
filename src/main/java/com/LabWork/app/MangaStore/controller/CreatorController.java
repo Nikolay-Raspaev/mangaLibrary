@@ -1,7 +1,6 @@
-/*
 package com.LabWork.app.MangaStore.controller;
 
-import com.LabWork.app.MangaStore.Dto.CreatorDto;
+import com.LabWork.app.MangaStore.model.Dto.CreatorDto;
 import com.LabWork.app.MangaStore.service.CreatorService;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,4 +44,4 @@ public class CreatorController {
     public CreatorDto deleteCreator(@PathVariable Long id) {
         return new CreatorDto(creatorService.deleteCreator(id));
     }
-}*/
+}
