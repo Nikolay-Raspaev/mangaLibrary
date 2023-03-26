@@ -1,11 +1,11 @@
 package com.LabWork.app;
 
-import com.LabWork.app.student.model.Creator;
-import com.LabWork.app.student.model.Manga;
-import com.LabWork.app.student.model.Reader;
-import com.LabWork.app.student.service.CreatorService;
-import com.LabWork.app.student.service.MangaService;
-import com.LabWork.app.student.service.ReaderService;
+import com.LabWork.app.MangaStore.model.Creator;
+import com.LabWork.app.MangaStore.model.Manga;
+import com.LabWork.app.MangaStore.model.Reader;
+import com.LabWork.app.MangaStore.service.CreatorService;
+import com.LabWork.app.MangaStore.service.MangaService;
+import com.LabWork.app.MangaStore.service.ReaderService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

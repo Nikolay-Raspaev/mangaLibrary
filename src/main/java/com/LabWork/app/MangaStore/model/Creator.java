@@ -1,6 +1,8 @@
-package com.LabWork.app.student.model;
+package com.LabWork.app.MangaStore.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,9 +13,11 @@ public class Creator {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "creatorName can't be null or empty")
     @Column
     private String creatorName;
 
+    @NotBlank(message = "hashedPassword can't be null or empty")
     @Column
     private String hashedPassword;
 

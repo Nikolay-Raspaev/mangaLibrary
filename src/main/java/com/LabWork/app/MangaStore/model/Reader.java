@@ -1,4 +1,4 @@
-package com.LabWork.app.student.model;
+package com.LabWork.app.MangaStore.model;
 
 import jakarta.persistence.*;
 
