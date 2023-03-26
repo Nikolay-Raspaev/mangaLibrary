@@ -1,3 +1,4 @@
+/*
 package com.LabWork.app.MangaStore.controller;
 
 import com.LabWork.app.MangaStore.Dto.CreatorDto;
@@ -44,4 +45,4 @@ public class CreatorController {
     public CreatorDto deleteCreator(@PathVariable Long id) {
         return new CreatorDto(creatorService.deleteCreator(id));
     }
-}
+}*/

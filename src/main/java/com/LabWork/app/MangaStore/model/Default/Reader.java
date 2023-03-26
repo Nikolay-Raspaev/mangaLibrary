@@ -1,4 +1,4 @@
-package com.LabWork.app.MangaStore.model;
+package com.LabWork.app.MangaStore.model.Default;
 
 import jakarta.persistence.*;
 
@@ -17,7 +17,6 @@ public class Reader {
 
     @Column
     private String hashedPassword;
-
 
     @ManyToMany(mappedBy = "readers", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private List<Manga> mangas;

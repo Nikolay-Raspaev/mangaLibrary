@@ -1,9 +1,9 @@
 package com.LabWork.app.MangaStore.service;
 
-import com.LabWork.app.MangaStore.model.Creator;
-import com.LabWork.app.MangaStore.model.Manga;
-import com.LabWork.app.MangaStore.repository.CreatorRepository;
-import com.LabWork.app.MangaStore.repository.MangaRepository;
+import com.LabWork.app.MangaStore.model.Default.Creator;
+import com.LabWork.app.MangaStore.model.Default.Manga;
+import com.LabWork.app.MangaStore.service.Repository.CreatorRepository;
+import com.LabWork.app.MangaStore.service.Repository.MangaRepository;
 import com.LabWork.app.MangaStore.service.Exception.CreatorNotFoundException;
 import com.LabWork.app.MangaStore.service.Exception.MangaNotFoundException;
 import com.LabWork.app.MangaStore.util.validation.ValidatorUtil;
@@ -19,7 +19,8 @@ public class MangaService {
     public final CreatorRepository creatorRepository;
     private final ValidatorUtil validatorUtil;
 
-    public MangaService(MangaRepository mangaRepository, CreatorRepository creatorRepository, ValidatorUtil validatorUtil) {
+    public MangaService(MangaRepository mangaRepository, CreatorRepository creatorRepository,
+                        ValidatorUtil validatorUtil) {
         this.mangaRepository = mangaRepository;
         this.creatorRepository = creatorRepository;
         this.validatorUtil = validatorUtil;

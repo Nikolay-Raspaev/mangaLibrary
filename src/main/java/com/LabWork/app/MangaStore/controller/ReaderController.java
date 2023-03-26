@@ -1,3 +1,4 @@
+/*
 package com.LabWork.app.MangaStore.controller;
 
 import com.LabWork.app.MangaStore.Dto.ReaderDto;
@@ -56,4 +57,4 @@ public class ReaderController {
     public ReaderDto deleteReader(@PathVariable Long id) {
         return new ReaderDto(readerService.deleteReader(id));
     }
-}
+}*/

@@ -1,6 +1,6 @@
-package com.LabWork.app.MangaStore.repository;
+package com.LabWork.app.MangaStore.service.Repository;
 
-import com.LabWork.app.MangaStore.model.Creator;
+import com.LabWork.app.MangaStore.model.Default.Creator;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CreatorRepository extends JpaRepository<Creator, Long> {

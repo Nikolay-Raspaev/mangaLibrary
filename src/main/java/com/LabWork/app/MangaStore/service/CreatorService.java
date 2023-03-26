@@ -1,7 +1,7 @@
 package com.LabWork.app.MangaStore.service;
 
-import com.LabWork.app.MangaStore.model.Creator;
-import com.LabWork.app.MangaStore.repository.CreatorRepository;
+import com.LabWork.app.MangaStore.model.Default.Creator;
+import com.LabWork.app.MangaStore.service.Repository.CreatorRepository;
 import com.LabWork.app.MangaStore.service.Exception.CreatorNotFoundException;
 import com.LabWork.app.MangaStore.util.validation.ValidatorUtil;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,8 @@ public class CreatorService {
 
     private final ValidatorUtil validatorUtil;
 
-    public CreatorService(CreatorRepository creatorRepository, ValidatorUtil validatorUtil) {
+    public CreatorService(CreatorRepository creatorRepository,
+                          ValidatorUtil validatorUtil) {
         this.creatorRepository = creatorRepository;
         this.validatorUtil = validatorUtil;
     }

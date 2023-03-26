@@ -1,7 +1,7 @@
-package com.LabWork.app.MangaStore.Dto;
+package com.LabWork.app.MangaStore.model.Dto;
 
-import com.LabWork.app.MangaStore.model.Creator;
-import com.LabWork.app.MangaStore.model.Manga;
+import com.LabWork.app.MangaStore.model.Default.Creator;
+import com.LabWork.app.MangaStore.model.Default.Manga;
 import java.util.List;
 
 public class CreatorDto {

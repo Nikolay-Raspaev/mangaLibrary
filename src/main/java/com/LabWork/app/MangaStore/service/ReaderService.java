@@ -1,15 +1,14 @@
 package com.LabWork.app.MangaStore.service;
 
-import com.LabWork.app.MangaStore.model.Manga;
-import com.LabWork.app.MangaStore.model.Reader;
-import com.LabWork.app.MangaStore.repository.MangaRepository;
-import com.LabWork.app.MangaStore.repository.ReaderRepository;
+import com.LabWork.app.MangaStore.model.Default.Manga;
+import com.LabWork.app.MangaStore.model.Default.Reader;
+import com.LabWork.app.MangaStore.service.Repository.MangaRepository;
+import com.LabWork.app.MangaStore.service.Repository.ReaderRepository;
 import com.LabWork.app.MangaStore.service.Exception.MangaNotFoundException;
 import com.LabWork.app.MangaStore.service.Exception.ReaderNotFoundException;
 import com.LabWork.app.MangaStore.util.validation.ValidatorUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +20,8 @@ public class ReaderService {
     private final MangaRepository mangaRepository;
     private final ValidatorUtil validatorUtil;
 
-    public ReaderService(ReaderRepository readerRepository, MangaRepository mangaRepository, ValidatorUtil validatorUtil) {
+    public ReaderService(ReaderRepository readerRepository, MangaRepository mangaRepository,
+                         ValidatorUtil validatorUtil) {
         this.readerRepository = readerRepository;
         this.mangaRepository = mangaRepository;
         this.validatorUtil = validatorUtil;
@@ -85,11 +85,9 @@ public class ReaderService {
     @Transactional
     public Reader deleteReader(Long id) {
         final Reader currentReader = findReader(id);
-/*        for (Manga manga : currentReader.getMangas()){
+        for (Manga manga : currentReader.getMangas()){
             manga.getReaders().remove(currentReader);
         }
-        em.merge(currentReader);
-        em.remove(currentReader);*/
         readerRepository.delete(currentReader);
         return currentReader;
     }
