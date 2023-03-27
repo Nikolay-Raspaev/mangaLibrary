@@ -42,6 +42,10 @@ public class Manga {
         return id;
     }
 
+    public Long getCreatorId() {
+        return creator.getId();
+    }
+
     public String getMangaName() {
         return mangaName;
     }

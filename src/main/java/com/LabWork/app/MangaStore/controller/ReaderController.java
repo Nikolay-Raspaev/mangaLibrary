@@ -41,15 +41,15 @@ public class ReaderController {
         return new ReaderDto(readerService.updateReader(id, readerName, password));
     }
 
-    @PostMapping("/{id}/manga/{manga_id}")
+    @PutMapping("/{id}/addManga")
     public ReaderDto addManga(@PathVariable Long id,
-                              @PathVariable Long mangaId) {
+                              @RequestParam("mangaId") Long mangaId) {
         return new ReaderDto(readerService.addManga(mangaId, id));
     }
 
-    @PutMapping("/{id}/manga/{manga_id}")
+    @PutMapping("/{id}/removeManga")
     public ReaderDto removeManga(@PathVariable Long id,
-                              @PathVariable Long mangaId) {
+                                 @RequestParam("mangaId") Long mangaId) {
         return new ReaderDto(readerService.removeManga(mangaId, id));
     }
 

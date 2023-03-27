@@ -38,7 +38,7 @@ public class MangaController {
 
     @PutMapping("/{id}")
     public MangaDto updateManga(@PathVariable Long id,
-                                   @RequestParam("chapterCount") Integer chapterCount) {
+                                @RequestParam("chapterCount") Integer chapterCount) {
         return new MangaDto(mangaService.updateManga(id, chapterCount));
     }
 

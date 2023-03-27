@@ -41,6 +41,22 @@ public class ReMangaTest {
         creatorService.deleteAllCreators();
     }
 
+    @Test
+    void test() {
+        readerService.deleteAllReaders();
+        mangaService.deleteAllMangas();
+        creatorService.deleteAllCreators();
+        Creator c1 = creatorService.addCreator("first", "1");
+        Manga m1 = mangaService.addManga(c1.getId(), 0, "Vagabond");
+        Manga m2 = mangaService.addManga(c1.getId(), 10, "Berserk");
+        Manga m3 = mangaService.addManga(c1.getId(), 0, "Manga_3");
+        Creator c2 = creatorService.findCreator(c1.getId());
+        Assertions.assertEquals(3, c2.getMangas().size());
+        readerService.deleteAllReaders();
+        mangaService.deleteAllMangas();
+        creatorService.deleteAllCreators();
+    }
+
 /*    @Test
     void testCreatorAddManga() {
         readerService.deleteAllReaders();

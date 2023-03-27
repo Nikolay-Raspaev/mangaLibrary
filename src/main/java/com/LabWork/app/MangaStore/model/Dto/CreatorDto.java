@@ -3,18 +3,21 @@ package com.LabWork.app.MangaStore.model.Dto;
 import com.LabWork.app.MangaStore.model.Default.Creator;
 import com.LabWork.app.MangaStore.model.Default.Manga;
 import java.util.List;
+import java.util.Objects;
 
 public class CreatorDto {
     private final long id;
     private final String creatorName;
     private final String hashedPassword;
-    private final List<Manga> mangas;
+    private final List<MangaDto> mangas;
 
     public CreatorDto(Creator creator) {
         this.id = creator.getId();
         this.creatorName = creator.getCreatorName();
         this.hashedPassword = creator.getHashedPassword();
-        this.mangas = creator.getMangas();
+        this.mangas = creator.getMangas().stream()
+                .map(y -> new MangaDto(y))
+                .toList();
     }
 
     public long getId() {
@@ -29,5 +32,5 @@ public class CreatorDto {
         return hashedPassword;
     }
 
-    public List<Manga> getMangas() { return mangas; }
+    public List<MangaDto> getMangas() { return mangas; }
 }

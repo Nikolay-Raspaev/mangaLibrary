@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script type="module" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <title>Main</title>
+    <title>Mangs</title>
   </head>
   <body>
     <div class="container" id="root-div">
@@ -17,38 +17,35 @@
             <a class="nav-link" href="Readers.html">Reader</a>
         </nav>
         <div class="content">
-            <h1>Creator</h1>
+            <h1>Manga</h1>
             <form id="form">
                 <div class="d-flex justify-content-evenly mt-3">
-                    <div class="col-sm-2">
-                        <label for="creatorId" class="form-label">creatorId</label>
-                        <input type="number" class="form-control" value="0" id="creatorId" />
-                    </div>
                     <div class="col-sm-2">
                         <label for="mangaId" class="form-label">mangaId</label>
                         <input type="number" class="form-control" value="0" id="mangaId" />
                     </div>
                     <div class="col-sm-2">
-                        <label for="creatorName" class="form-label">creatorName</label>
-                        <input type="text" class="form-control" value="0" id="creatorName" />
+                        <label for="mangaName" class="form-label">mangaName</label>
+                        <input type="text" class="form-control" value="0" id="mangaName" />
                     </div>
                     <div class="col-sm-2">
-                        <label for="password" class="form-label">password</label>
-                        <input type="text" class="form-control" id="password" />
+                        <label for="chapterCount" class="form-label">chapterCount</label>
+                        <input type="number" class="form-control" value="0" id="chapterCount" />
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="creatorId" class="form-label">creatorId</label>
+                        <input type="number" class="form-control" id="creatorId" />
                     </div>                           
                 </div>
                 <div class="row mt-3">
-                    <div class="d-grid col-sm-3 mx-auto">
+                    <div class="d-grid col-sm-4 mx-auto">
                         <button type="submit" class="btn btn-success">Добавить</button>
                     </div>
-                    <div class="d-grid col-sm-3 mx-auto">
+                    <div class="d-grid col-sm-4 mx-auto">
                         <button type="submit" class="btn btn-success" id="btnUpdate" >Обновить</button>
                     </div>
-                    <div class="d-grid col-sm-3 mx-auto">
+                    <div class="d-grid col-sm-4 mx-auto">
                         <button id="btnRemove" class="btn btn-success">Удалить</button>
-                    </div>
-                    <div class="d-grid col-sm-3 mx-auto">
-                        <button id="btnRemoveAll" class="btn btn-success">Удалить всё</button>
                     </div>
                 </div>           
             </form>
@@ -57,9 +54,10 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">CreatorName</th>
-                        <th scope="col">Password</th>
-                        <th scope="col">Mangs</th>
+                        <th scope="col">mangaName</th>
+                        <th scope="col">chapterCount</th>
+                        <th scope="col">creatorId</th>
+                        <th scope="col">readers</th>
                     </tr>
                     </thead>
                     <tbody id="tbody">
@@ -68,6 +66,6 @@
             </div>
         </div>
     </div>
-    <script src="scriptCreator.js"></script>
+    <script src="scriptManga.js"></script>
   </body>
 </html>

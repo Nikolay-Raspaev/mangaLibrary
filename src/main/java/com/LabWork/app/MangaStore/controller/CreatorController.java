@@ -42,6 +42,12 @@ public class CreatorController {
 
     @DeleteMapping("/{id}")
     public CreatorDto deleteCreator(@PathVariable Long id) {
+        //creatorService.deleteAllCreators();
         return new CreatorDto(creatorService.deleteCreator(id));
+    }
+
+    @DeleteMapping
+    public void deleteAllCreator() {
+        creatorService.deleteAllCreators();
     }
 }
