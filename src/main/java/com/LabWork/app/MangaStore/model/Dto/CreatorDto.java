@@ -16,7 +16,7 @@ public class CreatorDto {
         this.creatorName = creator.getCreatorName();
         this.hashedPassword = creator.getHashedPassword();
         this.mangas = creator.getMangas().stream()
-                .map(y -> new MangaDto(y))
+                .map(x -> new MangaDto(x))
                 .toList();
     }
 

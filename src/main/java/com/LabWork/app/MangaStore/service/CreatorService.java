@@ -1,8 +1,12 @@
 package com.LabWork.app.MangaStore.service;
 
 import com.LabWork.app.MangaStore.model.Default.Creator;
+import com.LabWork.app.MangaStore.model.Default.Manga;
+import com.LabWork.app.MangaStore.model.Default.Reader;
 import com.LabWork.app.MangaStore.service.Repository.CreatorRepository;
 import com.LabWork.app.MangaStore.service.Exception.CreatorNotFoundException;
+import com.LabWork.app.MangaStore.service.Repository.MangaRepository;
+import com.LabWork.app.MangaStore.service.Repository.ReaderRepository;
 import com.LabWork.app.MangaStore.util.validation.ValidatorUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,11 +17,17 @@ import java.util.Optional;
 public class CreatorService {
     private final CreatorRepository creatorRepository;
 
+    private final ReaderRepository readerRepository;
+
+    private final MangaService mangaService;
+
     private final ValidatorUtil validatorUtil;
 
-    public CreatorService(CreatorRepository creatorRepository,
+    public CreatorService(CreatorRepository creatorRepository, MangaService mangaService, ReaderRepository readerRepository,
                           ValidatorUtil validatorUtil) {
         this.creatorRepository = creatorRepository;
+        this.readerRepository = readerRepository;
+        this.mangaService = mangaService;
         this.validatorUtil = validatorUtil;
     }
 
@@ -50,6 +60,12 @@ public class CreatorService {
     @Transactional
     public Creator deleteCreator(Long id) {
         final Creator currentCreator = findCreator(id);
+        List<Manga> listManga = currentCreator.getMangas();mangaService.findAllMangas();
+        for (Manga manga : listManga){
+            for (final Reader reader :mangaService.getReader(manga.getId())){
+                readerRepository.delete(reader);
+            }
+        }
         creatorRepository.delete(currentCreator);
         return currentCreator;
     }
