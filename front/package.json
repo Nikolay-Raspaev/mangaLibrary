@@ -1,0 +1,17 @@
+{
+  "name": "front",
+  "version": "1.0.0",
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel --port 3000",
+    "build": "npm run clean && parcel build",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "bootstrap": "5.2.3"
+  },
+  "devDependencies": {
+    "parcel": "2.8.3",
+    "rimraf": "4.4.0"
+  }
+}
