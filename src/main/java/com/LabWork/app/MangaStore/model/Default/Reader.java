@@ -18,7 +18,7 @@ public class Reader {
     @Column
     private String hashedPassword;
 
-    @ManyToMany(mappedBy = "readers", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private List<Manga> mangas;
 
     public Reader() {

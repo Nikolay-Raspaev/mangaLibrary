@@ -14,16 +14,11 @@ public class MangaDto {
     private final String mangaName;
     private final Integer chapterCount;
 
-    private final List<String> readers;
-
     public MangaDto(Manga manga) {
         this.id = manga.getId();
         this.creatorId = manga.getCreator().getId();
         this.mangaName = manga.getMangaName();
         this.chapterCount = manga.getChapterCount();
-        this.readers = manga.getReaders().stream()
-                .map(y -> new String(y.getReaderName()))
-                .toList();
     }
 
     public Long getId() {
@@ -40,10 +35,6 @@ public class MangaDto {
 
     public Long getCreatorId() {
         return creatorId;
-    }
-
-    public List<String> getReaders() {
-        return readers;
     }
 
 }

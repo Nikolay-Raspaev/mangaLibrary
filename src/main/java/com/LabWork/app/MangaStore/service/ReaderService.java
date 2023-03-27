@@ -58,7 +58,7 @@ public class ReaderService {
         final Reader reader = findReader(readerId);
         validatorUtil.validate(reader);
         reader.getMangas().add(manga);
-        manga.getReaders().add(reader);
+/*        manga.getReaders().add(reader);*/
         return readerRepository.save(reader);
     }
 
@@ -68,7 +68,7 @@ public class ReaderService {
         final Reader currentReader = findReader(readerId);
         final Manga currentManga = findManga(mangaId);
         currentReader.getMangas().remove(currentManga);
-        currentManga.getReaders().remove(currentReader);
+/*        currentManga.getReaders().remove(currentReader);*/
         mangaRepository.save(currentManga);
         return readerRepository.save(currentReader);
     }
@@ -85,9 +85,9 @@ public class ReaderService {
     @Transactional
     public Reader deleteReader(Long id) {
         final Reader currentReader = findReader(id);
-        for (Manga manga : currentReader.getMangas()){
+/*        for (Manga manga : currentReader.getMangas()){
             manga.getReaders().remove(currentReader);
-        }
+        }*/
         readerRepository.delete(currentReader);
         return currentReader;
     }
