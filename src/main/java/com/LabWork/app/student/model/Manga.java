@@ -22,12 +22,6 @@ public class Manga {
     @JoinColumn(name="creator_fk")
     private Creator creator;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "mangas_readers",
-            joinColumns = @JoinColumn(name = "manga_fk"),
-            inverseJoinColumns = @JoinColumn(name = "reader_fk"))
-    private List<Reader> readers;
-
     public Manga() {
     }
 
@@ -35,7 +29,6 @@ public class Manga {
         this.creator = creator;
         this.mangaName = mangaName;
         this.chapterCount = chapterCount;
-        this.readers = new ArrayList<>();
     }
 
     public Long getId() {
@@ -60,14 +53,6 @@ public class Manga {
 
     public Creator getCreator() {
         return creator;
-    }
-
-    public List<Reader> getReaders() {
-        return readers;
-    }
-
-    public void setReaders(List<Reader> readers) {
-        this.readers = readers;
     }
 
     @Override

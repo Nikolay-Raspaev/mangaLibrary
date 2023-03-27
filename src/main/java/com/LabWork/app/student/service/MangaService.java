@@ -60,8 +60,21 @@ public class MangaService {
     }
 
     @Transactional
+    public List<Reader> getReader(Long id) {
+        //em.createNativeQuery("delete from Mangas_Readers where MANGA_FK = " + manga.getId() + " AND READER_FK = "+ readerId).executeUpdate();
+        //SELECT b FROM Book b WHERE ?1 MEMBER OF b.genres
+        final List<Reader> listReader = em.createQuery("select r from Reader r where " + id + " MEMBER OF r.mangas", Reader.class).getResultList();
+        return listReader;
+    }
+
+    @Transactional
     public Manga deleteManga(Long id) {
         final Manga currentManga = findManga(id);
+        final List<Reader> listReader = em.createQuery("select c from Reader c", Reader.class).getResultList();
+        for (Reader reader : listReader){
+            reader.getMangas().remove(currentManga);
+            em.merge(reader);
+        }
         em.remove(currentManga);
         return currentManga;
     }
