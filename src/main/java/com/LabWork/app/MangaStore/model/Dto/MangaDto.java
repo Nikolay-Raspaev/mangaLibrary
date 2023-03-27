@@ -44,6 +44,10 @@ public class MangaDto {
         return mangaName;
     }
 
+    public List<String> getReaders() {
+        return readers;
+    }
+
     public Integer getChapterCount() {
         return chapterCount;
     }

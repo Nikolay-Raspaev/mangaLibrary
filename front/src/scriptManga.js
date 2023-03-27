@@ -15,18 +15,18 @@ window.addEventListener('DOMContentLoaded', function () {
         const response = await fetch(host + "/manga");
         const data = await response.json();
         console.log(data);
-        data.forEach(Manga => {
+        data.forEach(MangaDto => {
             let temp = "<select>";
-            Manga.readers.forEach(String => {
+            MangaDto.readers.forEach(String => {
                 temp += `<option>${String}</option>>`
             })
             temp += "</select>"
             table.innerHTML +=
                 `<tr>
-                        <th scope="row" id="componentId">${Manga.id}</th>
-                        <td>${Manga.mangaName}</td>
-                        <td>${Manga.chapterCount}</td>
-                        <td>${Manga.creatorId}</td>
+                        <th scope="row" id="componentId">${MangaDto.id}</th>
+                        <td>${MangaDto.mangaName}</td>
+                        <td>${MangaDto.chapterCount}</td>
+                        <td>${MangaDto.creatorId}</td>
                         <td>${temp}</td>
                     </tr>`;
         })

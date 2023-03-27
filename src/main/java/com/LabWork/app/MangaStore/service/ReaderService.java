@@ -85,9 +85,7 @@ public class ReaderService {
     @Transactional
     public Reader deleteReader(Long id) {
         final Reader currentReader = findReader(id);
-/*        for (Manga manga : currentReader.getMangas()){
-            manga.getReaders().remove(currentReader);
-        }*/
+        currentReader.getMangas().clear();
         readerRepository.delete(currentReader);
         return currentReader;
     }

@@ -73,7 +73,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 "Content-Type": "application/json",
             }
         };
-        const response = await fetch(host + `/reader/` + readerIdInput.value, requestParams);
+        const response = await fetch(host + `/reader/${readerIdInput.value}`, requestParams);
         return await response.json();
     }
 

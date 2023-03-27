@@ -46,7 +46,7 @@ public class Reader {
 
     public List<Manga> getMangas() { return mangas; }
 
-    public void setMangas(List<Manga> mangs) { this.mangas = mangs; }
+    public void setMangas(List<Manga> mangas) { this.mangas = mangas; }
 
     @Override
     public boolean equals(Object o) {
