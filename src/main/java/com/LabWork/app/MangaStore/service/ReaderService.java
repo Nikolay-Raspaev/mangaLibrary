@@ -57,6 +57,10 @@ public class ReaderService {
         final Manga manga = findManga(mangaId);
         final Reader reader = findReader(readerId);
         validatorUtil.validate(reader);
+        if (reader.getMangas().contains(manga))
+        {
+            return null;
+        }
         reader.getMangas().add(manga);
 /*        manga.getReaders().add(reader);*/
         return readerRepository.save(reader);
