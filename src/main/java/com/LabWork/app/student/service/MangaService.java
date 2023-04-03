@@ -63,7 +63,10 @@ public class MangaService {
     public List<Reader> getReader(Long id) {
         //em.createNativeQuery("delete from Mangas_Readers where MANGA_FK = " + manga.getId() + " AND READER_FK = "+ readerId).executeUpdate();
         //SELECT b FROM Book b WHERE ?1 MEMBER OF b.genres
-        final List<Reader> listReader = em.createQuery("select r from Reader r where " + id + " MEMBER OF r.mangas", Reader.class).getResultList();
+        final Manga currentManga = em.find(Manga.class, id);
+        final List<Reader> listReader = em.createQuery("select r from Reader r where :currentManga MEMBER OF r.mangas", Reader.class)
+                .setParameter("currentManga", currentManga)
+                .getResultList();
         return listReader;
     }
 

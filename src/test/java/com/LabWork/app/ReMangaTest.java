@@ -13,6 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 @SpringBootTest
 public class ReMangaTest {
     @Autowired
@@ -44,9 +46,10 @@ public class ReMangaTest {
 
         Reader r4 = readerService.findReader(r1.getId());
         log.info(r4.getMangas().toString());
-        //List<Reader> listReader = mangaService.getReader(m1.getId());
-        //log.info(listReader);
-        Assertions.assertEquals(2, mangaService.getReader(m1.getId()).size());
+        List<Reader> listReader = mangaService.getReader(m1.getId());
+        log.info(listReader.toString());
+        Assertions.assertEquals(true, mangaService.getReader(m1.getId()).contains(r4));
+        Assertions.assertEquals(true, mangaService.getReader(m1.getId()).contains(r2));
         readerService.deleteAllReaders();
         mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
