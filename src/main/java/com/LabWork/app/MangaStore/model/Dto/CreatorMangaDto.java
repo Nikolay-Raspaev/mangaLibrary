@@ -1,17 +1,17 @@
 package com.LabWork.app.MangaStore.model.Dto;
 
 import com.LabWork.app.MangaStore.model.Default.Creator;
-import com.LabWork.app.MangaStore.model.Default.Manga;
-import java.util.List;
-import java.util.Objects;
+import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 
-public class CreatorDto {
+import java.util.List;
+
+public class CreatorMangaDto {
     private final long id;
     private final String creatorName;
     private final String hashedPassword;
     private final List<MangaDto> mangas;
 
-    public CreatorDto(Creator creator) {
+    public CreatorMangaDto(Creator creator) {
         this.id = creator.getId();
         this.creatorName = creator.getCreatorName();
         this.hashedPassword = creator.getHashedPassword();

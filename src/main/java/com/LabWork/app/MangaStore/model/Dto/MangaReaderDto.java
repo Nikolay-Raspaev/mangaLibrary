@@ -3,37 +3,27 @@ package com.LabWork.app.MangaStore.model.Dto;
 import com.LabWork.app.MangaStore.model.Default.Creator;
 import com.LabWork.app.MangaStore.model.Default.Manga;
 import com.LabWork.app.MangaStore.model.Default.Reader;
-import com.LabWork.app.MangaStore.service.MangaService;
+import com.LabWork.app.MangaStore.model.Dto.SupportDto.ReaderDto;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class MangaDto {
+public class MangaReaderDto {
     private final Long id;
 
     private final Long creatorId;
     private final String mangaName;
     private final Integer chapterCount;
 
-    private final List<String> readers;
+    private final List<ReaderDto> readers;
 
-    public MangaDto(Manga manga, List<Reader> listReader) {
+    public MangaReaderDto(Manga manga, List<Reader> listReader) {
         this.id = manga.getId();
         this.creatorId = manga.getCreator().getId();
         this.mangaName = manga.getMangaName();
         this.chapterCount = manga.getChapterCount();
         this.readers = listReader.stream()
-                .map(y -> new String(y.getReaderName()))
+                .map(y -> new ReaderDto(y))
                 .toList();
-    }
-
-    public MangaDto(Manga manga) {
-        this.id = manga.getId();
-        this.creatorId = manga.getCreator().getId();
-        this.mangaName = manga.getMangaName();
-        this.chapterCount = manga.getChapterCount();
-        this.readers = null;
     }
 
     public Long getId() {
@@ -44,7 +34,7 @@ public class MangaDto {
         return mangaName;
     }
 
-    public List<String> getReaders() {
+    public List<ReaderDto> getReaders() {
         return readers;
     }
 

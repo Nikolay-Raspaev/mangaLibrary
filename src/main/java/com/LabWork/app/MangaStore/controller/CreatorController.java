@@ -1,6 +1,6 @@
 package com.LabWork.app.MangaStore.controller;
 
-import com.LabWork.app.MangaStore.model.Dto.CreatorDto;
+import com.LabWork.app.MangaStore.model.Dto.CreatorMangaDto;
 import com.LabWork.app.MangaStore.service.CreatorService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,34 +16,34 @@ public class CreatorController {
     }
 
     @GetMapping("/{id}")
-    public CreatorDto getCreator(@PathVariable Long id) {
-        return new CreatorDto(creatorService.findCreator(id));
+    public CreatorMangaDto getCreator(@PathVariable Long id) {
+        return new CreatorMangaDto(creatorService.findCreator(id));
     }
 
     @GetMapping
-    public List<CreatorDto> getCreators() {
+    public List<CreatorMangaDto> getCreators() {
         return creatorService.findAllCreators().stream()
-                .map(CreatorDto::new)
+                .map(CreatorMangaDto::new)
                 .toList();
     }
 
     @PostMapping
-    public CreatorDto createCreator(@RequestParam("creatorName") String creatorName,
-                                   @RequestParam("password") String password) {
-        return new CreatorDto(creatorService.addCreator(creatorName, password));
+    public CreatorMangaDto createCreator(@RequestParam("creatorName") String creatorName,
+                                         @RequestParam("password") String password) {
+        return new CreatorMangaDto(creatorService.addCreator(creatorName, password));
     }
 
     @PutMapping("/{id}")
-    public CreatorDto updateCreator(@PathVariable Long id,
-                                    @RequestParam("creatorName") String creatorName,
-                                    @RequestParam("password") String password) {
-        return new CreatorDto(creatorService.updateCreator(id, creatorName, password));
+    public CreatorMangaDto updateCreator(@PathVariable Long id,
+                                         @RequestParam("creatorName") String creatorName,
+                                         @RequestParam("password") String password) {
+        return new CreatorMangaDto(creatorService.updateCreator(id, creatorName, password));
     }
 
     @DeleteMapping("/{id}")
-    public CreatorDto deleteCreator(@PathVariable Long id) {
+    public CreatorMangaDto deleteCreator(@PathVariable Long id) {
         //creatorService.deleteAllCreators();
-        return new CreatorDto(creatorService.deleteCreator(id));
+        return new CreatorMangaDto(creatorService.deleteCreator(id));
     }
 
     @DeleteMapping

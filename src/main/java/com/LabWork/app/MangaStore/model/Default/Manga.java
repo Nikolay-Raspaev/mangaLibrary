@@ -1,5 +1,7 @@
 package com.LabWork.app.MangaStore.model.Default;
 
+import com.LabWork.app.MangaStore.service.CreatorService;
+import com.LabWork.app.MangaStore.service.MangaService;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
