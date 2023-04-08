@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 export default function Header(props) {
     return (
-        <nav className="navbar navbar-expand-lg bg-light">
+        <nav className="navbar navbar-expand-lg navbar-dark">
             <div className="container-fluid">
                 <button className="navbar-toggler" type="button"
                     data-bs-toggle="collapse" data-bs-target="#navbarNav"

@@ -3,6 +3,7 @@ package com.LabWork.app.MangaStore.service;
 import com.LabWork.app.MangaStore.model.Default.Creator;
 import com.LabWork.app.MangaStore.model.Default.Manga;
 import com.LabWork.app.MangaStore.model.Default.Reader;
+import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import com.LabWork.app.MangaStore.service.Repository.CreatorRepository;
 import com.LabWork.app.MangaStore.service.Repository.MangaRepository;
 import com.LabWork.app.MangaStore.service.Exception.CreatorNotFoundException;
@@ -76,11 +77,30 @@ public class MangaService {
     }
 
     @Transactional
+    public Manga addManga(MangaDto mangaDto) {
+        final Creator currentCreator = findCreator(mangaDto.getCreatorId());
+        final Manga manga = new Manga(currentCreator, mangaDto);
+        validatorUtil.validate(manga);
+        return mangaRepository.save(manga);
+    }
+
+    @Transactional
     public Manga updateManga(Long id, Integer chapterCount) {
         final Manga currentManga = findManga(id);
         currentManga.setChapterCount(chapterCount);
         validatorUtil.validate(currentManga);
-        return mangaRepository.save(currentManga);
+        mangaRepository.save(currentManga);
+        return currentManga;
+    }
+
+    @Transactional
+    public Manga updateManga(MangaDto mangaDto) {
+        final Manga currentManga = findManga(mangaDto.getId());
+        currentManga.setChapterCount(mangaDto.getChapterCount());
+        currentManga.setImage(mangaDto.getImage().getBytes());
+        validatorUtil.validate(currentManga);
+        mangaRepository.save(currentManga);
+        return currentManga;
     }
 
     @Transactional

@@ -1,5 +1,6 @@
 package com.LabWork.app.MangaStore.model.Default;
 
+import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import com.LabWork.app.MangaStore.service.CreatorService;
 import com.LabWork.app.MangaStore.service.MangaService;
 import jakarta.persistence.*;
@@ -24,13 +25,34 @@ public class Manga {
     @JoinColumn(name="creator_fk")
     private Creator creator;
 
+    private Long creatorId;
+
+    @Lob
+    private byte[] image;
     public Manga() {
     }
 
     public Manga(Creator creator, String mangaName, Integer chapterCount) {
         this.creator = creator;
+        this.creatorId = creatorId;
         this.mangaName = mangaName;
         this.chapterCount = chapterCount;
+        this.image = image;
+    }
+
+    public Manga(Creator creator, MangaDto mangaDto) {
+        this.creator = creator;
+        this.mangaName = mangaDto.getMangaName();
+        this.chapterCount = mangaDto.getChapterCount();
+        this.image = mangaDto.getImage().getBytes();
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public Long getId() {

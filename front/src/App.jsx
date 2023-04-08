@@ -1,8 +1,12 @@
 import { useRoutes, Outlet, BrowserRouter } from 'react-router-dom';
-import Creator from './components/Creator';
-import Reader from './components/Reader';
+import Creator from './MainS/Creator';
+import Reader from './MainS/Reader';
 import Header from './components/Header';
-import Manga from './components/Manga';
+import Manga from './MainS/Manga';
+import CreatorAction from './Main/CreatorAction';
+import ReaderAction from './Main/ReaderAction';
+import MangaPage from './Main/MangaPage';
+import Catalog from './Main/Catalog';
 
 function Router(props) {
   return useRoutes(props.rootRoute);
@@ -14,6 +18,10 @@ export default function App() {
     { path: 'creator', element: <Creator />, label: 'Creator' },
     { path: 'reader', element: <Reader />, label: 'Reader' },
     { path: 'manga', element: <Manga />, label: 'Manga' },
+    { path: 'creatorAction', element: <CreatorAction />, label: 'CreatorAction' },
+    { path: 'readerAction', element: <ReaderAction />, label: 'ReaderAction' },
+    { path: 'catalog', element: <Catalog />, label: 'Catalog' },
+    { path: 'mangapage', element: <MangaPage /> },
   ];
   const links = routes.filter(route => route.hasOwnProperty('label'));
   const rootRoute = [

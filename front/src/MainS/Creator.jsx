@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-import TableManga from './TableManga';
+import TableCreator from '../components/Table/TableCreator';
+import MangaDto from '../Dto/Manga-Dto';
 
-export default function Manga() {
+export default function Creator() {
 
     const host = "http://localhost:8080";
 
     const [creatorId, setCreatorId] = useState(0);
 
-    const [mangaId, setMangaId] = useState(0);
+    const [creatorName, setCreatorName] = useState("");
 
-    const [mangaName, setMangaName] = useState("");
+    const [password, setPassword] = useState("");
 
-    const [chapterCount, setChapterCount] = useState(0);
-
+    const [mangaModel, setMangaModel] = useState(new MangaDto({}));
 
     const [data, setData] = useState([]);
 
@@ -20,26 +20,30 @@ export default function Manga() {
     const table = document.getElementById("tbody");
 
     useEffect(() => {
-        getData();
+        getData()
+        .then(_data =>setData(_data)) ;
+        console.log(2);
       },[]);
 
 
     const getData = async function () {
-        const response = await fetch(host + "/manga");
-        setData(await response.json())
+        const response = await fetch(host + "/creator");
+        const _data = await response.json()
         console.log(data);
+        return _data;
+
         //table.innerHTML = "";
-        // data.forEach(Manga => {
+        // data.forEach(Creator => {
         //     let temp = "<select>";
-        //     Manga.mangas.forEach(Manga => {
+        //     Creator.mangas.forEach(Manga => {
         //         temp += `<option>${Manga.mangaName + " " + Manga.chapterCount}</option>>`
         //     })
         //     temp += "</select>"
         //     table.innerHTML +=
         //         `<tr>
-        //                 <th scope="row">${Manga.id}</th>
-        //                 <td>${Manga.mangaName}</td>
-        //                 <td>${Manga.hashedPassword}</td>
+        //                 <th scope="row">${Creator.id}</th>
+        //                 <td>${Creator.creatorName}</td>
+        //                 <td>${Creator.hashedPassword}</td>
         //                 <td>${temp}</td>
         //             </tr>`;
         //     })
@@ -52,13 +56,13 @@ export default function Manga() {
                 "Content-Type": "application/json",
             }
         };
-        const response = await fetch(host + `/manga?creatorId=${creatorId}&chapterCount=${chapterCount}&mangaName=${mangaName}`, requestParams);
-        return await response.json();
+        const response = await fetch(host + `/creator?creatorName=${creatorName}&password=${password}`, requestParams);
+        getData();
     }
 
     const remove = async function (){
         console.info('Try to remove item');
-        if (mangaId !== 0) {
+        if (creatorId !== 0) {
             if (!confirm('Do you really want to remove this item?')) {
                 console.info('Canceled');
                 return;
@@ -70,14 +74,27 @@ export default function Manga() {
                 "Content-Type": "application/json",
             }
         };
-        const response = await fetch(host + `/manga/` + mangaIdInput.value, requestParams);
+        const response = await fetch(host + `/creator/` + creatorId, requestParams);
         console.log("REMOVE");
         getData();
+        return await response.json();
+    }
+
+    const removeAll = async function (){
+        console.info('Try to remove item');
+        if (!confirm('Do you really want to remove this item?')) {
+            console.info('Canceled');
+            return;
+        }
+        const requestParams = {
+            method: "DELETE",
+        };
+        await fetch(host + `/creator/`, requestParams);
     }
 
     const update = async function (){
         console.info('Try to update item');
-        if (mangaId === 0 || mangaName == null || password === 0) {
+        if (creatorId === 0 || creatorName == null || password === 0) {
             return;
         }
         const requestParams = {
@@ -86,53 +103,43 @@ export default function Manga() {
                 "Content-Type": "application/json",
             }
         };
-        const response = await fetch(host + `/manga/${mangaIdInput.value}?chapterCount=${chapterCountInput.value}`, requestParams);
+        const response = await fetch(host + `/creator/${creatorId}?creatorName=${creatorName}&password=${password}`, requestParams);
+        getData();
         return await response.json();
     }
     const createButton = (e) =>{
         e.preventDefault()
-        create().then((result) => {
-            getData();
-            alert(`Manga[id=${result.id}, mangaName=${result.mangaName}, chapterCount=${result.chapterCount}]`);
-        });
+        create();
     }
 
     const removeButton = (e) =>{
         e.preventDefault()
         remove();
-        getData();
     }
 
     const updateButton = (e) =>{
         e.preventDefault()
         update();
-        getData();
     }
-
-
 
     return (
         <main>
         <div className="container" id="root-div">
             <div className="content">
-                <h1>Manga</h1>
+                <h1>Creator</h1>
                 <form id="form">
                     <div className="d-flex justify-content-evenly mt-3">
                         <div className="col-sm-2">
-                            <label htmlFor="mangaId" className="form-label">creatorId</label>
+                            <label htmlFor="creatorId" className="form-label">creatorId</label>
                             <input type='number' value = {creatorId} onChange={event => setCreatorId(event.target.value)} className="form-control"/>
                         </div>
                         <div className="col-sm-2">
-                            <label htmlFor="mangaId" className="form-label">mangaId</label>
-                            <input type='number' value = {mangaId} onChange={event => setMangaId(event.target.value)} className="form-control"/>
+                            <label htmlFor="creatorName" className="form-label">creatorName</label>
+                            <input type='text' value = {creatorName} onChange={event => setCreatorName(event.target.value)} className="form-control"/>
                         </div>
                         <div className="col-sm-2">
-                            <label htmlFor="mangaName" className="form-label">mangaName</label>
-                            <input type='text' value = {mangaName} onChange={event => setMangaName(event.target.value)} className="form-control"/>
-                        </div>
-                        <div className="col-sm-2">
-                            <label htmlFor="chapterCount" className="form-label">chapterCount</label>
-                            <input type='number' value = {chapterCount} onChange={event => setChapterCount(event.target.value)} className="form-control"/>
+                            <label htmlFor="password" className="form-label">password</label>
+                            <input type='text' value = {password} onChange={event => setPassword(event.target.value)} className="form-control"/>
                         </div>                           
                     </div>
                     <div className="row mt-3">
@@ -149,17 +156,16 @@ export default function Manga() {
                 </form>
                 <div className="row table-responsive text-white">
 
-                    <table className="table mt-3">
+                    <table className="table mt-3 text-white">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">mangaName</th>
-                            <th scope="col">chapterCount</th>
-                            <th scope="col">mangaId</th>
-                            <th scope="col">readers</th>
+                            <th scope="col">CreatorName</th>
+                            <th scope="col">Password</th>
+                            <th scope="col">Mangs</th>
                         </tr>
                         </thead>
-                        <TableManga items = {data}/>
+                        <TableCreator items = {data}/>
                         {/* <tbody id="tbody">
                         </tbody> */}
                     </table>

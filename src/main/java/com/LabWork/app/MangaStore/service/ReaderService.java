@@ -53,7 +53,7 @@ public class ReaderService {
 
     //СКОРЕЕ ВСЕГО НЕ БУДЕТ РАБОТАТЬ
     @Transactional
-    public Reader addManga(Long mangaId, Long readerId) {
+    public Manga addManga(Long mangaId, Long readerId) {
         final Manga manga = findManga(mangaId);
         final Reader reader = findReader(readerId);
         validatorUtil.validate(reader);
@@ -62,19 +62,21 @@ public class ReaderService {
             return null;
         }
         reader.getMangas().add(manga);
+        readerRepository.save(reader);
 /*        manga.getReaders().add(reader);*/
-        return readerRepository.save(reader);
+        return manga;
     }
 
     @Transactional
-    public Reader removeManga(Long mangaId, Long readerId) {
+    public Manga removeManga(Long mangaId, Long readerId) {
         //em.createNativeQuery("delete from Mangas_Readers where MANGA_FK = " + manga.getId() + " AND READER_FK = "+ readerId).executeUpdate();
         final Reader currentReader = findReader(readerId);
         final Manga currentManga = findManga(mangaId);
         currentReader.getMangas().remove(currentManga);
 /*        currentManga.getReaders().remove(currentReader);*/
         mangaRepository.save(currentManga);
-        return readerRepository.save(currentReader);
+        readerRepository.save(currentReader);
+        return currentManga;
     }
 
     @Transactional

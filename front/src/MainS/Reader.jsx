@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import TableReader from './TableReader';
+import TableReader from '../components/Table/TableReader';
+import MyModal from "../components/Modal/MyModal";
+import EditReaderForm from "../components/Form/EditReaderForm";
 
-export default function Reader() {
+export default function ReaderS() {
 
     const host = "http://localhost:8080";
 
@@ -13,8 +15,11 @@ export default function Reader() {
 
     const [password, setPassword] = useState("");
 
+    const [modal, setModal] = useState(false);
 
     const [data, setData] = useState([]);
+
+    
 
 
     const table = document.getElementById("tbody");
@@ -29,21 +34,6 @@ export default function Reader() {
         const response = await fetch(host + "/reader");
         setData(await response.json())
         console.log(data);
-        //table.innerHTML = "";
-        // data.forEach(Reader => {
-        //     let temp = "<select>";
-        //     Reader.mangas.forEach(Manga => {
-        //         temp += `<option>${Manga.mangaName + " " + Manga.chapterCount}</option>>`
-        //     })
-        //     temp += "</select>"
-        //     table.innerHTML +=
-        //         `<tr>
-        //                 <th scope="row">${Reader.id}</th>
-        //                 <td>${Reader.readerName}</td>
-        //                 <td>${Reader.hashedPassword}</td>
-        //                 <td>${temp}</td>
-        //             </tr>`;
-        //     })
         }
 
     const create = async function (){
@@ -57,9 +47,9 @@ export default function Reader() {
         getData();
     }
 
-    const remove = async function (){
+    const remove = async function (id){
         console.info('Try to remove item');
-        if (readerId !== 0) {
+        if (id !== 0) {
             if (!confirm('Do you really want to remove this item?')) {
                 console.info('Canceled');
                 return;
@@ -71,7 +61,7 @@ export default function Reader() {
                 "Content-Type": "application/json",
             }
         };
-        const response = await fetch(host + `/reader/` + readerId, requestParams);
+        const response = await fetch(host + `/reader/` + id, requestParams);
         getData();
         return await response.json();
     }
@@ -138,9 +128,8 @@ export default function Reader() {
         create();
     }
 
-    const removeButton = (e) =>{
-        e.preventDefault()
-        remove();
+    const removeButton = (id) =>{
+        remove(id);
         
     }
 
@@ -159,7 +148,11 @@ export default function Reader() {
         addManga();
     }
 
-
+    const setModal_Click = (e) =>{
+        e.preventDefault()
+        setModal(true)
+        //setData({type:'', name:'', description:'' })  
+    }
 
     return (
         <main>
@@ -192,9 +185,6 @@ export default function Reader() {
                         <div className="d-grid col-sm-3 m-3 mx-auto">
                             <button onClick={updateButton} className="btn btn-success">Обновить</button>
                         </div>
-                        <div className="d-grid col-sm-3 m-3 mx-auto">
-                            <button onClick={removeButton} className="btn btn-success">Удалить</button>
-                        </div>
                         <div className="d-grid col-sm-2 m-3 mx-auto">
                             <button onClick={removeMangaButton} className="btn btn-success">Удалить мангу</button>
                         </div>
@@ -205,16 +195,22 @@ export default function Reader() {
                 </form>
                 <div className="row table-responsive text-white">
 
-                    <table className="table mt-3">
+                    <table className="table mt-3 text-white">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">readerName</th>
                             <th scope="col">Password</th>
                             <th scope="col">Mangs</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
                         </tr>
                         </thead>
-                        <TableReader items = {data}/>
+                        <TableReader 
+                            items = {data}
+                            remove ={removeButton}
+                            update ={updateButton}
+                        />
                         {/* <tbody id="tbody">
                         </tbody> */}
                     </table>

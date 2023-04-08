@@ -12,7 +12,7 @@ export default function TableCreator(props) {
                             <td>{item.creatorName}</td>
                             <td>{item.hashedPassword}</td>
                             <td>
-                                <select>{item.mangas.map(manga =>                         
+                                <select className="form-select" aria-label="Default select example">{item.mangas.map(manga =>                         
                                     <option key={manga.mangaName } >{manga.mangaName + " " +manga.chapterCount}</option>)}
                                 </select>
                             </td>
