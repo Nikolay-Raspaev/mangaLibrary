@@ -3,6 +3,7 @@ package com.LabWork.app.MangaStore.service;
 import com.LabWork.app.MangaStore.model.Default.Creator;
 import com.LabWork.app.MangaStore.model.Default.Manga;
 import com.LabWork.app.MangaStore.model.Default.Reader;
+import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import com.LabWork.app.MangaStore.service.Exception.MangaNotFoundException;
 import com.LabWork.app.MangaStore.service.Repository.CreatorRepository;
 import com.LabWork.app.MangaStore.service.Exception.CreatorNotFoundException;
@@ -18,13 +19,16 @@ import java.util.Optional;
 public class CreatorService {
     private final CreatorRepository creatorRepository;
     private final MangaService mangaService;
+    private final MangaRepository mangaRepository;
     private final ValidatorUtil validatorUtil;
 
     public CreatorService(CreatorRepository creatorRepository,
                           MangaService mangaService,
-                          ValidatorUtil validatorUtil) {
+                          ValidatorUtil validatorUtil,
+                          MangaRepository mangaRepository) {
         this.creatorRepository = creatorRepository;
         this.mangaService = mangaService;
+        this.mangaRepository = mangaRepository;
         this.validatorUtil = validatorUtil;
     }
 
@@ -69,5 +73,21 @@ public class CreatorService {
     @Transactional
     public void deleteAllCreators() {
         creatorRepository.deleteAll();
+    }
+
+    @Transactional
+    public Manga addManga(Long creatorId, Integer chapterCount, String mangaName) {
+        final Creator currentCreator = findCreator(creatorId);
+        final Manga manga = new Manga(currentCreator, mangaName, chapterCount);
+        validatorUtil.validate(manga);
+        return mangaRepository.save(manga);
+    }
+
+    @Transactional
+    public Manga addManga(MangaDto mangaDto) {
+        final Creator currentCreator = findCreator(mangaDto.getCreatorId());
+        final Manga manga = new Manga(currentCreator, mangaDto);
+        validatorUtil.validate(manga);
+        return mangaRepository.save(manga);
     }
 }

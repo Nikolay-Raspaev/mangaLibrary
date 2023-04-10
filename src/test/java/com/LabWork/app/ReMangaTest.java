@@ -32,12 +32,12 @@ public class ReMangaTest {
         mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
         Creator c1 = creatorService.addCreator("first_C", "1");
-        Manga m1 = mangaService.addManga(c1.getId(), 0, "Vagabond");
-        Manga m2 = mangaService.addManga(c1.getId(), 10, "Berserk");
+        Manga m1 = creatorService.addManga(c1.getId(), 0, "Vagabond");
+        Manga m2 = creatorService.addManga(c1.getId(), 10, "Berserk");
         Reader r1 = readerService.addReader("first_R", "1");
 
-        readerService.addManga(m1.getId(), r1.getId());
-        readerService.addManga(m2.getId(), r1.getId());
+        mangaService.addMangaToReader(m1.getId(), r1.getId());
+        mangaService.addMangaToReader(m2.getId(), r1.getId());
 
         Reader r11 = readerService.findReader(r1.getId());
         readerService.deleteReader(r11.getId());
@@ -54,13 +54,13 @@ public class ReMangaTest {
         mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
         Creator c1 = creatorService.addCreator("first_C", "1");
-        Manga m1 = mangaService.addManga(c1.getId(), 0, "vagabond");
+        Manga m1 = creatorService.addManga(c1.getId(), 0, "vagabond");
         Reader r1 = readerService.addReader("first_R", "1");
         Reader r2 = readerService.addReader("2", "2");
         Reader r3 = readerService.addReader("3", "3");
 
-        readerService.addManga(m1.getId(), r1.getId());
-        readerService.addManga(m1.getId(), r2.getId());
+        mangaService.addMangaToReader(m1.getId(), r1.getId());
+        mangaService.addMangaToReader(m1.getId(), r2.getId());
 
         log.info(r1.getMangas().toString());
 
@@ -93,9 +93,9 @@ public class ReMangaTest {
         mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
         Creator c1 = creatorService.addCreator("first", "1");
-        Manga m1 = mangaService.addManga(c1.getId(), 0, "Vagabond");
-        Manga m2 = mangaService.addManga(c1.getId(), 10, "Berserk");
-        Manga m3 = mangaService.addManga(c1.getId(), 0, "Manga_3");
+        Manga m1 = creatorService.addManga(c1.getId(), 0, "Vagabond");
+        Manga m2 = creatorService.addManga(c1.getId(), 10, "Berserk");
+        Manga m3 = creatorService.addManga(c1.getId(), 0, "Manga_3");
         Creator c2 = creatorService.findCreator(c1.getId());
         Assertions.assertEquals(3, c2.getMangas().size());
         readerService.deleteAllReaders();
@@ -187,8 +187,8 @@ public class ReMangaTest {
         mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
         Creator c1 = creatorService.addCreator("first", "1");
-        Manga m1 = mangaService.addManga(c1.getId(), 0, "Vagabond");
-        Manga m2 = mangaService.addManga(c1.getId(), 10, "Berserk");
+        Manga m1 = creatorService.addManga(c1.getId(), 0, "Vagabond");
+        Manga m2 = creatorService.addManga(c1.getId(), 10, "Berserk");
         creatorService.deleteCreator(c1.getId());
         log.info(mangaService.findAllMangas().toString());
         Assertions.assertEquals(0, mangaService.findAllMangas().size());
@@ -217,11 +217,11 @@ public class ReMangaTest {
         mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
         Creator c1 = creatorService.addCreator("first", "1");
-        Manga m1 = mangaService.addManga(c1.getId(), 0, "Vagabond");
-        Manga m2 = mangaService.addManga(c1.getId(), 10, "Berserk");
+        Manga m1 = creatorService.addManga(c1.getId(), 0, "Vagabond");
+        Manga m2 = creatorService.addManga(c1.getId(), 10, "Berserk");
         Reader r1 = readerService.addReader("1", "1");
-        readerService.addManga(m1.getId(), r1.getId());
-        readerService.addManga(m2.getId(), r1.getId());
+        mangaService.addMangaToReader(m1.getId(), r1.getId());
+        mangaService.addMangaToReader(m2.getId(), r1.getId());
         creatorService.deleteCreator(c1.getId());
         log.info(mangaService.findAllMangas().toString());
         Assertions.assertEquals(0, mangaService.findAllMangas().size());
@@ -236,8 +236,8 @@ public class ReMangaTest {
         mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
         Creator c1 = creatorService.addCreator("first", "1");
-        Manga m1 = mangaService.addManga(c1.getId(), 0, "Vagabond");
-        Manga m2 = mangaService.addManga(c1.getId(), 10, "Berserk");
+        Manga m1 = creatorService.addManga(c1.getId(), 0, "Vagabond");
+        Manga m2 = creatorService.addManga(c1.getId(), 10, "Berserk");
         c1 = creatorService.findCreator(c1.getId());
         m1 = mangaService.findManga(m1.getId());
         log.info(c1.getMangas().toString());
@@ -254,7 +254,7 @@ public class ReMangaTest {
         mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
         Creator c1 = creatorService.addCreator("first", "1");
-        Manga m1 = mangaService.addManga(c1.getId(), 0, "Vagabond");
+        Manga m1 = creatorService.addManga(c1.getId(), 0, "Vagabond");
         Manga m2 = mangaService.updateManga(m1.getId(), 10);
         m2 = mangaService.findManga(m2.getId());
         c1 = creatorService.findCreator(c1.getId());
@@ -274,12 +274,12 @@ public class ReMangaTest {
         mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
         Creator c1 = creatorService.addCreator("first", "1");
-        Manga m1 = mangaService.addManga(c1.getId(), 0, "Vagabond");
-        Manga m2 = mangaService.addManga(c1.getId(), 10, "Berserk");
+        Manga m1 = creatorService.addManga(c1.getId(), 0, "Vagabond");
+        Manga m2 = creatorService.addManga(c1.getId(), 10, "Berserk");
         Reader r1 = readerService.addReader("reader1", "password1");
 
-        readerService.addManga(m1.getId(), r1.getId());
-        readerService.addManga(m2.getId(), r1.getId());
+        mangaService.addMangaToReader(m1.getId(), r1.getId());
+        mangaService.addMangaToReader(m2.getId(), r1.getId());
         mangaService.deleteManga(m1.getId());
         r1 = readerService.findReader(r1.getId());
 
@@ -299,8 +299,8 @@ public class ReMangaTest {
         mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
         Creator c1 = creatorService.addCreator("first", "1");
-        Manga m1 = mangaService.addManga(c1.getId(), 0, "Vagabond");
-        Manga m2 = mangaService.addManga(c1.getId(), 10, "Berserk");
+        Manga m1 = creatorService.addManga(c1.getId(), 0, "Vagabond");
+        Manga m2 = creatorService.addManga(c1.getId(), 10, "Berserk");
         mangaService.deleteAllMangas();
         Assertions.assertEquals(0, mangaService.findAllMangas().size());
         readerService.deleteAllReaders();
@@ -314,12 +314,12 @@ public class ReMangaTest {
         mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
         Creator c1 = creatorService.addCreator("first_C", "1");
-        Manga m1 = mangaService.addManga(c1.getId(), 0, "vagabond");
-        Manga m2 = mangaService.addManga(c1.getId(), 10, "Berserk");
+        Manga m1 = creatorService.addManga(c1.getId(), 0, "vagabond");
+        Manga m2 = creatorService.addManga(c1.getId(), 10, "Berserk");
         Reader r1 = readerService.addReader("first_R", "1");
 
-        readerService.addManga(m1.getId(), r1.getId());
-        readerService.addManga(m2.getId(), r1.getId());
+        mangaService.addMangaToReader(m1.getId(), r1.getId());
+        mangaService.addMangaToReader(m2.getId(), r1.getId());
 
         log.info(r1.getMangas().toString());
 
@@ -358,15 +358,15 @@ public class ReMangaTest {
         mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
         Creator c1 = creatorService.addCreator("first_C", "1");
-        Manga m1 = mangaService.addManga(c1.getId(), 0, "Vagabond");
-        Manga m2 = mangaService.addManga(c1.getId(), 10, "Berserk");
+        Manga m1 = creatorService.addManga(c1.getId(), 0, "Vagabond");
+        Manga m2 = creatorService.addManga(c1.getId(), 10, "Berserk");
         Reader r1 = readerService.addReader("first_R", "1");
 
-        readerService.addManga(m1.getId(), r1.getId());
-        readerService.addManga(m2.getId(), r1.getId());
+        mangaService.addMangaToReader(m1.getId(), r1.getId());
+        mangaService.addMangaToReader(m2.getId(), r1.getId());
 
         Reader r11 = readerService.findReader(r1.getId());
-        readerService.removeManga(m1.getId(), r11.getId());
+        mangaService.removeMangaToReader(m1.getId(), r11.getId());
         Reader r12 = readerService.findReader(r11.getId());
 
         Manga m11 = mangaService.findManga(m1.getId());
@@ -384,13 +384,13 @@ public class ReMangaTest {
         mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
         Creator c1 = creatorService.addCreator("first_C", "1");
-        Manga m1 = mangaService.addManga(c1.getId(), 0, "Vagabond");
-        Manga m2 = mangaService.addManga(c1.getId(), 10, "Berserk");
+        Manga m1 = creatorService.addManga(c1.getId(), 0, "Vagabond");
+        Manga m2 = creatorService.addManga(c1.getId(), 10, "Berserk");
         Reader r1 = readerService.addReader("first_R", "1");
         Reader r2 = readerService.addReader("2_R", "2");
 
-        readerService.addManga(m1.getId(), r1.getId());
-        readerService.addManga(m2.getId(), r1.getId());
+        mangaService.addMangaToReader(m1.getId(), r1.getId());
+        mangaService.addMangaToReader(m2.getId(), r1.getId());
 
         Reader r11 = readerService.findReader(r1.getId());
         readerService.deleteReader(r11.getId());
@@ -410,12 +410,12 @@ public class ReMangaTest {
         mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
         Creator c1 = creatorService.addCreator("first_C", "1");
-        Manga m1 = mangaService.addManga(c1.getId(), 0, "Vagabond");
-        Manga m2 = mangaService.addManga(c1.getId(), 10, "Berserk");
+        Manga m1 = creatorService.addManga(c1.getId(), 0, "Vagabond");
+        Manga m2 = creatorService.addManga(c1.getId(), 10, "Berserk");
         Reader r1 = readerService.addReader("first_R", "1");
 
-        readerService.addManga(m1.getId(), r1.getId());
-        readerService.addManga(m2.getId(), r1.getId());
+        mangaService.addMangaToReader(m1.getId(), r1.getId());
+        mangaService.addMangaToReader(m2.getId(), r1.getId());
 
         Reader r11 = readerService.updateReader(r1.getId(), "reader", "password");
         r11 = readerService.findReader(r11.getId());

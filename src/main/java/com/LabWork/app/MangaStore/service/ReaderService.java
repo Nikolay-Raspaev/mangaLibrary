@@ -16,14 +16,11 @@ import java.util.Optional;
 @Service
 public class ReaderService {
     private final ReaderRepository readerRepository;
-    private final MangaRepository mangaRepository;
     private final ValidatorUtil validatorUtil;
 
     public ReaderService(ReaderRepository readerRepository,
-                         ValidatorUtil validatorUtil,
-                         MangaRepository mangaRepository) {
+                         ValidatorUtil validatorUtil) {
         this.readerRepository = readerRepository;
-        this.mangaRepository = mangaRepository;
         this.validatorUtil = validatorUtil;
     }
 
@@ -54,10 +51,6 @@ public class ReaderService {
         return currentReader;
     }
 
-    public void addManga(Long readerId, List<Manga> mangas) {
-        readerRepository.findById(readerId).get().setMangas(mangas);
-    }
-
     @Transactional
     public Reader deleteReader(Long id) {
         final Reader currentReader = findReader(id);
@@ -69,32 +62,5 @@ public class ReaderService {
     @Transactional
     public void deleteAllReaders() {
         readerRepository.deleteAll();
-    }
-
-    @Transactional(readOnly = true)
-    public Manga findManga(Long id) {
-        final Optional<Manga> manga = mangaRepository.findById(id);
-        return manga.orElseThrow(() -> new MangaNotFoundException(id));
-    }
-
-    @Transactional
-    public Manga addManga(Long mangaId, Long readerId) {
-        final Manga manga = findManga(mangaId);
-        final Reader reader = findReader(readerId);
-        validatorUtil.validate(reader);
-        if (reader.getMangas().contains(manga))
-        {
-            return null;
-        }
-        reader.getMangas().add(manga);
-        return manga;
-    }
-
-    @Transactional
-    public Manga removeManga(Long mangaId, Long readerId) {
-        final Reader currentReader = findReader(readerId);
-        final Manga currentManga = findManga(mangaId);
-        currentReader.getMangas().remove(currentManga);
-        return currentManga;
     }
 }

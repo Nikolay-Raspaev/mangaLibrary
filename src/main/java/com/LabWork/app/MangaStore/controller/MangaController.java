@@ -4,6 +4,7 @@ package com.LabWork.app.MangaStore.controller;
 import com.LabWork.app.MangaStore.model.Dto.MangaReaderDto;
 import com.LabWork.app.MangaStore.model.Dto.ReaderMangaDto;
 import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
+import com.LabWork.app.MangaStore.service.CreatorService;
 import com.LabWork.app.MangaStore.service.MangaService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,11 @@ import java.util.List;
 @RequestMapping("/manga")
 public class MangaController {
     private final MangaService mangaService;
-
-    public MangaController(MangaService mangaService) {
+    private final CreatorService creatorService;
+    public MangaController(MangaService mangaService,
+                           CreatorService creatorService) {
         this.mangaService = mangaService;
+        this.creatorService = creatorService;
     }
 
     @GetMapping("/{id}")
@@ -58,7 +61,7 @@ public class MangaController {
 
     @PostMapping
     public MangaDto createManga(@RequestBody @Valid MangaDto mangaDto) {
-        return new MangaDto(mangaService.addManga(mangaDto));
+        return new MangaDto(creatorService.addManga(mangaDto));
     }
 
     @PutMapping("/{id}")
