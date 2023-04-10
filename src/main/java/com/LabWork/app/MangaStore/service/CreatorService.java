@@ -18,14 +18,14 @@ import java.util.Optional;
 public class CreatorService {
     private final CreatorRepository creatorRepository;
     private final ReaderRepository readerRepository;
-    private final MangaRepository mangaRepository;
+    private final MangaService mangaService;
     private final ValidatorUtil validatorUtil;
 
-    public CreatorService(CreatorRepository creatorRepository, MangaRepository mangaRepository, ReaderRepository readerRepository,
+    public CreatorService(CreatorRepository creatorRepository, MangaService mangaService, ReaderRepository readerRepository,
                           ValidatorUtil validatorUtil) {
         this.creatorRepository = creatorRepository;
         this.readerRepository = readerRepository;
-        this.mangaRepository = mangaRepository;
+        this.mangaService = mangaService;
         this.validatorUtil = validatorUtil;
     }
 
@@ -55,28 +55,11 @@ public class CreatorService {
         return creatorRepository.save(currentCreator);
     }
 
-    @Transactional(readOnly = true)
-    public List<Manga> findAllMangas() {
-        return mangaRepository.findAll();
-    }
-
-    @Transactional(readOnly = true)
-    public Manga findManga(Long id) {
-        final Optional<Manga> manga = mangaRepository.findById(id);
-        return manga.orElseThrow(() -> new MangaNotFoundException(id));
-    }
-
-    @Transactional
-    public List<Reader> getReader(Long id) {
-        final Manga currentManga = findManga(id);
-        final List<Reader> listReader = mangaRepository.getReaders(currentManga);
-        return listReader;
-    }
-
     @Transactional
     public Creator deleteCreator(Long id) {
         final Creator currentCreator = findCreator(id);
         List<Manga> listManga = currentCreator.getMangas();
+
         for (Manga manga : listManga){
             for (final Reader reader :getReader(manga.getId())){
                 reader.getMangas().remove(manga);

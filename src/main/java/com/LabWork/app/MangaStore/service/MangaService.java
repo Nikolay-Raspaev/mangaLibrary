@@ -20,16 +20,16 @@ import java.util.Optional;
 @Service
 public class MangaService {
     public final MangaRepository mangaRepository;
-    public final CreatorService creatorService;
+    public final CreatorRepository  creatorRepository ;
     public final ReaderService readerService;
     public final ReaderRepository readerRepository;
     private final ValidatorUtil validatorUtil;
 
-    public MangaService(MangaRepository mangaRepository, CreatorService creatorService, ReaderService readerService, ReaderRepository readerRepository,
+    public MangaService(MangaRepository mangaRepository, CreatorRepository  creatorRepository , ReaderService readerService, ReaderRepository readerRepository,
                         ValidatorUtil validatorUtil) {
         this.mangaRepository = mangaRepository;
         this.readerService = readerService;
-        this.creatorService = creatorService;
+        this.creatorRepository  = creatorRepository ;
         this.readerRepository = readerRepository;
         this.validatorUtil = validatorUtil;
     }
