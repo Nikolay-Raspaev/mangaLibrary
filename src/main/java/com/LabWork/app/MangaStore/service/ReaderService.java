@@ -16,10 +16,12 @@ import java.util.Optional;
 @Service
 public class ReaderService {
     private final ReaderRepository readerRepository;
+    private final MangaRepository mangaRepository;
     private final ValidatorUtil validatorUtil;
 
-    public ReaderService(ReaderRepository readerRepository, ValidatorUtil validatorUtil) {
+    public ReaderService(ReaderRepository readerRepository, ValidatorUtil validatorUtil, MangaRepository mangaRepository) {
         this.readerRepository = readerRepository;
+        this.mangaRepository = mangaRepository;
         this.validatorUtil = validatorUtil;
     }
 
@@ -65,5 +67,36 @@ public class ReaderService {
     @Transactional
     public void deleteAllReaders() {
         readerRepository.deleteAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Manga findManga(Long id) {
+        final Optional<Manga> manga = mangaRepository.findById(id);
+        return manga.orElseThrow(() -> new MangaNotFoundException(id));
+    }
+
+    @Transactional
+    public Manga addManga(Long mangaId, Long readerId) {
+        final Manga manga = findManga(mangaId);
+        final Reader reader = findReader(readerId);
+        validatorUtil.validate(reader);
+        if (reader.getMangas().contains(manga))
+        {
+            return null;
+        }
+        reader.getMangas().add(manga);
+        readerRepository.save(reader);
+        return manga;
+    }
+
+    @Transactional
+    public Manga removeManga(Long mangaId, Long readerId) {
+        //em.createNativeQuery("delete from Mangas_Readers where MANGA_FK = " + manga.getId() + " AND READER_FK = "+ readerId).executeUpdate();
+        final Reader currentReader = findReader(readerId);
+        final Manga currentManga = findManga(mangaId);
+        currentReader.getMangas().remove(currentManga);
+        mangaRepository.save(currentManga);
+        readerRepository.save(currentReader);
+        return currentManga;
     }
 }

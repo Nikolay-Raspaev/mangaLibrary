@@ -20,16 +20,16 @@ import java.util.Optional;
 @Service
 public class MangaService {
     public final MangaRepository mangaRepository;
-    public final CreatorRepository  creatorRepository ;
+    public final CreatorService creatorService;
     public final ReaderService readerService;
     public final ReaderRepository readerRepository;
     private final ValidatorUtil validatorUtil;
 
-    public MangaService(MangaRepository mangaRepository, CreatorRepository  creatorRepository , ReaderService readerService, ReaderRepository readerRepository,
+    public MangaService(MangaRepository mangaRepository, CreatorService  creatorService , ReaderService readerService, ReaderRepository readerRepository,
                         ValidatorUtil validatorUtil) {
         this.mangaRepository = mangaRepository;
         this.readerService = readerService;
-        this.creatorRepository  = creatorRepository ;
+        this.creatorService  = creatorService;
         this.readerRepository = readerRepository;
         this.validatorUtil = validatorUtil;
     }
@@ -99,19 +99,7 @@ public class MangaService {
         return currentManga;
     }
 
-    @Transactional
-    public Manga addMangaToReader(Long mangaId, Long readerId) {
-        final Manga manga = findManga(mangaId);
-        final Reader reader = readerService.findReader(readerId);
-        validatorUtil.validate(reader);
-        if (reader.getMangas().contains(manga))
-        {
-            return null;
-        }
-        reader.getMangas().add(manga);
-        readerRepository.save(reader);
-        return manga;
-    }
+
 
 /*    @Transactional
     public Manga addManga(Long mangaId, Long readerId) {
@@ -119,16 +107,7 @@ public class MangaService {
         readerService.addManga(readerId, List.of(manga));
         return manga;
     }*/
-    @Transactional
-    public Manga removeMangaToReader(Long mangaId, Long readerId) {
-        //em.createNativeQuery("delete from Mangas_Readers where MANGA_FK = " + manga.getId() + " AND READER_FK = "+ readerId).executeUpdate();
-        final Reader currentReader = readerService.findReader(readerId);
-        final Manga currentManga = findManga(mangaId);
-        currentReader.getMangas().remove(currentManga);
-        mangaRepository.save(currentManga);
-        readerRepository.save(currentReader);
-        return currentManga;
-    }
+
 
     @Transactional
     public void deleteAllMangas() {

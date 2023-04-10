@@ -55,13 +55,14 @@ public class CreatorService {
         return creatorRepository.save(currentCreator);
     }
 
+
     @Transactional
     public Creator deleteCreator(Long id) {
         final Creator currentCreator = findCreator(id);
         List<Manga> listManga = currentCreator.getMangas();
 
         for (Manga manga : listManga){
-            for (final Reader reader :getReader(manga.getId())){
+            for (final Reader reader :mangaService.getReader(manga.getId())){
                 reader.getMangas().remove(manga);
             }
         }
