@@ -1,6 +1,7 @@
 package com.LabWork.app.MangaStore.model.Default;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ public class Reader {
     private String hashedPassword;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    /*@Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)*/
+    /*orphanRemoval=true*/
     private List<Manga> mangas;
 
     public Reader() {
