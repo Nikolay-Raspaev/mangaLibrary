@@ -91,7 +91,6 @@ public class ReaderService {
 
     @Transactional
     public Manga removeManga(Long mangaId, Long readerId) {
-        //em.createNativeQuery("delete from Mangas_Readers where MANGA_FK = " + manga.getId() + " AND READER_FK = "+ readerId).executeUpdate();
         final Reader currentReader = findReader(readerId);
         final Manga currentManga = findManga(mangaId);
         currentReader.getMangas().remove(currentManga);

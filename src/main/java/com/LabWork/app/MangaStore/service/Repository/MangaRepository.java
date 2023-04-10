@@ -12,3 +12,5 @@ public interface MangaRepository extends JpaRepository<Manga, Long> {
     @Query("select r from Reader r where :manga MEMBER OF r.mangas")
     List<Reader> getReaders(Manga manga);
 }
+
+

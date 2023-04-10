@@ -38,7 +38,6 @@ public class CreatorService {
     @Transactional(readOnly = true)
     public List<Creator> findAllCreators() { return creatorRepository.findAll(); }
 
-
     @Transactional
     public Creator addCreator(String creatorName, String password) {
         final Creator creator = new Creator(creatorName, password);
@@ -55,12 +54,10 @@ public class CreatorService {
         return creatorRepository.save(currentCreator);
     }
 
-
     @Transactional
     public Creator deleteCreator(Long id) {
         final Creator currentCreator = findCreator(id);
         List<Manga> listManga = currentCreator.getMangas();
-
         for (Manga manga : listManga){
             for (final Reader reader :mangaService.getReader(manga.getId())){
                 reader.getMangas().remove(manga);

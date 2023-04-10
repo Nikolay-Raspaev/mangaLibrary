@@ -1,5 +1,4 @@
 package com.LabWork.app.MangaStore.service;
-
 import com.LabWork.app.MangaStore.model.Default.Creator;
 import com.LabWork.app.MangaStore.model.Default.Manga;
 import com.LabWork.app.MangaStore.model.Default.Reader;
@@ -12,8 +11,6 @@ import com.LabWork.app.MangaStore.service.Repository.ReaderRepository;
 import com.LabWork.app.MangaStore.util.validation.ValidatorUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -103,16 +100,6 @@ public class MangaService {
         mangaRepository.delete(currentManga);
         return currentManga;
     }
-
-
-
-/*    @Transactional
-    public Manga addManga(Long mangaId, Long readerId) {
-        final Manga manga = findManga(mangaId);
-        readerService.addManga(readerId, List.of(manga));
-        return manga;
-    }*/
-
 
     @Transactional
     public void deleteAllMangas() {
