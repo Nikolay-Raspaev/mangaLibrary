@@ -17,14 +17,14 @@ import java.util.Optional;
 @Service
 public class CreatorService {
     private final CreatorRepository creatorRepository;
-    private final ReaderRepository readerRepository;
     private final MangaService mangaService;
     private final ValidatorUtil validatorUtil;
 
-    public CreatorService(CreatorRepository creatorRepository, MangaService mangaService, ReaderRepository readerRepository,
+    public CreatorService(CreatorRepository creatorRepository,
+                          MangaService mangaService,
+                          ReaderRepository readerRepository,
                           ValidatorUtil validatorUtil) {
         this.creatorRepository = creatorRepository;
-        this.readerRepository = readerRepository;
         this.mangaService = mangaService;
         this.validatorUtil = validatorUtil;
     }
@@ -51,7 +51,7 @@ public class CreatorService {
         currentCreator.setCreatorName(creatorName);
         currentCreator.setHashedPassword(password);
         validatorUtil.validate(currentCreator);
-        return creatorRepository.save(currentCreator);
+        return currentCreator;
     }
 
     @Transactional

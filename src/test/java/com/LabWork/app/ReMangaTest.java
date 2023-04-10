@@ -67,6 +67,7 @@ public class ReMangaTest {
         Reader r4 = readerService.findReader(r1.getId());
         log.info(r4.getMangas().toString());
         Assertions.assertEquals(2, mangaService.getReader(m1.getId()).size());
+        Assertions.assertEquals(1, mangaService.findAllMangas().size());
         readerService.deleteAllReaders();
         mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
@@ -155,6 +156,7 @@ public class ReMangaTest {
         Creator c1 = creatorService.addCreator("first", "1");
         Creator c2 = creatorService.updateCreator(c1.getId(),"second", "1");
         Creator c3 = creatorService.findCreator(c1.getId());
+        log.info(c3.toString());
         Assertions.assertNotEquals(c1.getCreatorName(), c2.getCreatorName());
         Assertions.assertEquals(c1.getHashedPassword(), c2.getHashedPassword());
         Assertions.assertEquals(c3.getCreatorName(), c2.getCreatorName());
@@ -255,9 +257,11 @@ public class ReMangaTest {
         Manga m2 = mangaService.updateManga(m1.getId(), 10);
         m2 = mangaService.findManga(m2.getId());
         c1 = creatorService.findCreator(c1.getId());
+        log.info(m2.toString());
         Assertions.assertEquals(m1.getMangaName(), m2.getMangaName());
         Assertions.assertNotEquals(m1.getChapterCount(), m2.getChapterCount());
         Assertions.assertEquals(c1.getMangas().get(0).getChapterCount(), m2.getChapterCount());
+        Assertions.assertEquals(10, m2.getChapterCount());
         readerService.deleteAllReaders();
         mangaService.deleteAllMangas();
         creatorService.deleteAllCreators();
@@ -415,6 +419,8 @@ public class ReMangaTest {
         Reader r11 = readerService.updateReader(r1.getId(), "reader", "password");
         r11 = readerService.findReader(r11.getId());
         m1 = mangaService.findManga(m1.getId());
+        log.info(r1.getReaderName());
+        log.info(r11.getReaderName());
         Assertions.assertNotEquals(r11.getReaderName(), r1.getReaderName());
         //Assertions.assertEquals(r11.getReaderName(), m1.getReaders().get(0).getReaderName());
         readerService.deleteAllReaders();

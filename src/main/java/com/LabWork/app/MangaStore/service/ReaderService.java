@@ -19,7 +19,9 @@ public class ReaderService {
     private final MangaRepository mangaRepository;
     private final ValidatorUtil validatorUtil;
 
-    public ReaderService(ReaderRepository readerRepository, ValidatorUtil validatorUtil, MangaRepository mangaRepository) {
+    public ReaderService(ReaderRepository readerRepository,
+                         ValidatorUtil validatorUtil,
+                         MangaRepository mangaRepository) {
         this.readerRepository = readerRepository;
         this.mangaRepository = mangaRepository;
         this.validatorUtil = validatorUtil;
@@ -49,7 +51,7 @@ public class ReaderService {
         currentReader.setReaderName(readername);
         currentReader.setHashedPassword(password);
         validatorUtil.validate(currentReader);
-        return readerRepository.save(currentReader);
+        return currentReader;
     }
 
     public void addManga(Long readerId, List<Manga> mangas) {
@@ -85,7 +87,6 @@ public class ReaderService {
             return null;
         }
         reader.getMangas().add(manga);
-        readerRepository.save(reader);
         return manga;
     }
 
@@ -94,8 +95,6 @@ public class ReaderService {
         final Reader currentReader = findReader(readerId);
         final Manga currentManga = findManga(mangaId);
         currentReader.getMangas().remove(currentManga);
-        mangaRepository.save(currentManga);
-        readerRepository.save(currentReader);
         return currentManga;
     }
 }

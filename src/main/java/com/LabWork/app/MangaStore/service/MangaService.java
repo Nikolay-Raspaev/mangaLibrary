@@ -22,7 +22,10 @@ public class MangaService {
     public final ReaderRepository readerRepository;
     private final ValidatorUtil validatorUtil;
 
-    public MangaService(MangaRepository mangaRepository, CreatorRepository  creatorRepository, ReaderService readerService, ReaderRepository readerRepository,
+    public MangaService(MangaRepository mangaRepository,
+                        CreatorRepository  creatorRepository,
+                        ReaderService readerService,
+                        ReaderRepository readerRepository,
                         ValidatorUtil validatorUtil) {
         this.mangaRepository = mangaRepository;
         this.readerService = readerService;
@@ -76,7 +79,6 @@ public class MangaService {
         final Manga currentManga = findManga(id);
         currentManga.setChapterCount(chapterCount);
         validatorUtil.validate(currentManga);
-        mangaRepository.save(currentManga);
         return currentManga;
     }
 
@@ -86,7 +88,6 @@ public class MangaService {
         currentManga.setChapterCount(mangaDto.getChapterCount());
         currentManga.setImage(mangaDto.getImage().getBytes());
         validatorUtil.validate(currentManga);
-        mangaRepository.save(currentManga);
         return currentManga;
     }
 
