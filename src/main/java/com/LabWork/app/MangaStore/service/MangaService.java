@@ -92,9 +92,9 @@ public class MangaService {
     public Manga deleteManga(Long id) {
         final Manga currentManga = findManga(id);
         final List<Reader> listReader = readerService.findAllReaders();
-        for (Reader reader : listReader){
+/*        for (Reader reader : listReader){
             reader.getMangas().remove(currentManga);
-        }
+        }*/
         mangaRepository.delete(currentManga);
         return currentManga;
     }
