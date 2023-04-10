@@ -94,7 +94,6 @@ public class MangaService {
         final List<Reader> listReader = readerService.findAllReaders();
         for (Reader reader : listReader){
             reader.getMangas().remove(currentManga);
-            readerRepository.save(reader);
         }
         mangaRepository.delete(currentManga);
         return currentManga;

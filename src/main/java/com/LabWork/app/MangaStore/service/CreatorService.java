@@ -63,7 +63,6 @@ public class CreatorService {
         for (Manga manga : listManga){
             for (final Reader reader :getReader(manga.getId())){
                 reader.getMangas().remove(manga);
-                readerRepository.save(reader);
             }
         }
         creatorRepository.delete(currentCreator);
