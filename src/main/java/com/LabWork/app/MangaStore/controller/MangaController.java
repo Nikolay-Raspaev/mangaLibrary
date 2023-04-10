@@ -2,6 +2,7 @@ package com.LabWork.app.MangaStore.controller;
 
 
 import com.LabWork.app.MangaStore.model.Dto.MangaReaderDto;
+import com.LabWork.app.MangaStore.model.Dto.ReaderMangaDto;
 import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import com.LabWork.app.MangaStore.service.MangaService;
 import jakarta.validation.Valid;
@@ -27,6 +28,13 @@ public class MangaController {
     public List<MangaReaderDto> getMangas() {
         return mangaService.findAllMangas().stream()
                 .map(x -> new MangaReaderDto(x, mangaService.getReader(x.getId())))
+                .toList();
+    }
+
+    @GetMapping("/{id}/readers")
+    public List<ReaderMangaDto> getReaders(@PathVariable Long id) {
+        return mangaService.getReader(id).stream()
+                .map(x -> new ReaderMangaDto(x))
                 .toList();
     }
 /*

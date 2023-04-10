@@ -16,7 +16,6 @@ import java.util.Optional;
 @Service
 public class ReaderService {
     private final ReaderRepository readerRepository;
-
     private final MangaRepository mangaRepository;
     private final ValidatorUtil validatorUtil;
 
@@ -34,12 +33,6 @@ public class ReaderService {
     }
 
     @Transactional(readOnly = true)
-    public Manga findManga(Long id) {
-        final Optional<Manga> manga = mangaRepository.findById(id);
-        return manga.orElseThrow(() -> new MangaNotFoundException(id));
-    }
-
-    @Transactional(readOnly = true)
     public List<Reader> findAllReaders() {
         return readerRepository.findAll();
     }
@@ -51,7 +44,11 @@ public class ReaderService {
         return readerRepository.save(reader);
     }
 
-    //СКОРЕЕ ВСЕГО НЕ БУДЕТ РАБОТАТЬ
+    @Transactional(readOnly = true)
+    public Manga findManga(Long id) {
+        final Optional<Manga> manga = mangaRepository.findById(id);
+        return manga.orElseThrow(() -> new MangaNotFoundException(id));
+    }
     @Transactional
     public Manga addManga(Long mangaId, Long readerId) {
         final Manga manga = findManga(mangaId);

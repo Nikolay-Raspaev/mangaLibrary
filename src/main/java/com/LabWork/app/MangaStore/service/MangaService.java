@@ -21,15 +21,16 @@ import java.util.Optional;
 public class MangaService {
     public final MangaRepository mangaRepository;
     public final CreatorRepository creatorRepository;
-
+    public final ReaderService readerService;
     public final ReaderRepository readerRepository;
     private final ValidatorUtil validatorUtil;
 
-    public MangaService(MangaRepository mangaRepository, CreatorRepository creatorRepository, ReaderRepository readerRepository,
+    public MangaService(MangaRepository mangaRepository, CreatorRepository creatorRepository, ReaderService readerService, ReaderRepository readerRepository,
                         ValidatorUtil validatorUtil) {
         this.mangaRepository = mangaRepository;
-        this.readerRepository = readerRepository;
+        this.readerService = readerService;
         this.creatorRepository = creatorRepository;
+        this.readerRepository = readerRepository;
         this.validatorUtil = validatorUtil;
     }
 
@@ -39,31 +40,22 @@ public class MangaService {
         return manga.orElseThrow(() -> new MangaNotFoundException(id));
     }
 
-    @Transactional(readOnly = true)
-    public Creator findCreator(Long id) {
-        final Optional<Creator> creator = creatorRepository.findById(id);
-        return creator.orElseThrow(() -> new CreatorNotFoundException(id));
-    }
-
     @Transactional
     public List<Reader> getReader(Long id) {
-        //em.createNativeQuery("delete from Mangas_Readers where MANGA_FK = " + manga.getId() + " AND READER_FK = "+ readerId).executeUpdate();
-        //SELECT b FROM Book b WHERE ?1 MEMBER OF b.genres
-        //final List<Reader> listReader = em.createQuery("select r from Reader r where " + id + " MEMBER OF r.mangas", Reader.class).getResultList();
-        List<Reader> listReader = new ArrayList<>();
-        for (Reader reader : readerRepository.findAll()){
-            for (Manga manga : reader.getMangas()){
-                if (manga.getId() == id){
-                    listReader.add(reader);
-                }
-            }
-        }
+        final Manga currentManga = findManga(id);
+        final List<Reader> listReader = mangaRepository.getReaders(currentManga);
         return listReader;
     }
 
     @Transactional(readOnly = true)
     public List<Manga> findAllMangas() {
         return mangaRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Creator findCreator(Long id) {
+        final Optional<Creator> creator = creatorRepository.findById(id);
+        return creator.orElseThrow(() -> new CreatorNotFoundException(id));
     }
 
     @Transactional
@@ -106,7 +98,7 @@ public class MangaService {
     @Transactional
     public Manga deleteManga(Long id) {
         final Manga currentManga = findManga(id);
-        final List<Reader> listReader = readerRepository.findAll();
+        final List<Reader> listReader = readerService.findAllReaders();
         for (Reader reader : listReader){
             reader.getMangas().remove(currentManga);
             readerRepository.save(reader);

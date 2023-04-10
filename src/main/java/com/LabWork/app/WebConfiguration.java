@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -18,16 +19,12 @@ public class WebConfiguration implements WebMvcConfigurer {
     }
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/notFound").setViewName("forward:/index.html");
-    }
+        ViewControllerRegistration registration = registry.addViewController("/notFound");
+        registration.setViewName("forward:/index.html");
+        registration.setStatusCode(HttpStatus.OK);
 
-
-    @Bean
-    public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
-        return container -> {
-            container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,
-                    "/notFound"));
-        };
+// Alternative way (404 error hits the console):
+// > registry.addViewController("/notFound").setViewName("forward:/index.html");
     }
 
 }

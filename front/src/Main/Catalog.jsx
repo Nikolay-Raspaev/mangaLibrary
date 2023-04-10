@@ -29,7 +29,7 @@ export default function Catalog() {
         <Banner />
             <div className = "catalog_wrapper">
                 <h1>Каталог</h1>
-                    <h2>
+                    {/* <h2>
                         <select>
                         <option value="1">По рейтингу</option>
                         <option value="2">По лайкам</option>
@@ -40,7 +40,7 @@ export default function Catalog() {
                         <option value="7">Рандом</option>
                         </select>
                         <button type="button" className="btn btn-dark">&#8593;&#8595;</button>        
-                    </h2>
+                    </h2> */}
                 <div className="p-2 d-flex flex-wrap">
                 {mangs.map((manga, index) => (
                     <NavLink key={manga.id} to={`/mangapage?id=${manga.id}`}><img src={manga.image} alt={manga.mangaName} className="slideshow"/></NavLink>

@@ -23,6 +23,10 @@ export default function ReaderAction() {
     const [mangaName, setMangaName] = useState("");
 
     useEffect(() => {
+        const quryString = window.location.search;
+        const urlParams = new URLSearchParams(quryString);
+        const id = urlParams.get('id');
+        setReaderId(id);
         getReaderData()
         .then(_data =>setReaderData(_data));
         getMangaData()
