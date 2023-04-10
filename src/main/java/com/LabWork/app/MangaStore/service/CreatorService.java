@@ -22,7 +22,6 @@ public class CreatorService {
 
     public CreatorService(CreatorRepository creatorRepository,
                           MangaService mangaService,
-                          ReaderRepository readerRepository,
                           ValidatorUtil validatorUtil) {
         this.creatorRepository = creatorRepository;
         this.mangaService = mangaService;
