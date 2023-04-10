@@ -146,8 +146,9 @@ public class ReMangaTest {
         log.info(mangaService.findAllMangas().toString());
 
         Assertions.assertEquals(1, c1.getMangas().size());
-    }*/
 
+    }*/
+/*тестстим работоспособность гита*/
     @Test
     void testCreatorUpdated() {
         readerService.deleteAllReaders();
