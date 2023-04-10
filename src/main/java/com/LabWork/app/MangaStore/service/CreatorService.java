@@ -65,6 +65,7 @@ public class CreatorService {
         final Optional<Manga> manga = mangaRepository.findById(id);
         return manga.orElseThrow(() -> new MangaNotFoundException(id));
     }
+
     @Transactional
     public List<Reader> getReader(Long id) {
         final Manga currentManga = findManga(id);
@@ -90,26 +91,4 @@ public class CreatorService {
     public void deleteAllCreators() {
         creatorRepository.deleteAll();
     }
-
-/*
-      //бесполезная штука
-    @Transactional
-    public Creator addManga(Long creatorId, Manga manga) {
-        final Creator creator = findCreator(creatorId);
-        creator.getMangas().add(manga);
-        em.merge(creator);
-        return creator;
-    }*/
-
-/*    //бесполезная штука
-    @Transactional
-    public Manga deleteManga(Long creatorId, Manga manga) {
-        Creator creator = findCreator(creatorId);
-        if (creator.getMangas().contains(manga)){
-            final Manga currentManga = em.createQuery("select m from Manga m where m.id = " + manga.getId(), Manga.class).getSingleResult();
-            em.remove(currentManga);
-            return currentManga;
-        }
-        return null;
-    }*/
 }
