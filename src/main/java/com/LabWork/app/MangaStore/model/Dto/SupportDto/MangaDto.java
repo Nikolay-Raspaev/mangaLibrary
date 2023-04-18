@@ -44,4 +44,17 @@ public class MangaDto {
         return image;
     }
 
+    public void setrMangaName(String mangaName) {
+        this.mangaName = mangaName;
+    }
+
+    public void setChapterCount(Integer chapterCount) {
+        this.chapterCount = chapterCount;
+    }
+
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public void setImage(String image) {this.image = image;}
 }

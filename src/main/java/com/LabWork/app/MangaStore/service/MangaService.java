@@ -56,9 +56,9 @@ public class MangaService {
     }
 
     @Transactional
-    public Manga addManga(Long creatorId, Integer chapterCount, String mangaName) {
+    public Manga addManga(Long creatorId, Integer chapterCount, String mangaName, String Image) {
         final Creator currentCreator = findCreator(creatorId);
-        final Manga manga = new Manga(currentCreator, mangaName, chapterCount);
+        final Manga manga = new Manga(currentCreator, mangaName, chapterCount, Image);
         validatorUtil.validate(manga);
         return mangaRepository.save(manga);
     }
@@ -72,9 +72,10 @@ public class MangaService {
     }
 
     @Transactional
-    public Manga updateManga(Long id, Integer chapterCount) {
+    public Manga updateManga(Long id, Integer chapterCount, String Image) {
         final Manga currentManga = findManga(id);
         currentManga.setChapterCount(chapterCount);
+        currentManga.setImage(Image.getBytes());
         validatorUtil.validate(currentManga);
         return currentManga;
     }

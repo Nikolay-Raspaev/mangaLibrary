@@ -8,7 +8,7 @@ import EditMangaModal from "../components/Modal/EditMangaModal";
 
 export default function CreatorAction() {
 
-    const host = "http://localhost:8080";
+    const host = "http://localhost:8080/api";
 
     const [creatorData, setCreatorData] = useState([]);
 

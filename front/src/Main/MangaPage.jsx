@@ -8,7 +8,7 @@ export default function MangaPage() {
 
   const [readerData, setReaderData] = useState([]);
 
-  const host = "http://localhost:8080";
+  const host = "http://localhost:8080/api";
 
   useEffect(() => {
     const quryString = window.location.search;

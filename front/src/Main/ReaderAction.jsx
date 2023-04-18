@@ -6,7 +6,7 @@ import AddMangaReaderModal from "../components/Modal/AddMangaReaderModal";
 
 export default function ReaderAction() {
 
-    const host = "http://localhost:8080";
+    const host = "http://localhost:8080/api";
 
     const [mangaData, setMangaData] = useState([]);
 

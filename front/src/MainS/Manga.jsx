@@ -3,7 +3,7 @@ import TableManga from '../components/Table/TableManga';
 
 export default function Manga() {
 
-    const host = "http://localhost:8080";
+    const host = "http://localhost:8080/api";
 
     const [creatorId, setCreatorId] = useState(0);
 

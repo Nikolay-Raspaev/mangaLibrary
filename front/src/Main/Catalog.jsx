@@ -6,7 +6,7 @@ import MangaDto from "../Dto/Manga-Dto";
 
 export default function Catalog() {
 
-    const host = "http://localhost:8080";
+    const host = "http://localhost:8080/api";
 
     const [mangs, setMangs] = useState([]);
 

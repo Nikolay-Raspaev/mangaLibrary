@@ -24,4 +24,12 @@ public class ReaderDto {
     public String getReaderName() { return readerName; }
 
     public String getHashedPassword() { return hashedPassword; }
+
+    public void setrRaderName(String readerName) {
+        this.readerName = readerName;
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
 }

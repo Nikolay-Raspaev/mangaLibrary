@@ -32,12 +32,11 @@ public class Manga {
     public Manga() {
     }
 
-    public Manga(Creator creator, String mangaName, Integer chapterCount) {
+    public Manga(Creator creator, String mangaName, Integer chapterCount, String image) {
         this.creator = creator;
-        this.creatorId = creatorId;
         this.mangaName = mangaName;
         this.chapterCount = chapterCount;
-        this.image = image;
+        this.image = image.getBytes();
     }
 
     public Manga(Creator creator, MangaDto mangaDto) {

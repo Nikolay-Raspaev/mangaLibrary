@@ -21,12 +21,12 @@ public class CreatorController {
         return new CreatorMangaDto(creatorService.findCreator(id));
     }
 
-/*    @GetMapping
+    @GetMapping
     public List<CreatorMangaDto> getCreators() {
         return creatorService.findAllCreators().stream()
                 .map(CreatorMangaDto::new)
                 .toList();
-    }*/
+    }
 
     @PostMapping
     public CreatorMangaDto createCreator(@RequestParam("creatorName") String creatorName,

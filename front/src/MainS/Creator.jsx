@@ -4,7 +4,7 @@ import MangaDto from '../Dto/Manga-Dto';
 
 export default function Creator() {
 
-    const host = "http://localhost:8080";
+    const host = "http://localhost:8080/api";
 
     const [creatorId, setCreatorId] = useState(0);
 

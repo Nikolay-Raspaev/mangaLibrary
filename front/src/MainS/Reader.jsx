@@ -5,7 +5,7 @@ import EditReaderForm from "../components/Form/EditReaderForm";
 
 export default function ReaderS() {
 
-    const host = "http://localhost:8080";
+    const host = "http://localhost:8080/api";
 
     const [readerId, setReaderId] = useState(0);
 
