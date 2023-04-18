@@ -6,10 +6,13 @@ import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import java.util.List;
 
 public class CreatorMangaDto {
-    private final long id;
-    private final String creatorName;
-    private final String hashedPassword;
-    private final List<MangaDto> mangas;
+    private long id;
+    private String creatorName;
+    private String hashedPassword;
+    private List<MangaDto> mangas;
+
+    public CreatorMangaDto() {
+    }
 
     public CreatorMangaDto(Creator creator) {
         this.id = creator.getId();
@@ -33,4 +36,16 @@ public class CreatorMangaDto {
     }
 
     public List<MangaDto> getMangas() { return mangas; }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
+    public void setMangas(List<MangaDto> mangas) {
+        this.mangas = mangas;
+    }
 }

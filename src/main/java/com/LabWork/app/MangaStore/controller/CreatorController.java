@@ -2,12 +2,13 @@ package com.LabWork.app.MangaStore.controller;
 
 import com.LabWork.app.MangaStore.model.Dto.CreatorMangaDto;
 import com.LabWork.app.MangaStore.service.CreatorService;
+import com.LabWork.app.WebConfiguration;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/creator")
+@RequestMapping(WebConfiguration.REST_API + "/creator")
 public class CreatorController {
     private final CreatorService creatorService;
 
@@ -20,12 +21,12 @@ public class CreatorController {
         return new CreatorMangaDto(creatorService.findCreator(id));
     }
 
-    @GetMapping
+/*    @GetMapping
     public List<CreatorMangaDto> getCreators() {
         return creatorService.findAllCreators().stream()
                 .map(CreatorMangaDto::new)
                 .toList();
-    }
+    }*/
 
     @PostMapping
     public CreatorMangaDto createCreator(@RequestParam("creatorName") String creatorName,

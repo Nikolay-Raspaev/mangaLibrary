@@ -3,19 +3,23 @@ package com.LabWork.app.MangaStore.model.Dto;
 import com.LabWork.app.MangaStore.model.Default.Creator;
 import com.LabWork.app.MangaStore.model.Default.Manga;
 import com.LabWork.app.MangaStore.model.Default.Reader;
+import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import com.LabWork.app.MangaStore.model.Dto.SupportDto.ReaderDto;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class MangaReaderDto {
-    private final Long id;
+    private Long id;
 
-    private final Long creatorId;
-    private final String mangaName;
-    private final Integer chapterCount;
-    private final List<ReaderDto> readers;
+    private Long creatorId;
+    private String mangaName;
+    private Integer chapterCount;
+    private List<ReaderDto> readers;
     private String image;
+
+    public MangaReaderDto() {
+    }
 
     public MangaReaderDto(Manga manga, List<Reader> listReader) {
         this.id = manga.getId();
@@ -52,4 +56,21 @@ public class MangaReaderDto {
         return creatorId;
     }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setMangaName(String mangaName) {
+        this.mangaName = mangaName;
+    }
+
+    public void setReaders(List<ReaderDto> readers) {
+        this.readers = readers;
+    }
+
+    public void setChapterCount(Integer chapterCount) {
+        this.chapterCount = chapterCount;
+    }
+
+    public void setCreatorIdString(Long creatorId) {this.creatorId = creatorId;}
 }

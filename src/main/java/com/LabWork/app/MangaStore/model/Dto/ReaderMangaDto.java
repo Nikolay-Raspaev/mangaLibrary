@@ -14,6 +14,9 @@ public class ReaderMangaDto {
 
     private List<MangaDto> mangas;
 
+    public ReaderMangaDto() {
+    }
+
     public ReaderMangaDto(Reader reader) {
         this.id = reader.getId();
         this.readerName = reader.getReaderName();
@@ -32,5 +35,17 @@ public class ReaderMangaDto {
     public String getHashedPassword() { return hashedPassword; }
 
     public List<MangaDto> getMangas() { return mangas; }
+
+    public void setReaderName(String readerName) {
+        this.readerName = readerName;
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
+    public void setMangas(List<MangaDto> mangas) {
+        this.mangas = mangas;
+    }
 
 }

@@ -4,12 +4,13 @@ package com.LabWork.app.MangaStore.controller;
 import com.LabWork.app.MangaStore.model.Dto.ReaderMangaDto;
 import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import com.LabWork.app.MangaStore.service.ReaderService;
+import com.LabWork.app.WebConfiguration;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/reader")
+@RequestMapping(WebConfiguration.REST_API + "/reader")
 public class ReaderController {
     private final ReaderService readerService;
 
