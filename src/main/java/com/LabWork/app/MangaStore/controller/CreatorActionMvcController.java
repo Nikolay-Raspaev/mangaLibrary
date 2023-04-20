@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Base64;
 
 @Controller
 @RequestMapping("/creatorAction")
@@ -68,7 +69,7 @@ public class CreatorActionMvcController {
             return "creatorAction-edit";
         }*/
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        MangaDto.setImage(new String(multipartFile.getBytes()));
+        MangaDto.setImage(Base64.getEncoder().encodeToString(multipartFile.getBytes()));
         log.info(MangaDto.getMangaName());
         MangaDto.setCreatorId(creatorId);
         if (mangaId == null || mangaId <= 0) {

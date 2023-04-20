@@ -22,7 +22,7 @@
             <div class="row table-responsive text-white">
                 <div th:each="manga, iterator: ${creator?.mangas}" class="d-flex flex-row flex-wrap  flex-grow-1 align-items-center mt-3">
                     <div class="me-3">
-                        <a th:href="@{/mangapage/{id}(id=${manga.id})}"><img th:src="${manga.image}" th:alt="${manga.mangaName}" class="slideshow"/></a>
+                        <a th:href="@{/mangapage/{id}(id=${manga.id})}"><img th:src="@{'data:image/jpeg;base64,' + ${manga.image}}" th:alt="${manga.mangaName}" class="slideshow"/></a>
                     </div>
                     <div>
                         <div class="pt-3 description d-flex flex-column justify-content-start mb-3 fs-6 fw-bold">

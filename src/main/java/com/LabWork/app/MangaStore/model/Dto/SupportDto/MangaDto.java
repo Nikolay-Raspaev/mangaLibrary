@@ -44,7 +44,7 @@ public class MangaDto {
         return image;
     }
 
-    public void setrMangaName(String mangaName) {
+    public void setMangaName(String mangaName) {
         this.mangaName = mangaName;
     }
 
