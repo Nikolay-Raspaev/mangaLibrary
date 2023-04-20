@@ -9,18 +9,32 @@
     <div class="container" id="root-div" layout:fragment="content">
         <div class="content">
             <h1>Creator</h1>
-            <form id="form">
+            <form id="form mb-3">
                 <div class="d-flex mt-3">
                     <div class="d-grid col-sm-2">
                         <a class="btn btn-success"
-                           th:href="@{/creatorAction/create/1}">
+                           th:href="@{/creatorAction/create}">
                             <i class="fa-solid fa-plus"></i> Добавить
                         </a>
                     </div>
                 </div>
             </form>
+            <div th:text="${errors}" class="margin-bottom alert-danger"></div>
+            <form action="#" th:action="@{/creatorAction}" method="get">
+                <div class="col-sm-2 mb-3">
+                    <label for="creatorId" class="form-label">Создатель</label>
+                    <select th:name="creatorId" id="creatorId" class="form-select">
+                        <option th:each="creator: ${creators}" th:value="${creator.id}" th:text="${creator.creatorName}"/>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary button-fixed">
+                        <i class="fa-solid fa-plus">Обновить</i>
+                    </button>
+                </div>
+            </form>
             <div class="row table-responsive text-white">
-                <div th:each="manga, iterator: ${creator?.mangas}" class="d-flex flex-row flex-wrap  flex-grow-1 align-items-center mt-3">
+                <div th:each="manga, iterator: ${currentCreator?.mangas}" class="d-flex flex-row flex-wrap  flex-grow-1 align-items-center mt-3">
                     <div class="me-3">
                         <a th:href="@{/manga/{id}(id=${manga.id})}"><img th:src="@{'data:image/jpeg;base64,' + ${manga.image}}" th:alt="${manga.mangaName}" class="slideshow"/></a>
                     </div>

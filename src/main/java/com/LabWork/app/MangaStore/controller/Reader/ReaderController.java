@@ -1,4 +1,4 @@
-package com.LabWork.app.MangaStore.controller;
+package com.LabWork.app.MangaStore.controller.Reader;
 
 
 import com.LabWork.app.MangaStore.model.Dto.ReaderMangaDto;

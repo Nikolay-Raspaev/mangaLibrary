@@ -12,7 +12,7 @@
             <div class="d-flex mt-3">
                 <div class="d-grid col-sm-2">
                     <div th:text="${errors}" class="margin-bottom alert-danger"></div>
-                    <form action="#" th:action="@{/readerAction/1/manga}" enctype="multipart/form-data" method="post">
+                    <form action="#" th:action="@{/readerAction/manga/{id}(id=${readerId})}" method="post">
                         <div class="mb-3">
                             <label for="mangaId" class="form-label">Манга</label>
                             <select th:name="mangaId" id="mangaId" class="form-select">
@@ -27,6 +27,25 @@
                     </form>
                 </div>
             </div>
+
+
+
+            <div th:text="${errors}" class="margin-bottom alert-danger"></div>
+            <form action="#" th:action="@{/readerAction}" method="get">
+                <div class="col-sm-2 mb-3">
+                    <label for="readerId" class="form-label">Reader</label>
+                    <select th:name="readerId" id="readerId" class="form-select">
+                        <option th:each="reader: ${readers}" th:value="${reader.id}" th:text="${reader.readerName}"/>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary button-fixed">
+                        <i class="fa-solid fa-plus">Обновить</i>
+                    </button>
+                </div>
+            </form>
+
+
             <div class="row table-responsive text-white">
                 <div th:each="manga: ${reader?.mangas}" class="d-flex flex-row flex-wrap  flex-grow-1 align-items-center mt-3">
                     <div class="me-3">
@@ -46,7 +65,9 @@
                                         th:attr="onclick=|confirm('Удалить запись?') && document.getElementById('remove-${manga.id}').click()|">
                                     <i class="fa fa-trash" aria-hidden="true"></i> Удалить
                                 </button>
-                            <form th:action="@{/readerAction/1/removeManga/{id}(id=${manga.id})}" method="post">
+                           <!-- "${'/blah1/' + {object1.id} + '/blah2/' + {object2.id}}"
+                            th:action="@{/readerAction/{readerId}/removeManga/{id}(id=${manga.id} readerId=${readerId})}"-->
+                            <form th:action="@{'/readerAction/' + ${readerId} + '/removeManga/' + ${manga.id}}" method="post">
                                 <button th:id="'remove-' + ${manga.id}" type="submit" style="display: none">
                                     Удалить
                                 </button>

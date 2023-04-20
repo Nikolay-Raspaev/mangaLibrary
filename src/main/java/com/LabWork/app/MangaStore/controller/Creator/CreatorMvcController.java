@@ -1,4 +1,4 @@
-package com.LabWork.app.MangaStore.controller;
+package com.LabWork.app.MangaStore.controller.Creator;
 
 import com.LabWork.app.MangaStore.model.Dto.CreatorMangaDto;
 import com.LabWork.app.MangaStore.service.CreatorService;
