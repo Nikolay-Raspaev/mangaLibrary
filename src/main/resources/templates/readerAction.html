@@ -27,9 +27,6 @@
                     </form>
                 </div>
             </div>
-
-
-
             <div th:text="${errors}" class="margin-bottom alert-danger"></div>
             <form action="#" th:action="@{/readerAction}" method="get">
                 <div class="col-sm-2 mb-3">
@@ -44,8 +41,6 @@
                     </button>
                 </div>
             </form>
-
-
             <div class="row table-responsive text-white">
                 <div th:each="manga: ${reader?.mangas}" class="d-flex flex-row flex-wrap  flex-grow-1 align-items-center mt-3">
                     <div class="me-3">
@@ -65,8 +60,6 @@
                                         th:attr="onclick=|confirm('Удалить запись?') && document.getElementById('remove-${manga.id}').click()|">
                                     <i class="fa fa-trash" aria-hidden="true"></i> Удалить
                                 </button>
-                           <!-- "${'/blah1/' + {object1.id} + '/blah2/' + {object2.id}}"
-                            th:action="@{/readerAction/{readerId}/removeManga/{id}(id=${manga.id} readerId=${readerId})}"-->
                             <form th:action="@{'/readerAction/' + ${readerId} + '/removeManga/' + ${manga.id}}" method="post">
                                 <button th:id="'remove-' + ${manga.id}" type="submit" style="display: none">
                                     Удалить
@@ -79,28 +72,4 @@
         </div>
     </div>
 </body>
-<!--<th:block layout:fragment="scripts">
-    <script>
-        let buttonAdd = document.getElementById("buttonAdd");
-        let selectReaderId = document.getElementById("readerId");
-        const host = "http://localhost:8080";
-
-        buttonAdd.addEventListener('click', function (event){
-            event.preventDefault();
-            create(selectReaderId.value);
-        });
-        const create = async function (readerId) {
-            const requestParams = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            };
-            console.log(readerId);
-
-            const response = await fetch(host + `/readerAction?readerId=${readerId}`, requestParams);
-            return await response.json();
-        }
-    </script>
-</th:block>-->
 </html>

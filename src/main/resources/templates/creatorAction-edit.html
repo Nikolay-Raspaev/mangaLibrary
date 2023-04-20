@@ -21,10 +21,6 @@
             <label for="multipartFile" class="form-label">image</label>
             <input type="file" id="multipartFile" th:name="multipartFile" accept="image/png, image/jpeg" class="form-control" required="true"/>
         </div>
-<!--        <div class="mb-3">
-            <label for="image" class="form-label">image</label>
-            <input type="file" id="image" accept="image/png, image/jpeg" class="form-control" th:field="${mangaDto.image}" required="true"/>
-        </div>-->
         <div class="mb-3">
             <button type="submit" class="btn btn-primary button-fixed">
                 <span th:if="${controller == 'creator/'}">Добавить</span>

@@ -35,6 +35,4 @@ public class MangaMvcController {
                 .toList());
         return "mangaPage";
     }
-
-
 }

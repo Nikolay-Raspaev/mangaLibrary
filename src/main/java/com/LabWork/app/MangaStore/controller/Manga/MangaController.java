@@ -38,19 +38,6 @@ public class MangaController {
                 .map(x -> new ReaderMangaDto(x))
                 .toList();
     }
-/*
-    @PostMapping
-    public MangaReaderDto createManga(@RequestParam("creatorId") Long creatorId,
-                                      @RequestParam("chapterCount") Integer chapterCount,
-                                      @RequestParam("mangaName") String mangaName) {
-        return new MangaReaderDto(mangaService.addManga(creatorId, chapterCount, mangaName), mangaService.getReader(creatorId));
-    }*/
-
-/*    @PutMapping("/{id}")
-    public MangaReaderDto updateManga(@PathVariable Long id,
-                                      @RequestParam("chapterCount") Integer chapterCount) {
-        return new MangaReaderDto(mangaService.updateManga(id, chapterCount), mangaService.getReader(id));
-    }*/
 
     @DeleteMapping("/{id}")
     public MangaDto deleteManga(@PathVariable Long id) {
