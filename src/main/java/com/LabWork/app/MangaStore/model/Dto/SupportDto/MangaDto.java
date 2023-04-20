@@ -14,15 +14,15 @@ public class MangaDto {
     private Integer chapterCount;
     private String image;
 
+    public MangaDto() {
+    }
+
     public MangaDto(Manga manga) {
         this.id = manga.getId();
         this.creatorId = manga.getCreator().getId();
         this.mangaName = manga.getMangaName();
         this.chapterCount = manga.getChapterCount();
         this.image = new String(manga.getImage(), StandardCharsets.UTF_8);
-    }
-
-    public MangaDto() {
     }
     public Long getId() {
         return id;

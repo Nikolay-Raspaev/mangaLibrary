@@ -11,6 +11,9 @@ public class ReaderDto {
 
     private String hashedPassword;
 
+    public ReaderDto() {
+    }
+
     public ReaderDto(Reader reader) {
         this.id = reader.getId();
         this.readerName = reader.getReaderName();

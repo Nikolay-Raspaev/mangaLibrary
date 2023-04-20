@@ -49,13 +49,12 @@ public class ReaderActionMvcController {
                             @RequestParam("mangaId") Long mangaId,
                             @ModelAttribute @Valid MangaDto MangaDto,
                             BindingResult bindingResult,
-                            Model model) throws IOException {
-/*        if (bindingResult.hasErrors()) {
+                            Model model){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
-            return "readerAction-edit";
-        }*/
+            return "readerAction";
+        }
         readerService.addManga(mangaId, readerId);
-        System.out.println(mangaId + " " + readerId);
         return "redirect:/readerAction/?readerId=" + readerId;
     }
 

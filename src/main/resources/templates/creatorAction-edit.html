@@ -7,30 +7,28 @@
 <body>
 <div layout:fragment="content">
     <div th:text="${errors}" class="margin-bottom alert-danger"></div>
-    <form action="#" th:action="@{/creatorAction/manga/{id}(id=${mangaId})}" th:object="${MangaDto}" enctype="multipart/form-data" method="post">
-        <div class="mb-3" th:if="${mangaId == null}">
-            <label for="creatorId" class="form-label">Создатель</label>
-            <select th:name="creatorId" id="creatorId" class="form-select">
-                <option th:each="creator: ${creators}" th:value="${creator.id}" th:text="${creator.creatorName}"/>
-            </select>
-        </div>
-        <div class="mb-3" th:if="${mangaId == null}">
-            <label for="chapterCount" class="form-label">mangaName</label>
-            <input id="mangaName" type='text' value class="form-control" th:field="${MangaDto.mangaName}" required="true"/>
+    <form action="#" th:action="@{'/creatorAction/' + ${controller} + ${id}}" th:object="${mangaDto}" enctype="multipart/form-data" method="post">
+        <div class="mb-3" th:if="${controller == 'creator/'}">
+            <label for="mangaName" class="form-label">mangaName</label>
+            <input id="mangaName" type='text' class="form-control" th:field="${mangaDto.mangaName}" required="true"/>
         </div>
         <div class="mb-3">
             <label for="chapterCount" class="form-label">chapterCount</label>
-            <input id="chapterCount" type='number' value class="form-control" th:field="${MangaDto.chapterCount}" required="true"/>
+            <input id="chapterCount" type='number' class="form-control" th:field="${mangaDto.chapterCount}" required="true"/>
         </div>
+
         <div class="mb-3">
-            <label for="image" class="form-label">image</label>
-            <input type="file" id="image" name="image" accept="image/png, image/jpeg" class="form-control" th:value="@{'data:image/jpeg;base64,' + ${MangaDto.image}}"/>
-            <!--<input id="image" type="file" name="image" class="form-control text-white" accept="image/png, image/jpeg" th:field="${MangaDto.image}" required="true"/>-->
+            <label for="multipartFile" class="form-label">image</label>
+            <input type="file" id="multipartFile" th:name="multipartFile" accept="image/png, image/jpeg" class="form-control" required="true"/>
         </div>
+<!--        <div class="mb-3">
+            <label for="image" class="form-label">image</label>
+            <input type="file" id="image" accept="image/png, image/jpeg" class="form-control" th:field="${mangaDto.image}" required="true"/>
+        </div>-->
         <div class="mb-3">
             <button type="submit" class="btn btn-primary button-fixed">
-                <span th:if="${mangaId == null}">Добавить</span>
-                <span th:if="${mangaId != null}">Обновить</span>
+                <span th:if="${controller == 'creator/'}">Добавить</span>
+                <span th:if="${controller != 'creator/'}">Обновить</span>
             </button>
             <a class="btn btn-secondary button-fixed" th:href="@{/creator}">
                 Назад

@@ -37,56 +37,56 @@ public class CreatorActionMvcController {
         if(creatorId != null){
             model.addAttribute("currentCreator", new CreatorMangaDto(creatorService.findCreator(creatorId)));
         }
-        model.addAttribute("creatorId", 0);
+        model.addAttribute("creatorId", creatorId);
         return "creatorAction";
     }
 
     @GetMapping("/edit/{id}")
-    public String editManga(@PathVariable(required = false) Long id, Model model) {
-        model.addAttribute("mangaId", id);
-        model.addAttribute("MangaDto", new MangaDto(mangaService.findManga(id)));
-        model.addAttribute("creators",
-                creatorService.findAllCreators().stream()
-                        .map(CreatorMangaDto::new)
-                        .toList());
+    public String editManga(@PathVariable Long id, Model model) {
+        model.addAttribute("Id", id);
+        model.addAttribute("mangaDto", new MangaDto(mangaService.findManga(id)));
+        model.addAttribute("controller", "manga/");
         return "creatorAction-edit";
     }
 
-    @GetMapping("/create")
-    public String createManga(@RequestParam(value = "creatorId", required = false) Long creatorId, Model model) {
-        model.addAttribute("creatorId", 0);
-        model.addAttribute("MangaDto", new MangaDto());
-        model.addAttribute("creators",
-                creatorService.findAllCreators().stream()
-                        .map(CreatorMangaDto::new)
-                        .toList());
+    @GetMapping("/create/{id}")
+    public String createManga(@PathVariable Long id, Model model) {
+        model.addAttribute("Id", id);
+        model.addAttribute("mangaDto", new MangaDto());
+        model.addAttribute("controller", "creator/");
         return "creatorAction-edit";
     }
 
-    @PostMapping(value = {"/manga/", "/manga/{mangaId}"})
-    public String saveManga(@PathVariable(value = "mangaId", required = false) Long mangaId, @RequestParam("image") MultipartFile multipartFile,
-                              @RequestParam(value = "creatorId", required = false) Long creatorId,
-                              @ModelAttribute @Valid MangaDto MangaDto,
-                              BindingResult bindingResult,
-                              Model model) throws IOException {
-/*        if (bindingResult.hasErrors()) {
+    @PostMapping( "/creator/{creatorId}")
+    public String saveManga(@PathVariable(value = "creatorId", required = false) Long creatorId,
+                            @RequestParam("multipartFile") MultipartFile multipartFile,
+                            @ModelAttribute @Valid MangaDto mangaDto,
+                            BindingResult bindingResult,
+                            Model model) throws IOException {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "creatorAction-edit";
-        }*/
-        MangaDto.setImage("data:image/jpeg;base64," + Base64.getEncoder().encodeToString(multipartFile.getBytes()));
-        log.info(MangaDto.getMangaName());
-        MangaDto.setCreatorId(creatorId);
-        if (mangaId == null || mangaId <= 0) {
-            mangaService.addManga(MangaDto);
-        } else {
-            mangaService.updateManga(mangaId, MangaDto.getChapterCount(), MangaDto.getImage());
         }
-        if (creatorId != null){
-            return "redirect:/creatorAction?creatorId=" + creatorId;
-        } else {
-            return "redirect:/creatorAction?creatorId=" + mangaService.findManga(mangaId).getCreatorId();
-        }
+        mangaDto.setImage("data:image/jpeg;base64," + Base64.getEncoder().encodeToString(multipartFile.getBytes()));
+        log.info(mangaDto.getMangaName());
+        mangaDto.setCreatorId(creatorId);
+        mangaService.addManga(mangaDto);
+        return "redirect:/creatorAction?creatorId=" + creatorId;
 
+    }
+
+    @PostMapping( "/manga/{mangaId}")
+    public String updateManga(@PathVariable(value = "mangaId", required = false) Long mangaId, @RequestParam("multipartFile") MultipartFile multipartFile,
+                            @ModelAttribute @Valid MangaDto mangaDto,
+                            BindingResult bindingResult,
+                            Model model) throws IOException {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "creatorAction-edit";
+        }
+        mangaDto.setImage("data:image/jpeg;base64," + Base64.getEncoder().encodeToString(multipartFile.getBytes()));
+        mangaService.updateManga(mangaId, mangaDto.getChapterCount(), mangaDto.getImage());
+        return "redirect:/creatorAction?creatorId=" + mangaService.findManga(mangaId).getCreatorId();
     }
 
     @PostMapping("/delete/{id}")
