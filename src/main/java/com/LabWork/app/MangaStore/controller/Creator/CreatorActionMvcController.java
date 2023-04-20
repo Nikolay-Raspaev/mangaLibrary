@@ -68,7 +68,6 @@ public class CreatorActionMvcController {
             return "creatorAction-edit";
         }
         mangaDto.setImage("data:image/jpeg;base64," + Base64.getEncoder().encodeToString(multipartFile.getBytes()));
-        log.info(mangaDto.getMangaName());
         mangaDto.setCreatorId(creatorId);
         mangaService.addManga(mangaDto);
         return "redirect:/creatorAction?creatorId=" + creatorId;
