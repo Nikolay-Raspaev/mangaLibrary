@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}">
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container d-flex" >
+        <div class="d-flex flex-column">
+            <img class="img_style01" style={{borderRadius:"3%"}} th:src="@{'data:image/jpeg;base64,' + ${manga.image}}" th:alt="${manga.mangaName}"/>
+        </div>
+        <div class="container table text-white fs-4 ms-4">
+            <div class="row text-white fw-bold fs-3">О манге</div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-3">Год производства</div>
+                <div class="col-xs-6 col-sm-3">1000</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-3">Страна</div>
+                <div class="col-xs-6 col-sm-3">Россия</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-3">Жанр</div>
+                <div class="col-xs-6 col-sm-3">Драма</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-3">Количество глав</div>
+                <div class="col-xs-6 col-sm-3" th:text="${manga.chapterCount}"></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-3">Возраст</div>
+                <div class="col-xs-6 col-sm-3">16+</div>
+            </div>
+            <div class="row text-white fw-bold fs-3">Описание</div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-12">
+                    <p>Ким Кон Чжа спокойно живет в своей халупе, завидуя всем популярным охотникам. Однажды его желание быть лучше всех сбывается и он получает легендарный навык “Копирование способностей”... ценой своей жизни.</p>
+                    <p>Прежде чем он успевает понять это, его убивает охотник №1, Летний дух! Но это активирует его навык, и теперь он скопировал новый, “Путешествие во времени после смерти”.</p>
+                    <p>Как Ким Кон Чжа же будет использовать эти навыки, чтобы победить конкурентов и подняться на вершину?</p>
+                </div>
+            </div>
+            <div class="row table-responsive text-white">
+                <div th:each="reader: ${readers}" class="d-flex flex-row flex-wrap  flex-grow-1 align-items-center mt-3">
+                    <div>
+                        <div class="pt-3 description mb-3 fs-6 fw-bold">
+                            Имя пользователя:
+                            <a th:href="@{/readerAction/{id}(id=${reader.id})}" th:text="${reader.readerName}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

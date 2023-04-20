@@ -8,19 +8,27 @@
 <body>
     <div class="container" id="root-div" layout:fragment="content">
         <div class="content">
-            <h1>Creator</h1>
-            <form id="form">
-                <div class="d-flex mt-3">
-                    <div class="d-grid col-sm-2">
-                        <a class="btn btn-success"
-                           th:href="@{/creatorAction/create/1}">
-                            <i class="fa-solid fa-plus"></i> Добавить
-                        </a>
-                    </div>
+            <h1>Reader</h1>
+            <div class="d-flex mt-3">
+                <div class="d-grid col-sm-2">
+                    <div th:text="${errors}" class="margin-bottom alert-danger"></div>
+                    <form action="#" th:action="@{/readerAction/1/manga}" enctype="multipart/form-data" method="post">
+                        <div class="mb-3">
+                            <label for="mangaId" class="form-label">Манга</label>
+                            <select th:name="mangaId" id="mangaId" class="form-select">
+                                <option th:each="manga: ${mangaList}" th:value="${manga.id}" th:text="${manga.mangaName}"/>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary button-fixed">
+                                <i class="fa-solid fa-plus">Добавить</i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
             <div class="row table-responsive text-white">
-                <div th:each="manga, iterator: ${creator?.mangas}" class="d-flex flex-row flex-wrap  flex-grow-1 align-items-center mt-3">
+                <div th:each="manga: ${reader?.mangas}" class="d-flex flex-row flex-wrap  flex-grow-1 align-items-center mt-3">
                     <div class="me-3">
                         <a th:href="@{/manga/{id}(id=${manga.id})}"><img th:src="@{'data:image/jpeg;base64,' + ${manga.image}}" th:alt="${manga.mangaName}" class="slideshow"/></a>
                     </div>
@@ -33,20 +41,16 @@
                             </h4>
                         </div>
                         <div>
-                            <a class="btn btn-primary" th:href="@{/creatorAction/edit/{id}(id=${manga.id})}">
-                                <i class="fas fa-edit"></i>
-                            </a>
                             </button>
                                 <button type="button" class="delete bg-danger p-2 px-2 mx-2 border border-0 rounded text-white fw-bold"
                                         th:attr="onclick=|confirm('Удалить запись?') && document.getElementById('remove-${manga.id}').click()|">
                                     <i class="fa fa-trash" aria-hidden="true"></i> Удалить
                                 </button>
-                            <form th:action="@{/creatorAction/delete/{id}(id=${manga.id})}" method="post">
+                            <form th:action="@{/readerAction/1/removeManga/{id}(id=${manga.id})}" method="post">
                                 <button th:id="'remove-' + ${manga.id}" type="submit" style="display: none">
                                     Удалить
                                 </button>
                             </form>
-
                         </div>
                     </div>
                 </div>
@@ -57,23 +61,23 @@
 <!--<th:block layout:fragment="scripts">
     <script>
         let buttonAdd = document.getElementById("buttonAdd");
-        let selectCreatorId = document.getElementById("creatorId");
+        let selectReaderId = document.getElementById("readerId");
         const host = "http://localhost:8080";
 
         buttonAdd.addEventListener('click', function (event){
             event.preventDefault();
-            create(selectCreatorId.value);
+            create(selectReaderId.value);
         });
-        const create = async function (creatorId) {
+        const create = async function (readerId) {
             const requestParams = {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 }
             };
-            console.log(creatorId);
+            console.log(readerId);
 
-            const response = await fetch(host + `/creatorAction?creatorId=${creatorId}`, requestParams);
+            const response = await fetch(host + `/readerAction?readerId=${readerId}`, requestParams);
             return await response.json();
         }
     </script>

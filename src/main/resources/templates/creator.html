@@ -24,7 +24,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="creator, iterator: ${creators}">
+                        <tr th:each="creator: ${creators}">
                             <td th:text="${creator.id}"/>
                             <td th:text="${creator.creatorName}"/>
                             <td th:text="${creator.hashedPassword}"/>

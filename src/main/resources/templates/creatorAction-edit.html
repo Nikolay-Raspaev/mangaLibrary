@@ -18,7 +18,7 @@
         </div>
         <div class="mb-3">
             <label for="image" class="form-label">image</label>
-            <input type="file" id="image" name="image" accept="image/png, image/jpeg" />
+            <input type="file" id="image" name="image" accept="image/png, image/jpeg" class="form-control" th:value="@{'data:image/jpeg;base64,' + ${MangaDto.image}}"/>
             <!--<input id="image" type="file" name="image" class="form-control text-white" accept="image/png, image/jpeg" th:field="${MangaDto.image}" required="true"/>-->
         </div>
         <div class="mb-3">

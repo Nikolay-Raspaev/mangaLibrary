@@ -105,3 +105,7 @@ th {
     max-width:180px;
     border-radius: 7%;
 }
+
+.table > :not(:first-child) {
+    border-top: 0;
+}

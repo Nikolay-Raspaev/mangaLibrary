@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}">
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+    <article class="p-2 catalog_article">
+        <div class = "catalog_wrapper">
+            <h1>Каталог</h1>
+            <div class="p-2 d-flex flex-wrap">
+                <a th:each="manga: ${mangaList}" th:href="@{/manga/{id}(id=${manga.id})}"><img th:src="@{'data:image/jpeg;base64,' + ${manga.image}}" class="slideshow"/></a>
+            </div>
+        </div>
+    </article>
+</div>
+</body>
+</html>

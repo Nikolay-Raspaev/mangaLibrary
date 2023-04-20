@@ -68,7 +68,6 @@ public class CreatorActionMvcController {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "creatorAction-edit";
         }*/
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         MangaDto.setImage(Base64.getEncoder().encodeToString(multipartFile.getBytes()));
         log.info(MangaDto.getMangaName());
         MangaDto.setCreatorId(creatorId);

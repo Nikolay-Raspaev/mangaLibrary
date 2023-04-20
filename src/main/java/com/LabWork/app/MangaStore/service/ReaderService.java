@@ -54,10 +54,6 @@ public class ReaderService {
         return currentReader;
     }
 
-    public void addManga(Long readerId, List<Manga> mangas) {
-        readerRepository.findById(readerId).get().setMangas(mangas);
-    }
-
     @Transactional
     public Reader deleteReader(Long id) {
         final Reader currentReader = findReader(id);
