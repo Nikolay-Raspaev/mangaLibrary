@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import TableReader from '../components/Table/TableReader';
-import MyModal from "../components/Modal/MyModal";
-import EditReaderForm from "../components/Form/EditReaderForm";
 
 export default function ReaderS() {
 
@@ -14,8 +12,6 @@ export default function ReaderS() {
     const [readerName, setReaderName] = useState("");
 
     const [password, setPassword] = useState("");
-
-    const [modal, setModal] = useState(false);
 
     const [data, setData] = useState([]);
 
@@ -158,7 +154,7 @@ export default function ReaderS() {
         <main>
         <div className="container" id="root-div">
             <div className="content">
-                <h1>Reader</h1>
+                <h1>Readers</h1>
                 <form id="form">
                     <div className="d-flex justify-content-evenly mt-3">
                         <div className="col-sm-2">

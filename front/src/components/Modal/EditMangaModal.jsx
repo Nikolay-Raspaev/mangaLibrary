@@ -13,7 +13,7 @@ export default function EditMangaModal(props) {
                         <h5 className="modal-title" id="exampleModalLabel">Изменение манги</h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div className="modal-body">
                         <div>
                             <label htmlFor="chapterCount" className="form-label">chapterCount</label>
                             <input type='number' value={props.chapterCount} onChange={event => props.setChapterCount(event.target.value)} className="form-control"/>

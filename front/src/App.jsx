@@ -2,7 +2,6 @@ import { useRoutes, Outlet, BrowserRouter } from 'react-router-dom';
 import Creator from './MainS/Creator';
 import Reader from './MainS/Reader';
 import Header from './components/Header';
-import Manga from './MainS/Manga';
 import CreatorAction from './Main/CreatorAction';
 import ReaderAction from './Main/ReaderAction';
 import MangaPage from './Main/MangaPage';
@@ -14,10 +13,9 @@ function Router(props) {
 
 export default function App() {
   const routes = [
-    { index: true, element: <Creator /> },
+    { index: true, element: <Reader /> },
     { path: 'creator', element: <Creator />, label: 'Creator' },
     { path: 'reader', element: <Reader />, label: 'Reader' },
-    { path: 'manga', element: <Manga />, label: 'Manga' },
     { path: 'creatorAction', element: <CreatorAction />, label: 'CreatorAction' },
     { path: 'readerAction', element: <ReaderAction />, label: 'ReaderAction' },
     { path: 'catalog', element: <Catalog />, label: 'Catalog' },

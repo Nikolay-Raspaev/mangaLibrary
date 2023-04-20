@@ -160,7 +160,7 @@ export default function CreatorAction() {
                             <select className="form-select" value={creatorId} onChange={event => setCreatorId(event.target.value)} aria-label="Default select example">
                                 <option value={0}>Creator</option>
                                     {
-                                        creatorData.map((creatorD) =>
+                                        creatorData?.map((creatorD) =>
                                             <option key={creatorD.id} value={creatorD.id}>{creatorD.creatorName}</option>
                                         )
                                     }

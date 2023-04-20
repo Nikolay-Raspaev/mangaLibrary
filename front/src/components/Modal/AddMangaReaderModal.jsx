@@ -14,7 +14,7 @@ export default function AddMangaReaderModal(props) {
                     <h5 className="modal-title" id="exampleModalLabel2">Добавление манги к читателю</h5>
                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div className="modal-body">
                     <div>
                         <select className="form-select" value={props.mangaId} onChange={event => props.setMangaId(event.target.value)} aria-label="Default select example">
                             <option value={0}>Manga</option>

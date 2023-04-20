@@ -73,7 +73,7 @@ public class CreatorActionMvcController {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "creatorAction-edit";
         }*/
-        MangaDto.setImage(Base64.getEncoder().encodeToString(multipartFile.getBytes()));
+        MangaDto.setImage("data:image/jpeg;base64," + Base64.getEncoder().encodeToString(multipartFile.getBytes()));
         log.info(MangaDto.getMangaName());
         MangaDto.setCreatorId(creatorId);
         if (mangaId == null || mangaId <= 0) {

@@ -21,32 +21,12 @@ export default function Creator() {
 
     useEffect(() => {
         getData()
-        .then(_data =>setData(_data)) ;
-        console.log(2);
       },[]);
 
-
     const getData = async function () {
-        const response = await fetch(host + "/creator");
-        const _data = await response.json()
+        const response = await fetch(host + "/creator");    
+        setData(await response.json())
         console.log(data);
-        return _data;
-
-        //table.innerHTML = "";
-        // data.forEach(Creator => {
-        //     let temp = "<select>";
-        //     Creator.mangas.forEach(Manga => {
-        //         temp += `<option>${Manga.mangaName + " " + Manga.chapterCount}</option>>`
-        //     })
-        //     temp += "</select>"
-        //     table.innerHTML +=
-        //         `<tr>
-        //                 <th scope="row">${Creator.id}</th>
-        //                 <td>${Creator.creatorName}</td>
-        //                 <td>${Creator.hashedPassword}</td>
-        //                 <td>${temp}</td>
-        //             </tr>`;
-        //     })
         }
 
     const create = async function (){
@@ -56,6 +36,7 @@ export default function Creator() {
                 "Content-Type": "application/json",
             }
         };
+        console.log((host + `/creator?creatorName=${creatorName}&password=${password}`));
         const response = await fetch(host + `/creator?creatorName=${creatorName}&password=${password}`, requestParams);
         getData();
     }

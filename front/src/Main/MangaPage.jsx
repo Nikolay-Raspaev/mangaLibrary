@@ -108,7 +108,7 @@ export default function MangaPage() {
             readers={mangaModel.readers}
           />
         </div>
-        </div>
+      </div>
     </main>
   );
 }
