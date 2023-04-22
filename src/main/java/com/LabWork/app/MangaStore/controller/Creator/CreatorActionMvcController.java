@@ -67,7 +67,7 @@ public class CreatorActionMvcController {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "creatorAction-edit";
         }
-        mangaDto.setImage("data:image/jpeg;base64," + Base64.getEncoder().encodeToString(multipartFile.getBytes()));
+        mangaDto.setImage("data:" + multipartFile.getContentType() + ";base64," + Base64.getEncoder().encodeToString(multipartFile.getBytes()));
         mangaDto.setCreatorId(creatorId);
         mangaService.addManga(mangaDto);
         return "redirect:/creatorAction?creatorId=" + creatorId;
@@ -83,7 +83,7 @@ public class CreatorActionMvcController {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "creatorAction-edit";
         }
-        mangaDto.setImage("data:image/jpeg;base64," + Base64.getEncoder().encodeToString(multipartFile.getBytes()));
+        mangaDto.setImage("data:" + multipartFile.getContentType() + ";base64," + Base64.getEncoder().encodeToString(multipartFile.getBytes()));
         mangaService.updateManga(mangaId, mangaDto.getChapterCount(), mangaDto.getImage());
         return "redirect:/creatorAction?creatorId=" + mangaService.findManga(mangaId).getCreatorId();
     }
