@@ -7,7 +7,7 @@
 <body>
 <div layout:fragment="content">
     <div th:text="${errors}" class="margin-bottom alert-danger"></div>
-    <form action="#" th:action="@{'/creatorAction/' + ${controller} + ${id}}" th:object="${mangaDto}" enctype="multipart/form-data" method="post">
+    <form action="#" th:action="@{/creatorAction/{controller}{id}(id=${id}, controller=${controller})}" th:object="${mangaDto}" enctype="multipart/form-data" method="post">
         <div class="mb-3" th:if="${controller == 'creator/'}">
             <label for="mangaName" class="form-label">mangaName</label>
             <input id="mangaName" type='text' class="form-control" th:field="${mangaDto.mangaName}" required="true"/>

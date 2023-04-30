@@ -31,14 +31,11 @@
             <form action="#" th:action="@{/readerAction}" method="get">
                 <div class="col-sm-2 mb-3">
                     <label for="readerId" class="form-label">Reader</label>
-                    <select th:name="readerId" id="readerId" class="form-select">
-                        <option th:each="reader: ${readers}" th:value="${reader.id}" th:text="${reader.readerName}"/>
+                    <select id="readerId" th:name="readerId" class="form-select">
+                        <option value="" disabled selected>Select your option</option>
+                        <option th:each="value: ${readers}" th:selected="${readerId} == ${value}" th:text="${value.readerName}" th:value="${value.Id}">
+                        </option>
                     </select>
-                </div>
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-primary button-fixed">
-                        <i class="fa-solid fa-plus">Обновить</i>
-                    </button>
                 </div>
             </form>
             <div class="row table-responsive text-white">
@@ -72,4 +69,13 @@
         </div>
     </div>
 </body>
+<th:block layout:fragment="scripts">
+    <script>
+        $(document).ready(function() {
+            $('#readerId').on('change', function() {
+                this.form.submit();
+            });
+        });
+    </script>
+</th:block>
 </html>
