@@ -28,13 +28,9 @@
             <ul class="navbar-nav" th:with="activeLink=${#request.requestURI}" sec:authorize="isAuthenticated()">
                 <a class="nav-link" href="/"
                    th:classappend="${#strings.equals(activeLink, '/')} ? 'active' : ''">Index</a>
-                <a class="nav-link" href="/creator"
-                   th:classappend="${#strings.equals(activeLink, '/creator')} ? 'active' : ''">Creator</a>
-                <a class="nav-link" href="/reader"
-                   th:classappend="${#strings.equals(activeLink, '/reader')} ? 'active' : ''">Reader</a>
-                <a class="nav-link" href="/creatorAction"
+                <a class="nav-link" th:href="@{/creatorAction/{login}(login=${#authentication.name})}"
                    th:classappend="${#strings.equals(activeLink, '/creatorAction')} ? 'active' : ''">CreatorAction</a>
-                <a class="nav-link" href="/readerAction"
+                <a class="nav-link" href="/readerAction/"
                    th:classappend="${#strings.equals(activeLink, '/readerAction')} ? 'active' : ''">ReaderAction</a>
                 <a class="nav-link" href="/manga"
                    th:classappend="${#strings.equals(activeLink, '/manga')} ? 'active' : ''">Catalog</a>

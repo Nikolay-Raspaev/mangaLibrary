@@ -1,5 +1,7 @@
 package com.LabWork.app.MangaStore.user.service;
 
+import com.LabWork.app.MangaStore.model.Default.Creator;
+import com.LabWork.app.MangaStore.service.Repository.CreatorRepository;
 import com.LabWork.app.MangaStore.user.model.UserRole;
 import com.LabWork.app.MangaStore.util.validation.ValidationException;
 import com.LabWork.app.MangaStore.util.validation.ValidatorUtil;
@@ -19,13 +21,16 @@ import java.util.Objects;
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final CreatorRepository creatorRepository;
     private final PasswordEncoder passwordEncoder;
     private final ValidatorUtil validatorUtil;
 
     public UserService(UserRepository userRepository,
+                       CreatorRepository creatorRepository,
                        PasswordEncoder passwordEncoder,
                        ValidatorUtil validatorUtil) {
         this.userRepository = userRepository;
+        this.creatorRepository = creatorRepository;
         this.passwordEncoder = passwordEncoder;
         this.validatorUtil = validatorUtil;
     }
@@ -51,7 +56,10 @@ public class UserService implements UserDetailsService {
         if (!Objects.equals(password, passwordConfirm)) {
             throw new ValidationException("Passwords not equals");
         }
-        return userRepository.save(user);
+        userRepository.save(user);
+        final Creator creator = new Creator(user);
+        creatorRepository.save(creator);
+        return user;
     }
 
     @Override

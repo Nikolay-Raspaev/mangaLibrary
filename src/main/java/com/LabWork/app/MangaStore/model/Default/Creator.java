@@ -26,6 +26,13 @@ public class Creator {
 
     public Creator(String creatorName, String hashedPassword) {
         this.user = user;
+        this.id = user.getId();
+        this.mangas = new ArrayList<>();
+    }
+
+    public Creator(User user) {
+        this.user = user;
+        this.id = user.getId();
         this.mangas = new ArrayList<>();
     }
 
@@ -60,8 +67,6 @@ public class Creator {
     public String toString() {
         return "Creator{" +
                 "id=" + id +
-                ", creatorName='" + creatorName + '\'' +
-                ", hashedPassword='" + hashedPassword + '\'' +
                 '}';
     }
 }

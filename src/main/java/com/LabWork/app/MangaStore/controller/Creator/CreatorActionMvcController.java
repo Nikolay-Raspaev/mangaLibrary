@@ -28,16 +28,27 @@ public class CreatorActionMvcController {
         this.mangaService = mangaService;
     }
 
-    @GetMapping()
-    public String getCreator(@RequestParam(value = "creatorId", required = false) Long creatorId, Model model) {
+    @GetMapping("/{user}")
+    public String getCreator(@PathVariable String user, Model model) {
         model.addAttribute("creators",
                 creatorService.findAllCreators().stream()
                         .map(CreatorMangaDto::new)
                         .toList());
-        if(creatorId != null){
-            model.addAttribute("currentCreator", new CreatorMangaDto(creatorService.findCreator(creatorId)));
-        }
-        model.addAttribute("creatorId", creatorId);
+        CreatorMangaDto currentCreator = new CreatorMangaDto(creatorService.findCreator(creatorService.findByLogin(user).getId()));
+        model.addAttribute("currentCreator", currentCreator);
+        model.addAttribute("creatorId", currentCreator.getId());
+        return "creatorAction";
+    }
+
+    @GetMapping()
+    public String getCreator(@RequestParam("creatorId") Long creatorId, Model model) {
+        model.addAttribute("creators",
+                creatorService.findAllCreators().stream()
+                        .map(CreatorMangaDto::new)
+                        .toList());
+        CreatorMangaDto currentCreator = new CreatorMangaDto(creatorService.findCreator(creatorId));
+        model.addAttribute("currentCreator", currentCreator);
+        model.addAttribute("creatorId", currentCreator.getId());
         return "creatorAction";
     }
 

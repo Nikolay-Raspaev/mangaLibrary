@@ -5,6 +5,8 @@ import com.LabWork.app.MangaStore.model.Default.Manga;
 import com.LabWork.app.MangaStore.model.Default.Reader;
 import com.LabWork.app.MangaStore.service.Repository.CreatorRepository;
 import com.LabWork.app.MangaStore.service.Exception.CreatorNotFoundException;
+import com.LabWork.app.MangaStore.user.model.User;
+import com.LabWork.app.MangaStore.user.repository.UserRepository;
 import com.LabWork.app.MangaStore.util.validation.ValidatorUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,13 +16,17 @@ import java.util.Optional;
 @Service
 public class CreatorService {
     private final CreatorRepository creatorRepository;
+
+    private final UserRepository userRepository;
     private final MangaService mangaService;
     private final ValidatorUtil validatorUtil;
 
     public CreatorService(CreatorRepository creatorRepository,
                           MangaService mangaService,
-                          ValidatorUtil validatorUtil) {
+                          ValidatorUtil validatorUtil,
+                          UserRepository userRepository) {
         this.creatorRepository = creatorRepository;
+        this.userRepository = userRepository;
         this.mangaService = mangaService;
         this.validatorUtil = validatorUtil;
     }
@@ -29,6 +35,14 @@ public class CreatorService {
     public Creator findCreator(Long id) {
         final Optional<Creator> creator = creatorRepository.findById(id);
         return creator.orElseThrow(() -> new CreatorNotFoundException(id));
+    }
+    public User findByLogin(String login) {
+        return userRepository.findOneByLoginIgnoreCase(login);
+    }
+    @Transactional(readOnly = true)
+    public User findUser(Long id) {
+        final Optional<User> user = userRepository.findById(id);
+        return user.orElseThrow(() -> new CreatorNotFoundException(id));
     }
 
     @Transactional(readOnly = true)
@@ -43,11 +57,11 @@ public class CreatorService {
 
     @Transactional
     public Creator updateCreator(Long id, String creatorName, String password) {
-        final Creator currentCreator = findCreator(id);
-        currentCreator.setCreatorName(creatorName);
-        currentCreator.setHashedPassword(password);
-        validatorUtil.validate(currentCreator);
-        return currentCreator;
+        final User currentUser = findUser(id);
+        currentUser.setLogin(creatorName);
+        currentUser.setPassword(password);
+        validatorUtil.validate(currentUser);
+        return findCreator(id);
     }
 
     @Transactional
