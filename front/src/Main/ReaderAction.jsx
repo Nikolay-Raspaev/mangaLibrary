@@ -26,7 +26,8 @@ export default function ReaderAction() {
         const quryString = window.location.search;
         const urlParams = new URLSearchParams(quryString);
         const id = urlParams.get('id');
-        setReaderId(id);
+        console.log(id);
+        if (id !== null) setReaderId(id);
         getReaderData()
         .then(_data =>setReaderData(_data));
         getMangaData()
@@ -51,9 +52,11 @@ export default function ReaderAction() {
     
     useEffect(() => {
         console.log(readerId);
-        getReader(readerId)
-        .then(_data =>setReader(_data));
-        console.log(readerId);
+        if (readerId != 0 && readerId !== null){
+            console.log(readerId);
+            getReader(readerId)
+            .then(_data =>setReader(_data));
+        }
         },[readerId]);
 
     const getReader = async function (id) {
@@ -158,7 +161,7 @@ export default function ReaderAction() {
                             <select className="form-select" value={readerId} onChange={event => setReaderId(event.target.value)} aria-label="Default select example">
                                 <option value={0}>Reader</option>
                                     {
-                                        readerData.map((readerD) =>
+                                        readerData?.map((readerD) =>
                                             <option key={readerD.id} value={readerD.id}>{readerD.readerName}</option>
                                         )
                                     }

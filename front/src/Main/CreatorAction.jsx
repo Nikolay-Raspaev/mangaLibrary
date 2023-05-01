@@ -36,8 +36,12 @@ export default function CreatorAction() {
         }
     
     useEffect(() => {
-        getCreator(creatorId)
-        .then(_data =>setCreator(_data));
+        console.log(creatorId);
+        if (creatorId != 0){
+            console.log(creatorId);
+            getCreator(creatorId)
+            .then(_data =>setCreator(_data));
+        }
         },[creatorId]);
 
     const getCreator = async function (id) {
