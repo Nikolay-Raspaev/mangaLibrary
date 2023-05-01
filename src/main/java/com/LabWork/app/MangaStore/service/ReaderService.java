@@ -44,12 +44,6 @@ public class ReaderService {
     }
 
     @Transactional(readOnly = true)
-    public User findUser(Long id) {
-        final Optional<User> user = userRepository.findById(id);
-        return user.orElseThrow(() -> new CreatorNotFoundException(id));
-    }
-
-    @Transactional(readOnly = true)
     public List<Reader> findAllReaders() {
         return readerRepository.findAll();
     }

@@ -40,11 +40,6 @@ public class CreatorService {
     public Creator findByLogin(String login) {
         return findCreator(userRepository.findOneByLoginIgnoreCase(login).getId());
     }
-    @Transactional(readOnly = true)
-    public User findUser(Long id) {
-        final Optional<User> user = userRepository.findById(id);
-        return user.orElseThrow(() -> new CreatorNotFoundException(id));
-    }
 
     @Transactional(readOnly = true)
     public List<Creator> findAllCreators() { return creatorRepository.findAll(); }

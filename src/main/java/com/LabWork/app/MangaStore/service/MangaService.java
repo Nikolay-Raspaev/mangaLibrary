@@ -56,14 +56,6 @@ public class MangaService {
     }
 
     @Transactional
-    public Manga addManga(Long creatorId, Integer chapterCount, String mangaName, String Image) {
-        final Creator currentCreator = findCreator(creatorId);
-        final Manga manga = new Manga(currentCreator, mangaName, chapterCount, Image);
-        validatorUtil.validate(manga);
-        return mangaRepository.save(manga);
-    }
-
-    @Transactional
     public Manga addManga(MangaDto mangaDto) {
         final Creator currentCreator = findCreator(mangaDto.getCreatorId());
         final Manga manga = new Manga(currentCreator, mangaDto);
@@ -81,15 +73,6 @@ public class MangaService {
     }
 
     @Transactional
-    public Manga updateManga(MangaDto mangaDto) {
-        final Manga currentManga = findManga(mangaDto.getId());
-        currentManga.setChapterCount(mangaDto.getChapterCount());
-        currentManga.setImage(mangaDto.getImage().getBytes());
-        validatorUtil.validate(currentManga);
-        return currentManga;
-    }
-
-    @Transactional
     public Manga deleteManga(Long id) {
         final Manga currentManga = findManga(id);
         final List<Reader> listReader = readerService.findAllReaders();
@@ -98,10 +81,5 @@ public class MangaService {
         }
         mangaRepository.delete(currentManga);
         return currentManga;
-    }
-
-    @Transactional
-    public void deleteAllMangas() {
-        mangaRepository.deleteAll();
     }
 }
