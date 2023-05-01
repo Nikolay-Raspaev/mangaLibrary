@@ -35,6 +35,8 @@
                    th:classappend="${#strings.equals(activeLink, '/readerAction')} ? 'active' : ''">ReaderAction</a>
                 <a class="nav-link" href="/manga"
                    th:classappend="${#strings.equals(activeLink, '/manga')} ? 'active' : ''">Catalog</a>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/users"
+                   th:classappend="${#strings.equals(activeLink, '/users')} ? 'active' : ''">Пользователи</a>
                 <a class="nav-link" href="/swagger-ui/index.html" target="_blank">Документация REST API</a>
                 <a class="nav-link" href="/h2-console/" target="_blank">Консоль H2</a>
                 <a class="nav-link" href="/logout">
