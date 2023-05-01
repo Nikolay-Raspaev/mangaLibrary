@@ -1,5 +1,6 @@
 package com.LabWork.app.MangaStore.controller.Reader;
 
+import com.LabWork.app.MangaStore.model.Dto.CreatorMangaDto;
 import com.LabWork.app.MangaStore.model.Dto.ReaderMangaDto;
 import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import com.LabWork.app.MangaStore.service.ReaderService;
@@ -24,6 +25,20 @@ public class ReaderActionMvcController {
     public ReaderActionMvcController(ReaderService readerService, MangaService mangaService) {
         this.readerService = readerService;
         this.mangaService = mangaService;
+    }
+
+    @GetMapping("/{user}")
+    public String getReader(@PathVariable String user, Model model) {
+        model.addAttribute("readers",
+                readerService.findAllReaders().stream()
+                        .map(ReaderMangaDto::new)
+                        .toList());
+        ReaderMangaDto currentReader = new ReaderMangaDto(readerService.findReader(readerService.findByLogin(user).getId()));
+        model.addAttribute("readerId", currentReader.getId());
+        model.addAttribute("reader", new ReaderMangaDto(readerService.findReader(currentReader.getId())));
+        model.addAttribute("MangaDto", new MangaDto());
+        model.addAttribute("mangaList", mangaService.findAllMangas());
+        return "readerAction";
     }
 
     @GetMapping()

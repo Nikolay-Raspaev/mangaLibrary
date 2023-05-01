@@ -16,8 +16,8 @@ public class ReaderDto {
 
     public ReaderDto(Reader reader) {
         this.id = reader.getId();
-        this.readerName = reader.getReaderName();
-        this.hashedPassword = reader.getHashedPassword();
+        this.readerName = reader.getUser().getLogin();
+        this.hashedPassword = reader.getUser().getPassword();
     }
 
     public Long getId() {

@@ -14,7 +14,7 @@ public class Creator {
     @Id
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @MapsId
     private User user;
 
@@ -22,12 +22,6 @@ public class Creator {
     private List<Manga> mangas;
 
     public Creator() {
-    }
-
-    public Creator(String creatorName, String hashedPassword) {
-        this.user = user;
-        this.id = user.getId();
-        this.mangas = new ArrayList<>();
     }
 
     public Creator(User user) {

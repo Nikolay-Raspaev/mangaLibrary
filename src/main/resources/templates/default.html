@@ -30,7 +30,7 @@
                    th:classappend="${#strings.equals(activeLink, '/')} ? 'active' : ''">Index</a>
                 <a class="nav-link" th:href="@{/creatorAction/{login}(login=${#authentication.name})}"
                    th:classappend="${#strings.equals(activeLink, '/creatorAction')} ? 'active' : ''">CreatorAction</a>
-                <a class="nav-link" href="/readerAction/"
+                <a class="nav-link" th:href="@{/readerAction/{login}(login=${#authentication.name})}"
                    th:classappend="${#strings.equals(activeLink, '/readerAction')} ? 'active' : ''">ReaderAction</a>
                 <a class="nav-link" href="/manga"
                    th:classappend="${#strings.equals(activeLink, '/manga')} ? 'active' : ''">Catalog</a>

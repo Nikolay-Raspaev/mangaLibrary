@@ -49,8 +49,8 @@ public class CreatorService {
     public List<Creator> findAllCreators() { return creatorRepository.findAll(); }
 
     @Transactional
-    public Creator addCreator(String creatorName, String password) {
-        final Creator creator = new Creator(creatorName, password);
+    public Creator addCreator(User user) {
+        final Creator creator = new Creator(user);
         validatorUtil.validate(creator);
         return creatorRepository.save(creator);
     }

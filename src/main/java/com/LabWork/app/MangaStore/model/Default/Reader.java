@@ -1,6 +1,8 @@
 package com.LabWork.app.MangaStore.model.Default;
 
 import javax.persistence.*;
+
+import com.LabWork.app.MangaStore.user.model.User;
 import org.hibernate.annotations.Cascade;
 
 import java.util.ArrayList;
@@ -10,14 +12,11 @@ import java.util.Objects;
 @Entity
 public class Reader {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column
-    private String readerName;
-
-    @Column
-    private String hashedPassword;
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private User user;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     /*@Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)*/
@@ -27,9 +26,15 @@ public class Reader {
     public Reader() {
     }
 
-    public Reader(String readerName, String hashedPassword) {
-        this.readerName = readerName;
-        this.hashedPassword = hashedPassword;
+    public Reader(String creatorName, String hashedPassword) {
+        this.user = user;
+        this.id = user.getId();
+        this.mangas = new ArrayList<>();
+    }
+
+    public Reader(User user) {
+        this.user = user;
+        this.id = user.getId();
         this.mangas = new ArrayList<>();
     }
 
@@ -37,19 +42,11 @@ public class Reader {
         return id;
     }
 
-
-
-    public String getReaderName() { return readerName; }
-
-    public void setReaderName(String readerName) { this.readerName = readerName; }
-
-    public String getHashedPassword() { return hashedPassword; }
-
-    public void setHashedPassword(String hashedPassword) { this.hashedPassword = hashedPassword; }
-
     public List<Manga> getMangas() { return mangas; }
 
     public void setMangas(List<Manga> mangas) { this.mangas = mangas; }
+
+    public User getUser() { return user; }
 
     @Override
     public boolean equals(Object o) {
@@ -68,8 +65,6 @@ public class Reader {
     public String toString() {
         return "Reader{" +
                 "id=" + id +
-                ", readerName='" + readerName + '\'' +
-                ", hashedPassword='" + hashedPassword + '\'' +
                 '}';
     }
 }

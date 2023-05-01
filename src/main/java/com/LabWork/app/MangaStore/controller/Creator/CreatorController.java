@@ -28,12 +28,6 @@ public class CreatorController {
                 .toList();
     }
 
-    @PostMapping
-    public CreatorMangaDto createCreator(@RequestParam("creatorName") String creatorName,
-                                         @RequestParam("password") String password) {
-        return new CreatorMangaDto(creatorService.addCreator(creatorName, password));
-    }
-
     @PutMapping("/{id}")
     public CreatorMangaDto updateCreator(@PathVariable Long id,
                                          @RequestParam("creatorName") String creatorName,

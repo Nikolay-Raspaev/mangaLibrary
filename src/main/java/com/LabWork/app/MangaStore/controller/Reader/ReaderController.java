@@ -30,12 +30,6 @@ public class ReaderController {
                 .toList();
     }
 
-    @PostMapping
-    public ReaderMangaDto createReader(@RequestParam("readerName") String readerName,
-                                       @RequestParam("password") String password) {
-        return new ReaderMangaDto(readerService.addReader(readerName, password));
-    }
-
     @PutMapping("/{id}")
     public ReaderMangaDto updateReader(@PathVariable Long id,
                                        @RequestParam("readerName") String readerName,
