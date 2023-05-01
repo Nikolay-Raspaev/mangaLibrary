@@ -6,7 +6,7 @@ import com.LabWork.app.MangaStore.service.CreatorService;
 import com.LabWork.app.MangaStore.service.MangaService;
 import javax.validation.Valid;
 
-import com.LabWork.app.MangaStore.user.model.UserRole;
+import com.LabWork.app.MangaStore.model.Default.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.annotation.Secured;
@@ -38,7 +38,7 @@ public class CreatorActionMvcController {
                 creatorService.findAllCreators().stream()
                         .map(CreatorMangaDto::new)
                         .toList());
-        CreatorMangaDto currentCreator = new CreatorMangaDto(creatorService.findCreator(creatorService.findByLogin(user).getId()));
+        CreatorMangaDto currentCreator = new CreatorMangaDto(creatorService.findByLogin(user));
         model.addAttribute("currentCreator", currentCreator);
         model.addAttribute("creatorId", currentCreator.getId());
         return "creatorAction";

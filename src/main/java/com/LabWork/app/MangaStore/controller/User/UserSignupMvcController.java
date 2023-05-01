@@ -1,8 +1,8 @@
-package com.LabWork.app.MangaStore.user.controller;
+package com.LabWork.app.MangaStore.controller.User;
 
-import com.LabWork.app.MangaStore.user.model.User;
-import com.LabWork.app.MangaStore.user.model.UserSignupDto;
-import com.LabWork.app.MangaStore.user.service.UserService;
+import com.LabWork.app.MangaStore.model.Default.User;
+import com.LabWork.app.MangaStore.model.Dto.UserSignupDto;
+import com.LabWork.app.MangaStore.service.UserService;
 import com.LabWork.app.MangaStore.util.validation.ValidationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

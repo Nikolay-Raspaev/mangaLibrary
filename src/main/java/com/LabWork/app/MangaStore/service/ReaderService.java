@@ -1,6 +1,5 @@
 package com.LabWork.app.MangaStore.service;
 
-import com.LabWork.app.MangaStore.model.Default.Creator;
 import com.LabWork.app.MangaStore.model.Default.Manga;
 import com.LabWork.app.MangaStore.model.Default.Reader;
 import com.LabWork.app.MangaStore.service.Exception.CreatorNotFoundException;
@@ -8,8 +7,8 @@ import com.LabWork.app.MangaStore.service.Repository.MangaRepository;
 import com.LabWork.app.MangaStore.service.Repository.ReaderRepository;
 import com.LabWork.app.MangaStore.service.Exception.MangaNotFoundException;
 import com.LabWork.app.MangaStore.service.Exception.ReaderNotFoundException;
-import com.LabWork.app.MangaStore.user.model.User;
-import com.LabWork.app.MangaStore.user.repository.UserRepository;
+import com.LabWork.app.MangaStore.model.Default.User;
+import com.LabWork.app.MangaStore.service.Repository.UserRepository;
 import com.LabWork.app.MangaStore.util.validation.ValidatorUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,8 +39,8 @@ public class ReaderService {
         return reader.orElseThrow(() -> new ReaderNotFoundException(id));
     }
 
-    public User findByLogin(String login) {
-        return userRepository.findOneByLoginIgnoreCase(login);
+    public Reader findByLogin(String login) {
+        return findReader(userRepository.findOneByLoginIgnoreCase(login).getId());
     }
 
     @Transactional(readOnly = true)
@@ -60,28 +59,6 @@ public class ReaderService {
         final Reader reader = new Reader(user);
         validatorUtil.validate(reader);
         return readerRepository.save(reader);
-    }
-
-    @Transactional
-    public Reader updateReader(Long id, String creatorName, String password) {
-        final User currentUser = findUser(id);
-        currentUser.setLogin(creatorName);
-        currentUser.setPassword(password);
-        validatorUtil.validate(currentUser);
-        return findReader(id);
-    }
-
-    @Transactional
-    public Reader deleteReader(Long id) {
-        final Reader currentReader = findReader(id);
-        currentReader.getMangas().clear();
-        readerRepository.delete(currentReader);
-        return currentReader;
-    }
-
-    @Transactional
-    public void deleteAllReaders() {
-        readerRepository.deleteAll();
     }
 
     @Transactional(readOnly = true)

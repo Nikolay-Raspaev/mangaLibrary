@@ -1,13 +1,12 @@
 package com.LabWork.app.MangaStore.controller.Reader;
 
-import com.LabWork.app.MangaStore.model.Dto.CreatorMangaDto;
 import com.LabWork.app.MangaStore.model.Dto.ReaderMangaDto;
 import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import com.LabWork.app.MangaStore.service.ReaderService;
 import com.LabWork.app.MangaStore.service.MangaService;
 import javax.validation.Valid;
 
-import com.LabWork.app.MangaStore.user.model.UserRole;
+import com.LabWork.app.MangaStore.model.Default.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.annotation.Secured;
@@ -15,8 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
 
 @Controller
 @RequestMapping("/readerAction")
@@ -37,7 +34,7 @@ public class ReaderActionMvcController {
                 readerService.findAllReaders().stream()
                         .map(ReaderMangaDto::new)
                         .toList());
-        ReaderMangaDto currentReader = new ReaderMangaDto(readerService.findReader(readerService.findByLogin(user).getId()));
+        ReaderMangaDto currentReader = new ReaderMangaDto(readerService.findByLogin(user));
         model.addAttribute("readerId", currentReader.getId());
         model.addAttribute("reader", new ReaderMangaDto(readerService.findReader(currentReader.getId())));
         model.addAttribute("MangaDto", new MangaDto());

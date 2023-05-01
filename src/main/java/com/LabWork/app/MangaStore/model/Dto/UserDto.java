@@ -1,4 +1,7 @@
-package com.LabWork.app.MangaStore.user.model;
+package com.LabWork.app.MangaStore.model.Dto;
+
+import com.LabWork.app.MangaStore.model.Default.User;
+import com.LabWork.app.MangaStore.model.Default.UserRole;
 
 public class UserDto {
     private final long id;

@@ -25,8 +25,6 @@ public class Manga {
     @JoinColumn(name="creator_fk")
     private Creator creator;
 
-    private Long creatorId;
-
     @Lob
     private byte[] image;
     public Manga() {

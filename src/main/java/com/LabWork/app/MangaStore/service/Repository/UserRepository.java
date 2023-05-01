@@ -1,6 +1,6 @@
-package com.LabWork.app.MangaStore.user.repository;
+package com.LabWork.app.MangaStore.service.Repository;
 
-import com.LabWork.app.MangaStore.user.model.User;
+import com.LabWork.app.MangaStore.model.Default.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

@@ -1,8 +1,8 @@
 package com.LabWork.app.MangaStore.configuration;
 
-import com.LabWork.app.MangaStore.user.controller.UserSignupMvcController;
-import com.LabWork.app.MangaStore.user.model.UserRole;
-import com.LabWork.app.MangaStore.user.service.UserService;
+import com.LabWork.app.MangaStore.controller.User.UserSignupMvcController;
+import com.LabWork.app.MangaStore.model.Default.UserRole;
+import com.LabWork.app.MangaStore.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;

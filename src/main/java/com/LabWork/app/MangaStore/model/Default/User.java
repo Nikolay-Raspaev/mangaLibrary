@@ -1,4 +1,4 @@
-package com.LabWork.app.MangaStore.user.model;
+package com.LabWork.app.MangaStore.model.Default;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

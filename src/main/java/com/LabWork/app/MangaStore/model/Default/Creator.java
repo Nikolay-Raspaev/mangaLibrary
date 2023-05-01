@@ -1,9 +1,6 @@
 package com.LabWork.app.MangaStore.model.Default;
 
-import com.LabWork.app.MangaStore.user.model.User;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
 import java.util.List;

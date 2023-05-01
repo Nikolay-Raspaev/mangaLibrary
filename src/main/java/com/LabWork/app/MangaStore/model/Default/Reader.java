@@ -2,9 +2,6 @@ package com.LabWork.app.MangaStore.model.Default;
 
 import javax.persistence.*;
 
-import com.LabWork.app.MangaStore.user.model.User;
-import org.hibernate.annotations.Cascade;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

@@ -1,8 +1,8 @@
-package com.LabWork.app.MangaStore.user.service;
+package com.LabWork.app.MangaStore.service;
 
 import com.LabWork.app.MangaStore.service.CreatorService;
 import com.LabWork.app.MangaStore.service.ReaderService;
-import com.LabWork.app.MangaStore.user.model.UserRole;
+import com.LabWork.app.MangaStore.model.Default.UserRole;
 import com.LabWork.app.MangaStore.util.validation.ValidationException;
 import com.LabWork.app.MangaStore.util.validation.ValidatorUtil;
 import org.springframework.data.domain.Page;
@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.LabWork.app.MangaStore.user.model.User;
-import com.LabWork.app.MangaStore.user.repository.UserRepository;
+import com.LabWork.app.MangaStore.model.Default.User;
+import com.LabWork.app.MangaStore.service.Repository.UserRepository;
 import java.util.Collections;
 import java.util.Objects;
 
@@ -44,10 +44,6 @@ public class UserService implements UserDetailsService {
 
     public User findByLogin(String login) {
         return userRepository.findOneByLoginIgnoreCase(login);
-    }
-
-    public User createUser(String login, String password, String passwordConfirm) {
-        return createUser(login, password, passwordConfirm, UserRole.USER);
     }
 
     public User createUser(String login, String password, String passwordConfirm, UserRole role) {

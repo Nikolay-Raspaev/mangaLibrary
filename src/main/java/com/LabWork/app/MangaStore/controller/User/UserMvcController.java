@@ -1,8 +1,8 @@
-package com.LabWork.app.MangaStore.user.controller;
+package com.LabWork.app.MangaStore.controller.User;
 
-import com.LabWork.app.MangaStore.user.model.UserDto;
-import com.LabWork.app.MangaStore.user.model.UserRole;
-import com.LabWork.app.MangaStore.user.service.UserService;
+import com.LabWork.app.MangaStore.model.Dto.UserDto;
+import com.LabWork.app.MangaStore.model.Default.UserRole;
+import com.LabWork.app.MangaStore.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;

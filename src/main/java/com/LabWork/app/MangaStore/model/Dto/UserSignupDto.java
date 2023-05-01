@@ -1,4 +1,6 @@
-package com.LabWork.app.MangaStore.user.model;
+package com.LabWork.app.MangaStore.model.Dto;
+
+import com.LabWork.app.MangaStore.model.Default.UserRole;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

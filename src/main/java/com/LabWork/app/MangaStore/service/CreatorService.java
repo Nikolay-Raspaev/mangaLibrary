@@ -5,8 +5,8 @@ import com.LabWork.app.MangaStore.model.Default.Manga;
 import com.LabWork.app.MangaStore.model.Default.Reader;
 import com.LabWork.app.MangaStore.service.Repository.CreatorRepository;
 import com.LabWork.app.MangaStore.service.Exception.CreatorNotFoundException;
-import com.LabWork.app.MangaStore.user.model.User;
-import com.LabWork.app.MangaStore.user.repository.UserRepository;
+import com.LabWork.app.MangaStore.model.Default.User;
+import com.LabWork.app.MangaStore.service.Repository.UserRepository;
 import com.LabWork.app.MangaStore.util.validation.ValidatorUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,8 +36,9 @@ public class CreatorService {
         final Optional<Creator> creator = creatorRepository.findById(id);
         return creator.orElseThrow(() -> new CreatorNotFoundException(id));
     }
-    public User findByLogin(String login) {
-        return userRepository.findOneByLoginIgnoreCase(login);
+
+    public Creator findByLogin(String login) {
+        return findCreator(userRepository.findOneByLoginIgnoreCase(login).getId());
     }
     @Transactional(readOnly = true)
     public User findUser(Long id) {
@@ -53,32 +54,5 @@ public class CreatorService {
         final Creator creator = new Creator(user);
         validatorUtil.validate(creator);
         return creatorRepository.save(creator);
-    }
-
-    @Transactional
-    public Creator updateCreator(Long id, String creatorName, String password) {
-        final User currentUser = findUser(id);
-        currentUser.setLogin(creatorName);
-        currentUser.setPassword(password);
-        validatorUtil.validate(currentUser);
-        return findCreator(id);
-    }
-
-    @Transactional
-    public Creator deleteCreator(Long id) {
-        final Creator currentCreator = findCreator(id);
-        List<Manga> listManga = currentCreator.getMangas();
-        for (Manga manga : listManga){
-            for (final Reader reader :mangaService.getReader(manga.getId())){
-                reader.getMangas().remove(manga);
-            }
-        }
-        creatorRepository.delete(currentCreator);
-        return currentCreator;
-    }
-
-    @Transactional
-    public void deleteAllCreators() {
-        creatorRepository.deleteAll();
     }
 }
