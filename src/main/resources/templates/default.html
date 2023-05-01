@@ -28,15 +28,15 @@
             <ul class="navbar-nav" th:with="activeLink=${#request.requestURI}" sec:authorize="isAuthenticated()">
                 <a class="nav-link" href="/"
                    th:classappend="${#strings.equals(activeLink, '/')} ? 'active' : ''">Index</a>
-                <a class="nav-link" href="/speaker"
+                <a class="nav-link" href="/creator"
                    th:classappend="${#strings.equals(activeLink, '/creator')} ? 'active' : ''">Creator</a>
-                <a class="nav-link" href="/test"
+                <a class="nav-link" href="/reader"
                    th:classappend="${#strings.equals(activeLink, '/reader')} ? 'active' : ''">Reader</a>
-                <a class="nav-link" href="/student"
+                <a class="nav-link" href="/creatorAction"
                    th:classappend="${#strings.equals(activeLink, '/creatorAction')} ? 'active' : ''">CreatorAction</a>
-                <a class="nav-link" href="/rest-test"
+                <a class="nav-link" href="/readerAction"
                    th:classappend="${#strings.equals(activeLink, '/readerAction')} ? 'active' : ''">ReaderAction</a>
-                <a class="nav-link" href="/rest-test"
+                <a class="nav-link" href="/manga"
                    th:classappend="${#strings.equals(activeLink, '/manga')} ? 'active' : ''">Catalog</a>
                 <a class="nav-link" href="/swagger-ui/index.html" target="_blank">Документация REST API</a>
                 <a class="nav-link" href="/h2-console/" target="_blank">Консоль H2</a>
