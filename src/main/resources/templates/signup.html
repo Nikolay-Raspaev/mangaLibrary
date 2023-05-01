@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}">
+<body>
+<div class="container container-padding" layout:fragment="content">
+    <div th:if="${errors}" th:text="${errors}" class="margin-bottom alert alert-danger"></div>
+    <form action="#" th:action="@{/signup}" th:object="${userDto}" method="post">
+        <div class="mb-3">
+            <input type="text" class="form-control" th:field="${userDto.login}"
+                   placeholder="Логин" required="true" autofocus="true" maxlength="64"/>
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control" th:field="${userDto.password}"
+                   placeholder="Пароль" required="true" minlength="6" maxlength="64"/>
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control" th:field="${userDto.passwordConfirm}"
+                   placeholder="Пароль (подтверждение)" required="true" minlength="6" maxlength="64"/>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-success button-fixed">Создать</button>
+            <a class="btn btn-primary button-fixed" href="/login">Назад</a>
+        </div>
+        <div class="mb-3">
+            <label for="userRole" class="form-label">Манга</label>
+            <select th:field="${userDto.userRole}" id="userRole" class="form-select">
+                <option th:value="'creator'" th:text="creator"></option>
+                <option th:value="'reader'" th:text="reader"></option>
+            </select>
+        </div>
+    </form>
+</div>
+</body>
+</html>

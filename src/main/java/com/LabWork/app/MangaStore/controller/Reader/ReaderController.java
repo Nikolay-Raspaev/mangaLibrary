@@ -1,10 +1,10 @@
 package com.LabWork.app.MangaStore.controller.Reader;
 
 
+import com.LabWork.app.MangaStore.configuration.WebConfiguration;
 import com.LabWork.app.MangaStore.model.Dto.ReaderMangaDto;
 import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import com.LabWork.app.MangaStore.service.ReaderService;
-import com.LabWork.app.WebConfiguration;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -2,7 +2,7 @@ package com.LabWork.app.MangaStore.controller.Creator;
 
 import com.LabWork.app.MangaStore.model.Dto.CreatorMangaDto;
 import com.LabWork.app.MangaStore.service.CreatorService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

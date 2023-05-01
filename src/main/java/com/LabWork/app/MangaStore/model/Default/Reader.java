@@ -1,6 +1,6 @@
 package com.LabWork.app.MangaStore.model.Default;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import org.hibernate.annotations.Cascade;
 
 import java.util.ArrayList;

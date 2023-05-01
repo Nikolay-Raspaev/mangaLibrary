@@ -4,7 +4,7 @@ import com.LabWork.app.MangaStore.model.Dto.CreatorMangaDto;
 import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import com.LabWork.app.MangaStore.service.CreatorService;
 import com.LabWork.app.MangaStore.service.MangaService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

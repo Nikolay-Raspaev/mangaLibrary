@@ -1,7 +1,7 @@
 package com.LabWork.app.MangaStore.model.Default;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
 import java.util.List;

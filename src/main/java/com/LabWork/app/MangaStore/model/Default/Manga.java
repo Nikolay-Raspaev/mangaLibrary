@@ -3,7 +3,7 @@ package com.LabWork.app.MangaStore.model.Default;
 import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import com.LabWork.app.MangaStore.service.CreatorService;
 import com.LabWork.app.MangaStore.service.MangaService;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
