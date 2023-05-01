@@ -5,8 +5,11 @@ import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import com.LabWork.app.MangaStore.service.CreatorService;
 import com.LabWork.app.MangaStore.service.MangaService;
 import javax.validation.Valid;
+
+import com.LabWork.app.MangaStore.user.model.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +21,7 @@ import java.util.Base64;
 
 @Controller
 @RequestMapping("/creatorAction")
+@Secured({UserRole.AsString.ADMIN})
 public class CreatorActionMvcController {
     private final CreatorService creatorService;
     private static final Logger log = LoggerFactory.getLogger(CreatorActionMvcController.class);

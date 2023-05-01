@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8"/>
     <title>ReManga</title>
@@ -28,9 +29,9 @@
             <ul class="navbar-nav" th:with="activeLink=${#request.requestURI}" sec:authorize="isAuthenticated()">
                 <a class="nav-link" href="/"
                    th:classappend="${#strings.equals(activeLink, '/')} ? 'active' : ''">Index</a>
-                <a class="nav-link" th:href="@{/creatorAction/{login}(login=${#authentication.name})}"
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" th:href="@{/creatorAction/{login}(login=${#authentication.name})}"
                    th:classappend="${#strings.equals(activeLink, '/creatorAction')} ? 'active' : ''">CreatorAction</a>
-                <a class="nav-link" th:href="@{/readerAction/{login}(login=${#authentication.name})}"
+                <a sec:authorize="hasRole('ROLE_USER')" class="nav-link" th:href="@{/readerAction/{login}(login=${#authentication.name})}"
                    th:classappend="${#strings.equals(activeLink, '/readerAction')} ? 'active' : ''">ReaderAction</a>
                 <a class="nav-link" href="/manga"
                    th:classappend="${#strings.equals(activeLink, '/manga')} ? 'active' : ''">Catalog</a>
