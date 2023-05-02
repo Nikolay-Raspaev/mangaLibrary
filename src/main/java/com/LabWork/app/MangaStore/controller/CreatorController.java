@@ -1,14 +1,13 @@
-package com.LabWork.app.MangaStore.controller.Creator;
+package com.LabWork.app.MangaStore.controller;
 
 import com.LabWork.app.MangaStore.model.Dto.CreatorMangaDto;
 import com.LabWork.app.MangaStore.service.CreatorService;
-import com.LabWork.app.WebConfiguration;
 import org.springframework.web.bind.annotation.*;
-
+import com.LabWork.app.MangaStore.configuration.OpenAPI30Configuration;
 import java.util.List;
 
 @RestController
-@RequestMapping(WebConfiguration.REST_API + "/creator")
+@RequestMapping(OpenAPI30Configuration.API_PREFIX + "/creator")
 public class CreatorController {
     private final CreatorService creatorService;
 

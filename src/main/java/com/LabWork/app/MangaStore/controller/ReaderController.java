@@ -1,16 +1,16 @@
-package com.LabWork.app.MangaStore.controller.Reader;
+package com.LabWork.app.MangaStore.controller;
 
 
+import com.LabWork.app.MangaStore.configuration.OpenAPI30Configuration;
 import com.LabWork.app.MangaStore.model.Dto.ReaderMangaDto;
 import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import com.LabWork.app.MangaStore.service.ReaderService;
-import com.LabWork.app.WebConfiguration;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(WebConfiguration.REST_API + "/reader")
+@RequestMapping(OpenAPI30Configuration.API_PREFIX  + "/reader")
 public class ReaderController {
     private final ReaderService readerService;
 
