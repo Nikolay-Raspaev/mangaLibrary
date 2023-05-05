@@ -69,7 +69,7 @@ public class UserService implements UserDetailsService {
             throw new ValidationException("Passwords not equals");
         }
         final User user = new User(login, email, passwordEncoder.encode(password), role);
-        validatorUtil.validate(user);
+        //validatorUtil.validate(user);
         return userRepository.save(user);
     }
 

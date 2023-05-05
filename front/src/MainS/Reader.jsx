@@ -3,7 +3,7 @@ import TableReader from '../components/Table/TableReader';
 
 export default function ReaderS() {
 
-    const host = "http://localhost:8080/api";
+    const host = "http://localhost:8080/api/1.0";
 
     const [readerId, setReaderId] = useState(0);
 
@@ -15,8 +15,9 @@ export default function ReaderS() {
 
     const [data, setData] = useState([]);
 
-    
-
+    const getTokenForHeader = function () {
+        return "Bearer " + localStorage.getItem("token");
+    }
 
     const table = document.getElementById("tbody");
 
@@ -25,21 +26,30 @@ export default function ReaderS() {
         console.log(2);
       },[]);
 
-
     const getData = async function () {
-        const response = await fetch(host + "/reader");
+        const requestParams = {
+            method: "GET",
+            headers: {
+                "Authorization": getTokenForHeader(),
+            }
+        };
+        const requestUrl = host + `/reader`;
+        const response = await fetch(requestUrl, requestParams);
         setData(await response.json())
         console.log(data);
-        }
+    }
 
     const create = async function (){
         const requestParams = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": getTokenForHeader(),
             }
         };
         const response = await fetch(host + `/reader?readerName=${readerName}&password=${password}`, requestParams);
+        alert(response);
+        console.log(response);
         getData();
     }
 
@@ -55,6 +65,7 @@ export default function ReaderS() {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": getTokenForHeader(),
             }
         };
         const response = await fetch(host + `/reader/` + id, requestParams);
@@ -70,6 +81,9 @@ export default function ReaderS() {
         }
         const requestParams = {
             method: "DELETE",
+            headers: {
+                "Authorization": getTokenForHeader(),
+            }
         };
         await fetch(host + `/reader/`, requestParams);
         getData();
@@ -83,6 +97,7 @@ export default function ReaderS() {
         const requestParams = {
             method: "PUT",
             headers: {
+                "Authorization": getTokenForHeader(),
                 "Content-Type": "application/json",
             }
         };
@@ -100,6 +115,7 @@ export default function ReaderS() {
         const requestParams = {
             method: "PUT",
             headers: {
+                "Authorization": getTokenForHeader(),
                 "Content-Type": "application/json",
             }
         };
@@ -112,6 +128,7 @@ export default function ReaderS() {
         const requestParams = {
             method: "PUT",
             headers: {
+                "Authorization": getTokenForHeader(),
                 "Content-Type": "application/json",
             }
         };

@@ -6,7 +6,7 @@ import AddMangaReaderModal from "../components/Modal/AddMangaReaderModal";
 
 export default function ReaderAction() {
 
-    const host = "http://localhost:8080/api";
+    const host = "http://localhost:8080/api/1.0";
 
     const [mangaData, setMangaData] = useState([]);
 
@@ -21,6 +21,10 @@ export default function ReaderAction() {
     const [chapterCount, setChapterCount] = useState(0);
 
     const [mangaName, setMangaName] = useState("");
+
+    const getTokenForHeader = function () {
+        return "Bearer " + localStorage.getItem("token");
+    }
 
     useEffect(() => {
         const quryString = window.location.search;
@@ -37,14 +41,26 @@ export default function ReaderAction() {
         },[]);
 
     const getReaderData = async function () {
-        const response = await fetch(host + "/reader");
+        const requestParams = {
+            method: "GET",
+            headers: {
+                "Authorization": getTokenForHeader(),
+            }
+        };
+        const response = await fetch(host + "/reader", requestParams);
         const _data = await response.json()
         console.log(_data);
         return _data;
         }
 
     const getMangaData = async function () {
-        const response = await fetch(host + "/manga");
+        const requestParams = {
+            method: "GET",
+            headers: {
+                "Authorization": getTokenForHeader(),
+            }
+        };
+        const response = await fetch(host + "/manga", requestParams);
         const _data = await response.json()
         console.log(_data);
         return _data;
@@ -64,6 +80,7 @@ export default function ReaderAction() {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": getTokenForHeader(),
             }
         };
         const response = await fetch(host + `/reader/` + id, requestParams);
@@ -93,6 +110,7 @@ export default function ReaderAction() {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": getTokenForHeader(),
             }
         };
         const response = await fetch(host + `/manga/${mangaId}?chapterCount=${chapterCount}`, requestParams);
@@ -120,6 +138,7 @@ export default function ReaderAction() {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": getTokenForHeader(),
             }
         };
         console.log(host + `/reader/${readerId}/removeManga?mangaId=${id}`, requestParams);
@@ -143,6 +162,7 @@ export default function ReaderAction() {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": getTokenForHeader(),
             }
         };
         console.log(host + `/reader/${readerId}/addManga?mangaId=${mangaId}`, requestParams);

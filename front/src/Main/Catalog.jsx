@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import '../components/Banner/banner.css'
-import Banner from '../components/Banner/Banner.jsx'
-import { Link, NavLink } from 'react-router-dom';
-import MangaDto from "../Dto/Manga-Dto";
+import { NavLink } from 'react-router-dom';
 
 export default function Catalog() {
 
-    const host = "http://localhost:8080/api";
+    const host = "http://localhost:8080/api/1.0";
 
     const [mangs, setMangs] = useState([]);
 
@@ -17,8 +14,18 @@ export default function Catalog() {
         console.log(mangs);
         },[]);
 
+    const getTokenForHeader = function () {
+        return "Bearer " + localStorage.getItem("token");
+    }
+
     const getMangs = async function () {
-        const response = await fetch(host + "/manga");
+        const requestParams = {
+            method: "GET",
+            headers: {
+                "Authorization": getTokenForHeader(),
+            }
+        };
+        const response = await fetch(host + "/manga", requestParams);
         const _data = await response.json()
         console.log(_data);
         return _data;
@@ -26,7 +33,6 @@ export default function Catalog() {
 
     return (
         <article className="p-2 catalog_article">
-        <Banner />
             <div className = "catalog_wrapper">
                 <h1>Каталог</h1>
                 <div className="p-2 d-flex flex-wrap">

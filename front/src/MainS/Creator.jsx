@@ -4,7 +4,7 @@ import MangaDto from '../Dto/Manga-Dto';
 
 export default function Creator() {
 
-    const host = "http://localhost:8080/api";
+    const host = "http://localhost:8080/api/1.0";
 
     const [creatorId, setCreatorId] = useState(0);
 
@@ -16,6 +16,9 @@ export default function Creator() {
 
     const [data, setData] = useState([]);
 
+    const getTokenForHeader = function () {
+        return "Bearer " + localStorage.getItem("token");
+    }
 
     const table = document.getElementById("tbody");
 
@@ -24,15 +27,23 @@ export default function Creator() {
       },[]);
 
     const getData = async function () {
-        const response = await fetch(host + "/creator");    
+        const requestParams = {
+            method: "GET",
+            headers: {
+                "Authorization": getTokenForHeader(),
+            }
+        };
+        const requestUrl = host + `/creator`;
+        const response = await fetch(requestUrl, requestParams);
         setData(await response.json())
         console.log(data);
-        }
+    }
 
     const create = async function (){
         const requestParams = {
             method: "POST",
             headers: {
+                "Authorization": getTokenForHeader(),
                 "Content-Type": "application/json",
             }
         };
@@ -52,6 +63,7 @@ export default function Creator() {
         const requestParams = {
             method: "DELETE",
             headers: {
+                "Authorization": getTokenForHeader(),
                 "Content-Type": "application/json",
             }
         };
@@ -69,6 +81,9 @@ export default function Creator() {
         }
         const requestParams = {
             method: "DELETE",
+            headers: {
+                "Authorization": getTokenForHeader(),
+            }
         };
         await fetch(host + `/creator/`, requestParams);
     }
@@ -81,6 +96,7 @@ export default function Creator() {
         const requestParams = {
             method: "PUT",
             headers: {
+                "Authorization": getTokenForHeader(),
                 "Content-Type": "application/json",
             }
         };

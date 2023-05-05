@@ -8,7 +8,7 @@ import EditMangaModal from "../components/Modal/EditMangaModal";
 
 export default function CreatorAction() {
 
-    const host = "http://localhost:8080/api";
+    const host = "http://localhost:8080/api/1.0";
 
     const [creatorData, setCreatorData] = useState([]);
 
@@ -24,13 +24,23 @@ export default function CreatorAction() {
 
     const [mangaModel, setMangaModel] = useState(new MangaDto({}));
 
+    const getTokenForHeader = function () {
+        return "Bearer " + localStorage.getItem("token");
+    }
+
     useEffect(() => {
         getCreatorData()
         .then(_data =>setCreatorData(_data));
         },[]);
 
     const getCreatorData = async function () {
-        const response = await fetch(host + "/creator");
+        const requestParams = {
+            method: "GET",
+            headers: {
+                "Authorization": getTokenForHeader(),
+            }
+        };
+        const response = await fetch(host + "/creator", requestParams);
         const _data = await response.json()
         return _data;
         }
@@ -49,6 +59,7 @@ export default function CreatorAction() {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": getTokenForHeader(),
             }
         };
         const response = await fetch(host + `/creator/` + id, requestParams);
@@ -79,6 +90,7 @@ export default function CreatorAction() {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": getTokenForHeader(),
             },
             body: JSON.stringify(mangaModel),
         };
@@ -108,6 +120,7 @@ export default function CreatorAction() {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": getTokenForHeader(),
             }
         };
         const response = await fetch(host + `/manga/` + id, requestParams);
@@ -131,6 +144,7 @@ export default function CreatorAction() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": getTokenForHeader(),
             },
             body: JSON.stringify(mangaModel),
         };

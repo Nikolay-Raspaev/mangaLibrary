@@ -2,9 +2,12 @@ package com.LabWork.app.MangaStore.controller;
 
 
 import com.LabWork.app.MangaStore.configuration.OpenAPI30Configuration;
+import com.LabWork.app.MangaStore.model.Default.UserRole;
 import com.LabWork.app.MangaStore.model.Dto.ReaderMangaDto;
 import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import com.LabWork.app.MangaStore.service.ReaderService;
+import com.LabWork.app.MangaStore.util.validation.ValidationException;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,9 +34,14 @@ public class ReaderController {
     }
 
     @PostMapping
-    public ReaderMangaDto createReader(@RequestParam("readerName") String readerName,
+    @Secured({UserRole.AsString.ADMIN})
+    public String createReader(@RequestParam("readerName") String readerName,
                                        @RequestParam("password") String password) {
-        return new ReaderMangaDto(readerService.addReader(readerName, password));
+        try {
+            return new ReaderMangaDto(readerService.addReader(readerName, password)).toString();
+        } catch (ValidationException e) {
+            return e.getMessage();
+        }
     }
 
     @PutMapping("/{id}")
@@ -56,6 +64,7 @@ public class ReaderController {
     }
 
     @DeleteMapping("/{id}")
+    @Secured({UserRole.AsString.USER})
     public ReaderMangaDto deleteReader(@PathVariable Long id) {
         return new ReaderMangaDto(readerService.deleteReader(id));
     }

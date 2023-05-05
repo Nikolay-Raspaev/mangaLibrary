@@ -8,7 +8,11 @@ export default function MangaPage() {
 
   const [readerData, setReaderData] = useState([]);
 
-  const host = "http://localhost:8080/api";
+    const host = "http://localhost:8080/api/1.0";
+
+    const getTokenForHeader = function () {
+        return "Bearer " + localStorage.getItem("token");
+    }
 
   useEffect(() => {
     const quryString = window.location.search;
@@ -29,6 +33,7 @@ export default function MangaPage() {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
+            "Authorization": getTokenForHeader(),
         }
     };
     const response = await fetch(host + `/manga/` + id + `/readers`, requestParams);
@@ -52,6 +57,7 @@ export default function MangaPage() {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": getTokenForHeader(),
             }
         };
         const response = await fetch(host + `/manga/` + id, requestParams);

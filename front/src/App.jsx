@@ -1,11 +1,15 @@
-import { useRoutes, Outlet, BrowserRouter } from 'react-router-dom';
+import { Routes, BrowserRouter, Route } from 'react-router-dom';
 import Creator from './MainS/Creator';
 import Reader from './MainS/Reader';
 import Header from './components/Header';
 import CreatorAction from './Main/CreatorAction';
 import ReaderAction from './Main/ReaderAction';
-import MangaPage from './Main/MangaPage';
+import UsersPage from './Main/UsersPage';
 import Catalog from './Main/Catalog';
+import LoginPage from './Main/LoginPage';
+import SingupPage from './Main/SingupPage';
+import PrivateRoutes from "./components/PrivateRoutes";
+import MangaPage from "./Main/MangaPage";
 
 function Router(props) {
   return useRoutes(props.rootRoute);
@@ -14,30 +18,41 @@ function Router(props) {
 export default function App() {
   const routes = [
     { index: true, element: <Reader /> },
-    { path: 'creator', element: <Creator />, label: 'Creator' },
-    { path: 'reader', element: <Reader />, label: 'Reader' },
-    { path: 'creatorAction', element: <CreatorAction />, label: 'CreatorAction' },
-    { path: 'readerAction', element: <ReaderAction />, label: 'ReaderAction' },
-    { path: 'catalog', element: <Catalog />, label: 'Catalog' },
-    { path: 'mangapage', element: <MangaPage /> },
-  ];
-  const links = routes.filter(route => route.hasOwnProperty('label'));
-  const rootRoute = [
-    { path: '/', element: render(links), children: routes }
   ];
 
-  function render(links) {
-    return (
-      <>
-      <Header links={links} />
-        <Outlet />
-      </>
-    );
-  }
-
+  const links = [
+    { path: 'catalog', label: "Catalog", userGroup: "AUTH" },
+    { path: 'readerAction', label: "ReaderAction", userGroup: "USER" },
+    { path: 'creatorAction', label: "CreatorAction", userGroup: "ADMIN" },
+    { path: 'creator', label: "Creator", userGroup: "ADMIN" },
+    { path: 'reader', label: "Reader", userGroup: "ADMIN" },
+    { path: 'users', label: "Users", userGroup: "ADMIN" }
+  ];
   return (
-    <BrowserRouter>
-      <Router rootRoute={ rootRoute } />
-    </BrowserRouter>
+      <>
+        <BrowserRouter>
+          <Header links={links}></Header>
+          <div className="content-div">
+            <Routes>
+              <Route element={<LoginPage />} path="/login" />
+              <Route element={<SingupPage />} path="/singup" />
+              <Route element={<PrivateRoutes userGroup="AUTH" />}>
+                <Route element={<MangaPage />} path="/mangapage" />
+                <Route element={<Catalog />} path="/catalog" />
+                <Route element={<Catalog />} path="*" />
+              </Route>
+              <Route element={<PrivateRoutes userGroup="USER" />}>
+                <Route element={<ReaderAction />} path="/readerAction" />
+              </Route>
+              <Route element={<PrivateRoutes userGroup="ADMIN" />}>
+                <Route element={<UsersPage />} path="/users" />
+                <Route element={<Creator />} path="/creator" />
+                <Route element={<Reader />} path="/reader" />
+                <Route element={<CreatorAction />} path="/creatorAction" />
+              </Route>
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </>
   );
 }
