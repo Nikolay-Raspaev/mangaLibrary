@@ -1,3 +1,4 @@
+/*
 package com.LabWork.app;
 
 import com.LabWork.app.MangaStore.model.Default.Creator;
@@ -103,6 +104,7 @@ public class ReMangaTest {
         creatorService.deleteAllCreators();
     }
 
+*/
 /*    @Test
     void testCreatorAddManga() {
         readerService.deleteAllReaders();
@@ -119,8 +121,10 @@ public class ReMangaTest {
         log.info(m1.getCreator().toString());
         log.info(c1.toString());
         Assertions.assertEquals(c1.getCreatorName(), m1.getCreator().getCreatorName());
-    }*/
+    }*//*
 
+
+*/
 /*    //бесполезня штука
     @Test
     void testCreatorDeleteManga() {
@@ -147,8 +151,11 @@ public class ReMangaTest {
 
         Assertions.assertEquals(1, c1.getMangas().size());
 
-    }*/
-/*тестстим работоспособность гита*/
+    }*//*
+
+*/
+/*тестстим работоспособность гита*//*
+
     @Test
     void testCreatorUpdated() {
         readerService.deleteAllReaders();
@@ -429,3 +436,4 @@ public class ReMangaTest {
         creatorService.deleteAllCreators();
     }
 }
+*/

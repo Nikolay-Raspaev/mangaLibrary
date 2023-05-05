@@ -12,8 +12,6 @@ export default function CreatorAction() {
 
     const [creatorData, setCreatorData] = useState([]);
 
-    const [creatorId, setCreatorId] = useState(0);
-
     const [creator, setCreator] = useState([]);
 
     const [mangaId, setMangaId] = useState(0);
@@ -24,14 +22,39 @@ export default function CreatorAction() {
 
     const [mangaModel, setMangaModel] = useState(new MangaDto({}));
 
+
+
     const getTokenForHeader = function () {
         return "Bearer " + localStorage.getItem("token");
     }
 
-    useEffect(() => {
+/*    useEffect(() => {
         getCreatorData()
         .then(_data =>setCreatorData(_data));
-        },[]);
+        },[]);*/
+
+
+    useEffect(() => {
+        getCreator().then(_data => {
+            setCreator(_data)
+            console.log(_data);
+        });
+    }, []);
+
+    const getCreator = async function () {
+        const requestParams = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": getTokenForHeader(),
+            }
+        };
+        let login = localStorage.getItem("user");
+        console.log(host + `/creator/` + login);
+        const response = await fetch(host + `/creator/` + login, requestParams);
+        const _data = await response.json()
+        return _data;
+    }
 
     const getCreatorData = async function () {
         const requestParams = {
@@ -41,37 +64,20 @@ export default function CreatorAction() {
             }
         };
         const response = await fetch(host + "/creator", requestParams);
+        console.log(response);
         const _data = await response.json()
         return _data;
         }
     
-    useEffect(() => {
-        console.log(creatorId);
-        if (creatorId != 0){
-            console.log(creatorId);
-            getCreator(creatorId)
-            .then(_data =>setCreator(_data));
-        }
-        },[creatorId]);
 
-    const getCreator = async function (id) {
-        const requestParams = {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": getTokenForHeader(),
-            }
-        };
-        const response = await fetch(host + `/creator/` + id, requestParams);
-        const _data = await response.json()
-        return _data;
-        }
+
+
 
     const updateButton = (e) =>{
         e.preventDefault();
         update().then((result) => {
             alert(`Manga[id=${result.id}, mangaName=${result.mangaName}, chapterCount=${result.chapterCount}]`);
-            getCreator(creatorId)
+            getCreator(creator.id)
             .then(_data =>setCreator(_data));
         });
     }
@@ -83,7 +89,7 @@ export default function CreatorAction() {
         }
         mangaModel.id = mangaId;
         mangaModel.chapterCount = chapterCount;
-        mangaModel.creatorId = creatorId;
+        mangaModel.creatorId = creator.id;
         mangaModel.image = imageURL;
         mangaModel.mangaName = mangaName;
         const requestParams = {
@@ -104,7 +110,7 @@ export default function CreatorAction() {
 
     const removeButton = (id) =>{
         remove(id).then(() => {
-            getCreator(creatorId)
+            getCreator(creator.id)
             .then(_data =>setCreator(_data));
         });
     }
@@ -130,16 +136,17 @@ export default function CreatorAction() {
         e.preventDefault()
         create().then((result) => {
             alert(`Manga[id=${result.id}, mangaName=${result.mangaName}, chapterCount=${result.chapterCount}]`);
-            getCreator(creatorId)
+            getCreator(creator.id)
             .then(_data =>setCreator(_data));
         });
     }
 
     const create = async function (){
         mangaModel.chapterCount = chapterCount;
-        mangaModel.creatorId = creatorId;
+        mangaModel.creatorId = creator.id;
         mangaModel.image = imageURL;
         mangaModel.mangaName = mangaName;
+        console.log(mangaModel);
         const requestParams = {
             method: "POST",
             headers: {
@@ -174,16 +181,6 @@ export default function CreatorAction() {
                 <h1>Creator</h1>
                 <form id="form">
                     <div className="d-flex mt-3">
-                        <div className="col-sm-2 me-3">
-                            <select className="form-select" value={creatorId} onChange={event => setCreatorId(event.target.value)} aria-label="Default select example">
-                                <option value={0}>Creator</option>
-                                    {
-                                        creatorData?.map((creatorD) =>
-                                            <option key={creatorD.id} value={creatorD.id}>{creatorD.creatorName}</option>
-                                        )
-                                    }
-                            </select>
-                        </div>
                         <div className="d-grid col-sm-2">
                             <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal2">Добавить</button>
                         </div>

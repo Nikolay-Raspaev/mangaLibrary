@@ -33,7 +33,7 @@ public class ReaderController {
                 .toList();
     }
 
-    @PostMapping
+/*    @PostMapping
     @Secured({UserRole.AsString.ADMIN})
     public String createReader(@RequestParam("readerName") String readerName,
                                        @RequestParam("password") String password) {
@@ -49,7 +49,7 @@ public class ReaderController {
                                        @RequestParam("readerName") String readerName,
                                        @RequestParam("password") String password) {
         return new ReaderMangaDto(readerService.updateReader(id, readerName, password));
-    }
+    }*/
 
     @PutMapping("/{id}/addManga")
     public MangaDto addManga(@PathVariable Long id,

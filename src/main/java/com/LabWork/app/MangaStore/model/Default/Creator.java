@@ -13,23 +13,10 @@ public class Creator {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "creatorName can't be null or empty")
-    @Column
-    private String creatorName;
-
-    @NotBlank(message = "hashedPassword can't be null or empty")
-    @Column
-    private String hashedPassword;
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "creator", cascade = CascadeType.REMOVE)
     private List<Manga> mangas;
 
     public Creator() {
-    }
-
-    public Creator(String creatorName, String hashedPassword) {
-        this.creatorName = creatorName;
-        this.hashedPassword = hashedPassword;
         this.mangas = new ArrayList<>();
     }
 
@@ -41,24 +28,8 @@ public class Creator {
         return mangas;
     }
 
-    public String getCreatorName() {
-        return creatorName;
-    }
-
-    public String getHashedPassword() {
-        return hashedPassword;
-    }
-
     public void setMangas(List<Manga> mangas) {
         this.mangas = mangas;
-    }
-
-    public void setCreatorName(String creatorName) {
-        this.creatorName = creatorName;
-    }
-
-    public void setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
     }
 
     @Override
@@ -78,8 +49,6 @@ public class Creator {
     public String toString() {
         return "Creator{" +
                 "id=" + id +
-                ", creatorName='" + creatorName + '\'' +
-                ", hashedPassword='" + hashedPassword + '\'' +
                 '}';
     }
 }

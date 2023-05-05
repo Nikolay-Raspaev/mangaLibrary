@@ -35,20 +35,20 @@ public class CreatorService {
     public List<Creator> findAllCreators() { return creatorRepository.findAll(); }
 
     @Transactional
-    public Creator addCreator(String creatorName, String password) {
-        final Creator creator = new Creator(creatorName, password);
+    public Creator addCreator() {
+        final Creator creator = new Creator();
         validatorUtil.validate(creator);
         return creatorRepository.save(creator);
     }
 
-    @Transactional
+/*    @Transactional
     public Creator updateCreator(Long id, String creatorName, String password) {
         final Creator currentCreator = findCreator(id);
         currentCreator.setCreatorName(creatorName);
         currentCreator.setHashedPassword(password);
         validatorUtil.validate(currentCreator);
         return currentCreator;
-    }
+    }*/
 
     @Transactional
     public Creator deleteCreator(Long id) {

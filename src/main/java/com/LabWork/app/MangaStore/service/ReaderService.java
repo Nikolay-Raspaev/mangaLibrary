@@ -39,20 +39,20 @@ public class ReaderService {
     }
 
     @Transactional
-    public Reader addReader(String readerName, String password) {
-        final Reader reader = new Reader(readerName, password);
+    public Reader addReader() {
+        final Reader reader = new Reader();
         validatorUtil.validate(reader);
         return readerRepository.save(reader);
     }
 
-    @Transactional
+/*    @Transactional
     public Reader updateReader(Long id, String readername, String password) {
         final Reader currentReader = findReader(id);
         currentReader.setReaderName(readername);
         currentReader.setHashedPassword(password);
         validatorUtil.validate(currentReader);
         return currentReader;
-    }
+    }*/
 
     @Transactional
     public Reader deleteReader(Long id) {

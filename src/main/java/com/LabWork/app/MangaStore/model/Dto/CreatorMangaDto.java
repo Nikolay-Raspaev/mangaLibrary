@@ -16,8 +16,6 @@ public class CreatorMangaDto {
 
     public CreatorMangaDto(Creator creator) {
         this.id = creator.getId();
-        this.creatorName = creator.getCreatorName();
-        this.hashedPassword = creator.getHashedPassword();
         this.mangas = creator.getMangas().stream()
                 .map(x -> new MangaDto(x))
                 .toList();

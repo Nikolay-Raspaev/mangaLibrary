@@ -9,6 +9,8 @@ import com.LabWork.app.MangaStore.service.Exception.UserNotFoundException;
 import com.LabWork.app.MangaStore.service.Repository.UserRepository;
 import com.LabWork.app.MangaStore.util.validation.ValidationException;
 import com.LabWork.app.MangaStore.util.validation.ValidatorUtil;
+import com.LabWork.app.MangaStore.model.Default.Creator;
+import com.LabWork.app.MangaStore.model.Default.Reader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -30,15 +32,21 @@ public class UserService implements UserDetailsService {
     private final ValidatorUtil validatorUtil;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
+    private final CreatorService creatorService;
+    private final ReaderService readerService;
 
     public UserService(UserRepository userRepository,
                        ValidatorUtil validatorUtil,
                        PasswordEncoder passwordEncoder,
+                       CreatorService creatorService,
+                       ReaderService readerService,
                        JwtProvider jwtProvider) {
         this.userRepository = userRepository;
         this.validatorUtil = validatorUtil;
         this.passwordEncoder = passwordEncoder;
         this.jwtProvider = jwtProvider;
+        this.creatorService = creatorService;
+        this.readerService = readerService;
     }
 
     @Transactional(readOnly = true)
@@ -70,7 +78,16 @@ public class UserService implements UserDetailsService {
         }
         final User user = new User(login, email, passwordEncoder.encode(password), role);
         //validatorUtil.validate(user);
-        return userRepository.save(user);
+        userRepository.save(user);
+        if (role.toString().equals("ADMIN")){
+            final Creator creator = creatorService.addCreator();
+            bindCreator(user.getId(), creator.getId());
+        }
+        if (role.toString().equals("USER")){
+            final Reader reader = readerService.addReader();
+            bindReader(user.getId(), reader.getId());
+        }
+        return user;
     }
 
     @Transactional
@@ -101,20 +118,21 @@ public class UserService implements UserDetailsService {
         userRepository.deleteAll();
     }
 
-/*    @Transactional
-    public User bindCart(Long id, Long cartId) {
+    @Transactional
+    public User bindCreator(Long id, Long creatorId) {
         final User user = findUser(id);
-        final Cart cart = cartService.findCart(cartId);
-        user.setCart(cart);
+        final Creator creator = creatorService.findCreator(creatorId);
+        user.setCreator(creator);
         return userRepository.save(user);
     }
 
     @Transactional
-    public User unbindCart(Long id) {
+    public User bindReader(Long id, Long readerId) {
         final User user = findUser(id);
-        user.setCart(null);
+        final Reader reader = readerService.findReader(readerId);
+        user.setReader(reader);
         return userRepository.save(user);
-    }*/
+    }
 
     public String loginAndGetToken(UserDto userDto) {
         final User user = findByLogin(userDto.getLogin());

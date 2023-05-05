@@ -26,6 +26,14 @@ public class User {
     private String password;
     private UserRole role;
 
+    @OneToOne
+    @JoinColumn(name = "creator_id")
+    private Creator creator;
+
+    @OneToOne
+    @JoinColumn(name = "reader_id")
+    private Reader reader;
+
     public User() {
     }
 
@@ -86,6 +94,22 @@ public class User {
 
     public void setRole(UserRole role) {
         this.role = role;
+    }
+
+    public void setCreator(Creator creator) {
+        this.creator = creator;
+    }
+
+    public Creator getCreator() {
+        return creator;
+    }
+
+    public void setReader(Reader reader) {
+        this.reader = reader;
+    }
+
+    public Reader getReader() {
+        return reader;
     }
 
     // ![Properties]

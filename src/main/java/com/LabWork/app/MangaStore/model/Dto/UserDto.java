@@ -10,7 +10,9 @@ public class UserDto {
     private String email;
     private String password;
     private UserRole role;
-    private Long cartId;
+    private Long creatortId;
+
+    private Long readerId;
 
     public UserDto() {
     }
@@ -21,6 +23,8 @@ public class UserDto {
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.role = user.getRole();
+        this.creatortId = user.getCreator().getId();
+        this.readerId = user.getReader().getId();
     }
 
     public void setId(Long id) {
@@ -59,8 +63,11 @@ public class UserDto {
         return role;
     }
 
-    public Long getCartId() {
-        return cartId;
+    public Long getReaderId() {
+        return readerId;
+    }
+    public Long getCreatorId() {
+        return creatortId;
     }
 }
 

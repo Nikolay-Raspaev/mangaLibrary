@@ -19,8 +19,6 @@ public class ReaderMangaDto {
 
     public ReaderMangaDto(Reader reader) {
         this.id = reader.getId();
-        this.readerName = reader.getReaderName();
-        this.hashedPassword = reader.getHashedPassword();
         this.mangas = reader.getMangas().stream()
                 .map(y -> new MangaDto(y))
                 .toList();
