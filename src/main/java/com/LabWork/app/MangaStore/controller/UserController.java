@@ -61,14 +61,12 @@ public class UserController {
     }
 
     @DeleteMapping(OpenAPI30Configuration.API_PREFIX + "/user/{id}")
-    @Secured({UserRole.AsString.USER})
     public UserDto removeUser(@PathVariable Long id) {
         User user = userService.deleteUser(id);
         return new UserDto(user);
     }
 
     @GetMapping(OpenAPI30Configuration.API_PREFIX + "/users")
-    @Secured({UserRole.AsString.ADMIN})
     public Pair<Page<UserDto>, List<Integer>> getUsers(@RequestParam(defaultValue = "1") int page,
                            @RequestParam(defaultValue = "5") int size) {
         final Page<UserDto> users = userService.findAllPages(page, size)

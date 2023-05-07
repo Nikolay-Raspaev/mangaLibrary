@@ -6,6 +6,7 @@ import com.LabWork.app.MangaStore.model.Default.UserRole;
 import com.LabWork.app.MangaStore.model.Dto.ReaderMangaDto;
 import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import com.LabWork.app.MangaStore.service.ReaderService;
+import com.LabWork.app.MangaStore.service.UserService;
 import com.LabWork.app.MangaStore.util.validation.ValidationException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +18,17 @@ import java.util.List;
 public class ReaderController {
     private final ReaderService readerService;
 
-    public ReaderController(ReaderService readerService) {
+    private final UserService userService;
+
+    public ReaderController(ReaderService readerService,
+                            UserService userService) {
         this.readerService = readerService;
+        this.userService = userService;
     }
 
-    @GetMapping("/{id}")
-    public ReaderMangaDto getReader(@PathVariable Long id) {
-        return new ReaderMangaDto(readerService.findReader(id));
+    @GetMapping("/{login}")
+    public ReaderMangaDto getReader(@PathVariable String login) {
+        return new ReaderMangaDto(readerService.findReader(userService.findByLogin(login).getReader().getId()));
     }
 
     @GetMapping
@@ -64,7 +69,6 @@ public class ReaderController {
     }
 
     @DeleteMapping("/{id}")
-    @Secured({UserRole.AsString.USER})
     public ReaderMangaDto deleteReader(@PathVariable Long id) {
         return new ReaderMangaDto(readerService.deleteReader(id));
     }
