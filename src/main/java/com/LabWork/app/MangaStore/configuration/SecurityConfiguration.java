@@ -5,19 +5,21 @@ import com.LabWork.app.MangaStore.model.Default.UserRole;
 import com.LabWork.app.MangaStore.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration  {
     private final Logger log = LoggerFactory.getLogger(SecurityConfiguration.class);
     private static final String LOGIN_URL = "/login";
     private final UserService userService;
@@ -35,33 +37,38 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         }
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.headers().frameOptions().sameOrigin().and()
                 .cors().and()
                 .csrf().disable()
-                .authorizeRequests()
-                .antMatchers(UserSignupMvcController.SIGNUP_URL).permitAll()
-                .antMatchers(HttpMethod.GET, LOGIN_URL).permitAll()
+                .authorizeHttpRequests()
+                .requestMatchers(UserSignupMvcController.SIGNUP_URL).permitAll()
+                .requestMatchers(HttpMethod.GET, LOGIN_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage(LOGIN_URL).permitAll()
                 .and()
                 .logout().permitAll();
+        return http.build();
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService);
+    @Bean
+    public AuthenticationManager authenticationManagerBean(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = http
+                .getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.userDetailsService(userService);
+        return authenticationManagerBuilder.build();
     }
 
-    @Override
-    public void configure(WebSecurity web) {
-        web.ignoring()
-                .antMatchers("/css/**")
-                .antMatchers("/js/**")
-                .antMatchers("/templates/**")
-                .antMatchers("/webjars/**");
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return web -> web.ignoring()
+                .requestMatchers("/css/**")
+                .requestMatchers("/js/**")
+                .requestMatchers("/templates/**")
+                .requestMatchers("/webjars/**")
+                .requestMatchers("/vk.jpg");
     }
 }
