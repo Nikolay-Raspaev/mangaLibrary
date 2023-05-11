@@ -62,9 +62,9 @@ public class ReaderService {
     }
 
     @Transactional
-    public Manga addManga(Long mangaId, Long readerId) {
+    public Manga addManga(Long mangaId, String readerLogin) {
         final Manga manga = findManga(mangaId);
-        final Reader reader = findReader(readerId);
+        final Reader reader = findByLogin(readerLogin);
         validatorUtil.validate(reader);
         if (reader.getMangas().contains(manga))
         {
@@ -75,8 +75,8 @@ public class ReaderService {
     }
 
     @Transactional
-    public Manga removeManga(Long mangaId, Long readerId) {
-        final Reader currentReader = findReader(readerId);
+    public Manga removeManga(Long mangaId, String readerLogin) {
+        final Reader currentReader = findByLogin(readerLogin);
         final Manga currentManga = findManga(mangaId);
         currentReader.getMangas().remove(currentManga);
         return currentManga;

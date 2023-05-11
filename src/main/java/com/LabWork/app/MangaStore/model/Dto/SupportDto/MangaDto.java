@@ -14,6 +14,8 @@ public class MangaDto {
     private Integer chapterCount;
     private String image;
 
+    private String login;
+
     public MangaDto() {
     }
 
@@ -22,6 +24,7 @@ public class MangaDto {
         this.creatorId = manga.getCreator().getId();
         this.mangaName = manga.getMangaName();
         this.chapterCount = manga.getChapterCount();
+        this.login = null;
         this.image = new String(manga.getImage(), StandardCharsets.UTF_8);
     }
     public Long getId() {
@@ -44,6 +47,10 @@ public class MangaDto {
         return image;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
     public void setMangaName(String mangaName) {
         this.mangaName = mangaName;
     }
@@ -57,4 +64,10 @@ public class MangaDto {
     }
 
     public void setImage(String image) {this.image = image;}
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+
 }

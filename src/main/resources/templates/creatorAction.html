@@ -14,7 +14,7 @@
                 <div class="d-flex mt-3">
                     <div class="d-grid col-sm-2">
                         <a class="btn btn-success"
-                           th:href="@{/creatorAction/create/{id}(id=${creatorId})}">
+                           th:href="@{/creatorAction/create/{login}(login=${login})}">
                             <i class="fa-solid fa-plus"></i> Добавить
                         </a>
                     </div>
@@ -24,9 +24,9 @@
             <form action="#" th:action="@{/creatorAction}" method="get">
                 <div class="col-sm-2 mb-3">
                     <label for="creatorId" class="form-label">Reader</label>
-                    <select id="creatorId" th:name="creatorId" class="form-select">
+                    <select id="creatorId" th:name="login" class="form-select">
                         <option value="" disabled selected>Select your option</option>
-                        <option th:each="value: ${creators}" th:selected="${creatorId} == ${value}" th:text="${value.creatorName}" th:value="${value.Id}">
+                        <option th:each="value: ${creators}" th:selected="${creatorName} == ${value}" th:text="${value.creatorName}" th:value="${value.creatorName}">
                         </option>
                     </select>
                 </div>

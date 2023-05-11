@@ -1,5 +1,6 @@
 package com.LabWork.app.MangaStore.controller.Reader;
 
+import com.LabWork.app.MangaStore.model.Dto.CreatorMangaDto;
 import com.LabWork.app.MangaStore.model.Dto.ReaderMangaDto;
 import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import com.LabWork.app.MangaStore.service.ReaderService;
@@ -15,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/readerAction")
 @Secured({UserRole.AsString.USER})
@@ -28,21 +31,25 @@ public class ReaderActionMvcController {
         this.mangaService = mangaService;
     }
 
-    @GetMapping("/{user}")
-    public String getReader(@PathVariable String user, Model model) {
-        model.addAttribute("readers",
-                readerService.findAllReaders().stream()
-                        .map(ReaderMangaDto::new)
-                        .toList());
-        ReaderMangaDto currentReader = new ReaderMangaDto(readerService.findByLogin(user));
-        model.addAttribute("readerId", currentReader.getId());
-        model.addAttribute("reader", new ReaderMangaDto(readerService.findReader(currentReader.getId())));
-        model.addAttribute("MangaDto", new MangaDto());
-        model.addAttribute("mangaList", mangaService.findAllMangas());
+    @GetMapping()
+    public String getReader(@RequestParam("readerLogin") String readerLogin, Model model, Principal principal) {
+        if (readerLogin.equals(principal.getName())) {
+            model.addAttribute("readers",
+                    readerService.findAllReaders().stream()
+                            .map(ReaderMangaDto::new)
+                            .toList());
+            ReaderMangaDto currentReader = new ReaderMangaDto(readerService.findByLogin(readerLogin));
+            model.addAttribute("readerLogin", readerLogin);
+            model.addAttribute("readerId", currentReader.getId());
+            model.addAttribute("reader", new ReaderMangaDto(readerService.findReader(currentReader.getId())));
+            model.addAttribute("MangaDto", new MangaDto());
+            model.addAttribute("mangaList", mangaService.findAllMangas());
+            return "readerAction";
+        }
         return "readerAction";
     }
 
-    @GetMapping()
+/*    @GetMapping()
     public String getReader(@RequestParam(value = "readerId", required = false) Long readerId, Model model) {
         model.addAttribute("readers",
                 readerService.findAllReaders().stream()
@@ -58,10 +65,10 @@ public class ReaderActionMvcController {
         model.addAttribute("MangaDto", new MangaDto());
         model.addAttribute("mangaList", mangaService.findAllMangas());
         return "readerAction";
-    }
+    }*/
 
-    @PostMapping("/manga/{readerId}")
-    public String saveManga(@PathVariable Long readerId,
+    @PostMapping("/manga/{readerLogin}")
+    public String saveManga(@PathVariable String readerLogin,
                             @RequestParam("mangaId") Long mangaId,
                             @ModelAttribute @Valid MangaDto MangaDto,
                             BindingResult bindingResult,
@@ -70,13 +77,13 @@ public class ReaderActionMvcController {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "readerAction";
         }
-        readerService.addManga(mangaId, readerId);
-        return "redirect:/readerAction/?readerId=" + readerId;
+        readerService.addManga(mangaId, readerLogin);
+        return "redirect:/readerAction/?readerLogin=" + readerLogin;
     }
 
-    @PostMapping("/{id}/removeManga/{mangaId}")
-    public String removeManga(@PathVariable Long id, @PathVariable Long mangaId) {
-        readerService.removeManga(mangaId, id);
-        return "redirect:/readerAction/?readerId=" + id;
+    @PostMapping("/{readerLogin}/removeManga/{mangaId}")
+    public String removeManga(@PathVariable String readerLogin, @PathVariable Long mangaId) {
+        readerService.removeManga(mangaId, readerLogin);
+        return "redirect:/readerAction/?readerLogin=" + readerLogin;
     }
 }

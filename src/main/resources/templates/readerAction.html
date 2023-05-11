@@ -13,7 +13,7 @@
             <div class="d-flex mt-3">
                 <div class="d-grid col-sm-2">
                     <div th:text="${errors}" class="margin-bottom alert-danger"></div>
-                    <form action="#" th:action="@{/readerAction/manga/{id}(id=${readerId})}" method="post">
+                    <form action="#" th:action="@{/readerAction/manga/{readerLogin}(readerLogin=${readerLogin})}" method="post">
                         <div class="mb-3">
                             <label for="mangaId" class="form-label">Манга</label>
                             <select th:name="mangaId" id="mangaId" class="form-select">
@@ -32,9 +32,9 @@
             <form action="#" th:action="@{/readerAction}" method="get">
                 <div class="col-sm-2 mb-3">
                     <label for="readerId" class="form-label">Reader</label>
-                    <select id="readerId" th:name="readerId" class="form-select">
+                    <select id="readerId" th:name="login" class="form-select">
                         <option value="" disabled selected>Select your option</option>
-                        <option th:each="value: ${readers}" th:selected="${readerId} == ${value}" th:text="${value.readerName}" th:value="${value.Id}">
+                        <option th:each="value: ${readers}" th:selected="${login} == ${readerName}" th:text="${value.readerName}" th:value="${value.readerName}">
                         </option>
                     </select>
                 </div>
@@ -58,7 +58,7 @@
                                         th:attr="onclick=|confirm('Удалить запись?') && document.getElementById('remove-${manga.id}').click()|">
                                     <i class="fa fa-trash" aria-hidden="true"></i> Удалить
                                 </button>
-                            <form th:action="@{'/readerAction/' + ${readerId} + '/removeManga/' + ${manga.id}}" method="post">
+                            <form th:action="@{'/readerAction/' + ${readerLogin} + '/removeManga/' + ${manga.id}}" method="post">
                                 <button th:id="'remove-' + ${manga.id}" type="submit" style="display: none">
                                     Удалить
                                 </button>

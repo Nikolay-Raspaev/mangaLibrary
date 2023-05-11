@@ -8,6 +8,7 @@ import com.LabWork.app.MangaStore.service.Repository.MangaRepository;
 import com.LabWork.app.MangaStore.service.Exception.CreatorNotFoundException;
 import com.LabWork.app.MangaStore.service.Exception.MangaNotFoundException;
 import com.LabWork.app.MangaStore.service.Repository.ReaderRepository;
+import com.LabWork.app.MangaStore.service.Repository.UserRepository;
 import com.LabWork.app.MangaStore.util.validation.ValidatorUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,23 +19,29 @@ import java.util.Optional;
 public class MangaService {
     public final MangaRepository mangaRepository;
     public final CreatorRepository creatorRepository;
+    public final UserRepository userRepository;
     public final ReaderService readerService;
     private final ValidatorUtil validatorUtil;
 
     public MangaService(MangaRepository mangaRepository,
                         CreatorRepository  creatorRepository,
                         ReaderService readerService,
-                        ValidatorUtil validatorUtil) {
+                        ValidatorUtil validatorUtil,
+                        UserRepository userRepository) {
         this.mangaRepository = mangaRepository;
         this.readerService = readerService;
         this.creatorRepository  = creatorRepository;
         this.validatorUtil = validatorUtil;
+        this.userRepository = userRepository;
     }
 
     @Transactional(readOnly = true)
     public Manga findManga(Long id) {
         final Optional<Manga> manga = mangaRepository.findById(id);
         return manga.orElseThrow(() -> new MangaNotFoundException(id));
+    }
+    public Creator findCreatorByLogin(String login) {
+        return findCreator(userRepository.findOneByLoginIgnoreCase(login).getId());
     }
 
     @Transactional
@@ -57,7 +64,7 @@ public class MangaService {
 
     @Transactional
     public Manga addManga(MangaDto mangaDto) {
-        final Creator currentCreator = findCreator(mangaDto.getCreatorId());
+        final Creator currentCreator = findCreatorByLogin(mangaDto.getLogin());
         final Manga manga = new Manga(currentCreator, mangaDto);
         validatorUtil.validate(manga);
         return mangaRepository.save(manga);

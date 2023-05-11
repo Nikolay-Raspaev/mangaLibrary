@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Base64;
 
 @Controller
@@ -32,27 +33,18 @@ public class CreatorActionMvcController {
         this.mangaService = mangaService;
     }
 
-    @GetMapping("/{user}")
-    public String getCreator(@PathVariable String user, Model model) {
-        model.addAttribute("creators",
-                creatorService.findAllCreators().stream()
-                        .map(CreatorMangaDto::new)
-                        .toList());
-        CreatorMangaDto currentCreator = new CreatorMangaDto(creatorService.findByLogin(user));
-        model.addAttribute("currentCreator", currentCreator);
-        model.addAttribute("creatorId", currentCreator.getId());
-        return "creatorAction";
-    }
-
     @GetMapping()
-    public String getCreator(@RequestParam("creatorId") Long creatorId, Model model) {
-        model.addAttribute("creators",
-                creatorService.findAllCreators().stream()
-                        .map(CreatorMangaDto::new)
-                        .toList());
-        CreatorMangaDto currentCreator = new CreatorMangaDto(creatorService.findCreator(creatorId));
-        model.addAttribute("currentCreator", currentCreator);
-        model.addAttribute("creatorId", currentCreator.getId());
+    public String getCreator(@RequestParam("login") String login, Model model, Principal principal) {
+        if (login.equals(principal.getName())) {
+            model.addAttribute("creators",
+                    creatorService.findAllCreators().stream()
+                            .map(CreatorMangaDto::new)
+                            .toList());
+            CreatorMangaDto currentCreator = new CreatorMangaDto(creatorService.findByLogin(login));
+            model.addAttribute("currentCreator", currentCreator);
+            model.addAttribute("login", login);
+            return "creatorAction";
+        }
         return "creatorAction";
     }
 
@@ -64,16 +56,16 @@ public class CreatorActionMvcController {
         return "creatorAction-edit";
     }
 
-    @GetMapping("/create/{id}")
-    public String createManga(@PathVariable Long id, Model model) {
-        model.addAttribute("Id", id);
+    @GetMapping("/create/{login}")
+    public String createManga(@PathVariable String login, Model model) {
+        model.addAttribute("login", login);
         model.addAttribute("mangaDto", new MangaDto());
         model.addAttribute("controller", "creator/");
         return "creatorAction-edit";
     }
 
-    @PostMapping( "/creator/{creatorId}")
-    public String saveManga(@PathVariable(value = "creatorId", required = false) Long creatorId,
+    @PostMapping( "/creator/{login}")
+    public String saveManga(@PathVariable(value = "login", required = false) String login,
                             @RequestParam("multipartFile") MultipartFile multipartFile,
                             @ModelAttribute @Valid MangaDto mangaDto,
                             BindingResult bindingResult,
@@ -83,9 +75,9 @@ public class CreatorActionMvcController {
             return "creatorAction-edit";
         }
         mangaDto.setImage("data:" + multipartFile.getContentType() + ";base64," + Base64.getEncoder().encodeToString(multipartFile.getBytes()));
-        mangaDto.setCreatorId(creatorId);
+        mangaDto.setLogin(login);
         mangaService.addManga(mangaDto);
-        return "redirect:/creatorAction?creatorId=" + creatorId;
+        return "redirect:/creatorAction?login=" + login;
 
     }
 
@@ -100,13 +92,13 @@ public class CreatorActionMvcController {
         }
         mangaDto.setImage("data:" + multipartFile.getContentType() + ";base64," + Base64.getEncoder().encodeToString(multipartFile.getBytes()));
         mangaService.updateManga(mangaId, mangaDto.getChapterCount(), mangaDto.getImage());
-        return "redirect:/creatorAction?creatorId=" + mangaService.findManga(mangaId).getCreatorId();
+        return "redirect:/creatorAction?login=" + creatorService.findCreator(mangaService.findManga(mangaId).getCreatorId()).getUser().getLogin();
     }
 
-    @PostMapping("/delete/{id}")
-    public String deleteCreator(@PathVariable Long id) {
-        Long creatorId = mangaService.findManga(id).getCreatorId();
-        mangaService.deleteManga(id);
+    @PostMapping("/delete/{mangaId}")
+    public String deleteCreator(@PathVariable Long mangaId) {
+        Long creatorId = mangaService.findManga(mangaId).getCreatorId();
+        mangaService.deleteManga(mangaId);
         if (creatorId != null){
             return "redirect:/creatorAction?creatorId=" + creatorId;
         } else {
