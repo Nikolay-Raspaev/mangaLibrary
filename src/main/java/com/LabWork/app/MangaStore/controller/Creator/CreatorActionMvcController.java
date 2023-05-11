@@ -48,20 +48,26 @@ public class CreatorActionMvcController {
         return "creatorAction";
     }
 
-    @GetMapping("/edit/{id}")
-    public String editManga(@PathVariable Long id, Model model) {
-        model.addAttribute("Id", id);
-        model.addAttribute("mangaDto", new MangaDto(mangaService.findManga(id)));
-        model.addAttribute("controller", "manga/");
-        return "creatorAction-edit";
+    @GetMapping("/edit/{id}/{login}")
+    public String editManga(@PathVariable Long id, @PathVariable String login, Model model, Principal principal) {
+        if (login.equals(principal.getName())) {
+            model.addAttribute("Id", id);
+            model.addAttribute("mangaDto", new MangaDto(mangaService.findManga(id)));
+            model.addAttribute("controller", "manga/");
+            return "creatorAction-edit";
+        }
+        return "creatorAction";
     }
 
     @GetMapping("/create/{login}")
-    public String createManga(@PathVariable String login, Model model) {
-        model.addAttribute("login", login);
-        model.addAttribute("mangaDto", new MangaDto());
-        model.addAttribute("controller", "creator/");
-        return "creatorAction-edit";
+    public String createManga(@PathVariable String login, Model model, Principal principal) {
+        if (login.equals(principal.getName())) {
+            model.addAttribute("login", login);
+            model.addAttribute("mangaDto", new MangaDto());
+            model.addAttribute("controller", "creator/");
+            return "creatorAction-edit";
+        }
+        return "creatorAction";
     }
 
     @PostMapping( "/creator/{login}")
@@ -69,40 +75,50 @@ public class CreatorActionMvcController {
                             @RequestParam("multipartFile") MultipartFile multipartFile,
                             @ModelAttribute @Valid MangaDto mangaDto,
                             BindingResult bindingResult,
-                            Model model) throws IOException {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("errors", bindingResult.getAllErrors());
-            return "creatorAction-edit";
+                            Model model,
+                            Principal principal) throws IOException {
+        if (login.equals(principal.getName())) {
+            if (bindingResult.hasErrors()) {
+                model.addAttribute("errors", bindingResult.getAllErrors());
+                return "creatorAction-edit";
+            }
+            mangaDto.setImage("data:" + multipartFile.getContentType() + ";base64," + Base64.getEncoder().encodeToString(multipartFile.getBytes()));
+            mangaDto.setLogin(login);
+            mangaService.addManga(mangaDto);
+            return "redirect:/creatorAction?login=" + login;
         }
-        mangaDto.setImage("data:" + multipartFile.getContentType() + ";base64," + Base64.getEncoder().encodeToString(multipartFile.getBytes()));
-        mangaDto.setLogin(login);
-        mangaService.addManga(mangaDto);
-        return "redirect:/creatorAction?login=" + login;
-
+        return "creatorAction";
     }
 
-    @PostMapping( "/manga/{mangaId}")
-    public String updateManga(@PathVariable(value = "mangaId", required = false) Long mangaId, @RequestParam("multipartFile") MultipartFile multipartFile,
-                            @ModelAttribute @Valid MangaDto mangaDto,
-                            BindingResult bindingResult,
-                            Model model) throws IOException {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("errors", bindingResult.getAllErrors());
-            return "creatorAction-edit";
+    @PostMapping( "/manga/{mangaId}/{login}")
+    public String updateManga(@PathVariable(value = "mangaId", required = false) Long mangaId, @PathVariable(value = "login", required = false) String login, @RequestParam("multipartFile") MultipartFile multipartFile,
+                              @ModelAttribute @Valid MangaDto mangaDto,
+                              BindingResult bindingResult,
+                              Model model,
+                              Principal principal) throws IOException {
+        if (login.equals(principal.getName())) {
+            if (bindingResult.hasErrors()) {
+                model.addAttribute("errors", bindingResult.getAllErrors());
+                return "creatorAction-edit";
+            }
+            mangaDto.setImage("data:" + multipartFile.getContentType() + ";base64," + Base64.getEncoder().encodeToString(multipartFile.getBytes()));
+            mangaService.updateManga(mangaId, mangaDto.getChapterCount(), mangaDto.getImage());
+            return "redirect:/creatorAction?login=" + login;
         }
-        mangaDto.setImage("data:" + multipartFile.getContentType() + ";base64," + Base64.getEncoder().encodeToString(multipartFile.getBytes()));
-        mangaService.updateManga(mangaId, mangaDto.getChapterCount(), mangaDto.getImage());
-        return "redirect:/creatorAction?login=" + creatorService.findCreator(mangaService.findManga(mangaId).getCreatorId()).getUser().getLogin();
+        return "creatorAction";
     }
 
-    @PostMapping("/delete/{mangaId}")
-    public String deleteCreator(@PathVariable Long mangaId) {
-        Long creatorId = mangaService.findManga(mangaId).getCreatorId();
-        mangaService.deleteManga(mangaId);
-        if (creatorId != null){
-            return "redirect:/creatorAction?creatorId=" + creatorId;
-        } else {
-            return "redirect:/creatorAction";
+    @PostMapping("/delete/{mangaId}/{login}")
+    public String deleteCreator(@PathVariable Long mangaId, @PathVariable String login,Principal principal) {
+        if (login.equals(principal.getName())) {
+            Long creatorId = mangaService.findManga(mangaId).getCreatorId();
+            mangaService.deleteManga(mangaId);
+            if (creatorId != null){
+                return "redirect:/creatorAction?login=" + login;
+            } else {
+                return "redirect:/creatorAction";
+            }
         }
+        return "creatorAction";
     }
 }

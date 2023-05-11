@@ -72,18 +72,25 @@ public class ReaderActionMvcController {
                             @RequestParam("mangaId") Long mangaId,
                             @ModelAttribute @Valid MangaDto MangaDto,
                             BindingResult bindingResult,
-                            Model model){
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("errors", bindingResult.getAllErrors());
-            return "readerAction";
+                            Model model,
+                            Principal principal){
+        if (readerLogin.equals(principal.getName())) {
+            if (bindingResult.hasErrors()) {
+                model.addAttribute("errors", bindingResult.getAllErrors());
+                return "readerAction";
+            }
+            readerService.addManga(mangaId, readerLogin);
+            return "redirect:/readerAction/?readerLogin=" + readerLogin;
         }
-        readerService.addManga(mangaId, readerLogin);
-        return "redirect:/readerAction/?readerLogin=" + readerLogin;
+        return "readerAction";
     }
 
     @PostMapping("/{readerLogin}/removeManga/{mangaId}")
-    public String removeManga(@PathVariable String readerLogin, @PathVariable Long mangaId) {
-        readerService.removeManga(mangaId, readerLogin);
-        return "redirect:/readerAction/?readerLogin=" + readerLogin;
+    public String removeManga(@PathVariable String readerLogin, @PathVariable Long mangaId, Principal principal) {
+        if (readerLogin.equals(principal.getName())) {
+            readerService.removeManga(mangaId, readerLogin);
+            return "redirect:/readerAction/?readerLogin=" + readerLogin;
+        }
+        return "readerAction";
     }
 }

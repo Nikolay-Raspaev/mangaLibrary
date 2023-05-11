@@ -20,7 +20,7 @@ public class MangaMvcController {
     }
 
     @GetMapping()
-    public String getMangaAnfReaders(Model model) {
+    public String getMangaAndReaders(Model model) {
         model.addAttribute("mangaList", mangaService.findAllMangas().stream()
                 .map(x -> new MangaDto(x))
                 .toList());
@@ -28,7 +28,7 @@ public class MangaMvcController {
     }
 
     @GetMapping("/{id}")
-    public String getMangaAnfReaders(@PathVariable Long id, Model model) {
+    public String getMangaAndReaders(@PathVariable Long id, Model model) {
         model.addAttribute("manga", new MangaReaderDto(mangaService.findManga(id), mangaService.getReader(id)));
         model.addAttribute("readers", mangaService.getReader(id).stream()
                 .map(x -> new ReaderMangaDto(x))

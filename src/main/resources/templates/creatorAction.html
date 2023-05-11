@@ -45,7 +45,7 @@
                             </h4>
                         </div>
                         <div>
-                            <a class="btn btn-primary" th:href="@{/creatorAction/edit/{id}(id=${manga.id})}">
+                            <a class="btn btn-primary" th:href="@{/creatorAction/edit/{id}/{login}(id=${manga.id}, login=${login})}">
                                 <i class="fas fa-edit"></i>
                             </a>
                             </button>
@@ -53,7 +53,7 @@
                                         th:attr="onclick=|confirm('Удалить запись?') && document.getElementById('remove-${manga.id}').click()|">
                                     <i class="fa fa-trash" aria-hidden="true"></i> Удалить
                                 </button>
-                            <form th:action="@{/creatorAction/delete/{id}(id=${manga.id})}" method="post">
+                            <form th:action="@{/creatorAction/delete/{id}/{login}(id=${manga.id}, login=${login})}" method="post">
                                 <button th:id="'remove-' + ${manga.id}" type="submit" style="display: none">
                                     Удалить
                                 </button>
