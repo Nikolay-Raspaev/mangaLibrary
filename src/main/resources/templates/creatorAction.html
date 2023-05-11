@@ -14,23 +14,13 @@
                 <div class="d-flex mt-3">
                     <div class="d-grid col-sm-2">
                         <a class="btn btn-success"
-                           th:href="@{/creatorAction/create/{login}(login=${login})}">
+                           th:href="@{/creatorAction/create}">
                             <i class="fa-solid fa-plus"></i> Добавить
                         </a>
                     </div>
                 </div>
             </form>
             <div th:text="${errors}" class="margin-bottom alert-danger"></div>
-            <form action="#" th:action="@{/creatorAction}" method="get">
-                <div class="col-sm-2 mb-3">
-                    <label for="creatorId" class="form-label">Reader</label>
-                    <select id="creatorId" th:name="login" class="form-select">
-                        <option value="" disabled selected>Select your option</option>
-                        <option th:each="value: ${creators}" th:selected="${creatorName} == ${value}" th:text="${value.creatorName}" th:value="${value.creatorName}">
-                        </option>
-                    </select>
-                </div>
-            </form>
             <div class="row table-responsive text-white">
                 <div th:each="manga, iterator: ${currentCreator?.mangas}" class="d-flex flex-row flex-wrap  flex-grow-1 align-items-center mt-3">
                     <div class="me-3">
@@ -45,7 +35,7 @@
                             </h4>
                         </div>
                         <div>
-                            <a class="btn btn-primary" th:href="@{/creatorAction/edit/{id}/{login}(id=${manga.id}, login=${login})}">
+                            <a class="btn btn-primary" th:href="@{/creatorAction/edit/{id}(id=${manga.id})}">
                                 <i class="fas fa-edit"></i>
                             </a>
                             </button>
@@ -53,7 +43,7 @@
                                         th:attr="onclick=|confirm('Удалить запись?') && document.getElementById('remove-${manga.id}').click()|">
                                     <i class="fa fa-trash" aria-hidden="true"></i> Удалить
                                 </button>
-                            <form th:action="@{/creatorAction/delete/{id}/{login}(id=${manga.id}, login=${login})}" method="post">
+                            <form th:action="@{/creatorAction/delete/{id}(id=${manga.id})}" method="post">
                                 <button th:id="'remove-' + ${manga.id}" type="submit" style="display: none">
                                     Удалить
                                 </button>

@@ -7,7 +7,7 @@
 <body>
 <div layout:fragment="content">
     <div th:text="${errors}" class="margin-bottom alert-danger"></div>
-    <form th:if="${controller != 'creator/'}" action="#" th:action="@{/creatorAction/manga/{id}/{login}(login=${login}, id=${id})}" th:object="${mangaDto}" enctype="multipart/form-data" method="post">
+    <form th:if="${controller != 'creator/'}" action="#" th:action="@{/creatorAction/manga/{id}(id=${id})}" th:object="${mangaDto}" enctype="multipart/form-data" method="post">
         <div class="mb-3" th:if="${controller == 'creator/'}">
             <label for="mangaNameU" class="form-label">mangaName</label>
             <input id="mangaNameU" type='text' class="form-control" th:field="${mangaDto.mangaName}" required="true"/>
@@ -30,7 +30,7 @@
             </a>
         </div>
     </form>
-    <form th:if="${controller == 'creator/'}" action="#" th:action="@{/creatorAction/creator/{login}(login=${login})}" th:object="${mangaDto}" enctype="multipart/form-data" method="post">
+    <form th:if="${controller == 'creator/'}" action="#" th:action="@{/creatorAction/creator}" th:object="${mangaDto}" enctype="multipart/form-data" method="post">
         <div class="mb-3" th:if="${controller == 'creator/'}">
             <label for="mangaName" class="form-label">mangaName</label>
             <input id="mangaName" type='text' class="form-control" th:field="${mangaDto.mangaName}" required="true"/>
