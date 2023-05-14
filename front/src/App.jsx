@@ -1,6 +1,4 @@
 import { Routes, BrowserRouter, Route } from 'react-router-dom';
-import Creator from './MainS/Creator';
-import Reader from './MainS/Reader';
 import Header from './components/Header';
 import CreatorAction from './Main/CreatorAction';
 import ReaderAction from './Main/ReaderAction';
@@ -16,9 +14,6 @@ function Router(props) {
 }
 
 export default function App() {
-  const routes = [
-    { index: true, element: <Reader /> },
-  ];
 
   const links = [
     { path: 'catalog', label: "Catalog", userGroup: "AUTH" },
@@ -44,8 +39,6 @@ export default function App() {
               </Route>
               <Route element={<PrivateRoutes userGroup="ADMIN" />}>
                 <Route element={<UsersPage />} path="/users" />
-                <Route element={<Creator />} path="/creator" />
-                <Route element={<Reader />} path="/reader" />
                 <Route element={<CreatorAction />} path="/creatorAction" />
               </Route>
             </Routes>
