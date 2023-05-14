@@ -23,8 +23,6 @@ public class UserDto {
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.role = user.getRole();
-        this.creatortId = user.getCreator().getId();
-        this.readerId = user.getReader().getId();
     }
 
     public void setId(Long id) {

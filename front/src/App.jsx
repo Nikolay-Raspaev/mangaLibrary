@@ -24,8 +24,6 @@ export default function App() {
     { path: 'catalog', label: "Catalog", userGroup: "AUTH" },
     { path: 'readerAction', label: "ReaderAction", userGroup: "USER" },
     { path: 'creatorAction', label: "CreatorAction", userGroup: "ADMIN" },
-    { path: 'creator', label: "Creator", userGroup: "ADMIN" },
-    { path: 'reader', label: "Reader", userGroup: "ADMIN" },
     { path: 'users', label: "Users", userGroup: "ADMIN" }
   ];
   return (
