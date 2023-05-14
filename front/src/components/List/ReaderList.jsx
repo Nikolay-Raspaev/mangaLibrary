@@ -11,7 +11,7 @@ export default function ReaderList(props) {
                 <div key={reader.id} className="d-flex flex-row flex-wrap  flex-grow-1 align-items-center mt-3"> 
                     <div>
                         <div className="text-white pt-3 description d-flex flex-column justify-content-start mb-3 fs-6 fw-bold">
-                            Имя пользователя: {reader.login}
+                            Имя пользователя: {reader.readerName}
                         </div>
                     </div>                  
                 </div>   

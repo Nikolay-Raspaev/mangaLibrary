@@ -18,6 +18,11 @@ public class ReaderDto {
         this.id = reader.getId();
     }
 
+    public ReaderDto(Reader reader, String readerName) {
+        this.id = reader.getId();
+        this.readerName = readerName;
+    }
+
     public Long getId() {
         return id;
     }

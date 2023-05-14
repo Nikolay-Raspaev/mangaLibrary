@@ -2,6 +2,7 @@ package com.LabWork.app.MangaStore.service;
 
 import com.LabWork.app.MangaStore.model.Default.Manga;
 import com.LabWork.app.MangaStore.model.Default.Reader;
+import com.LabWork.app.MangaStore.model.Default.User;
 import com.LabWork.app.MangaStore.service.Repository.MangaRepository;
 import com.LabWork.app.MangaStore.service.Repository.ReaderRepository;
 import com.LabWork.app.MangaStore.service.Exception.MangaNotFoundException;
@@ -39,8 +40,8 @@ public class ReaderService {
     }
 
     @Transactional
-    public Reader addReader() {
-        final Reader reader = new Reader();
+    public Reader addReader(User user) {
+        final Reader reader = new Reader(user);
         validatorUtil.validate(reader);
         return readerRepository.save(reader);
     }

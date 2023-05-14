@@ -84,7 +84,7 @@ public class UserService implements UserDetailsService {
             bindCreator(user.getId(), creator.getId());
         }
         if (role.toString().equals("USER")){
-            final Reader reader = readerService.addReader();
+            final Reader reader = readerService.addReader(user);
             bindReader(user.getId(), reader.getId());
         }
         return user;

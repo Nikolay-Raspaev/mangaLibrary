@@ -18,9 +18,19 @@ public class Reader {
     /*orphanRemoval=true*/
     private List<Manga> mangas;
 
-    public Reader() {
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Reader(User user) {
         this.mangas = new ArrayList<>();
+        this.user = user;
     }
+
+    public Reader() {
+    }
+
 
     public Long getId() {
         return id;

@@ -2,10 +2,12 @@ package com.LabWork.app.MangaStore.controller;
 
 
 import com.LabWork.app.MangaStore.model.Dto.MangaReaderDto;
+import com.LabWork.app.MangaStore.model.Dto.MangaUserDto;
 import com.LabWork.app.MangaStore.model.Dto.ReaderMangaDto;
 import com.LabWork.app.MangaStore.model.Dto.SupportDto.MangaDto;
 import com.LabWork.app.MangaStore.service.MangaService;
 import com.LabWork.app.MangaStore.configuration.OpenAPI30Configuration;
+import com.LabWork.app.MangaStore.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,13 +18,19 @@ import java.util.List;
 public class MangaController {
     private final MangaService mangaService;
 
-    public MangaController(MangaService mangaService) {
+    private final UserService userService;
+
+    public MangaController(MangaService mangaService,
+                           UserService userService) {
         this.mangaService = mangaService;
+        this.userService = userService;
     }
 
     @GetMapping("/{id}")
-    public MangaReaderDto getManga(@PathVariable Long id) {
-        return new MangaReaderDto(mangaService.findManga(id), mangaService.getReader(id));
+    public MangaUserDto getManga(@PathVariable Long id) {
+        return new MangaUserDto(mangaService.findManga(id), mangaService.getReader(id).stream()
+                .map(x -> userService.findUser(x.getId()))
+                .toList());
     }
 
     @GetMapping

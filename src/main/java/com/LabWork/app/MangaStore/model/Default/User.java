@@ -30,8 +30,8 @@ public class User {
     @JoinColumn(name = "creator_id")
     private Creator creator;
 
-    @OneToOne
-    @JoinColumn(name = "reader_id")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private Reader reader;
 
     public User() {
