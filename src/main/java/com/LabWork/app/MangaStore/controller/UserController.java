@@ -50,6 +50,7 @@ public class UserController {
         return new UserDto(user);
     }
 
+    @Secured(UserRole.AsString.ADMIN)
     @PostMapping(OpenAPI30Configuration.API_PREFIX + "/user")
     public String updateUser(@RequestBody @Valid UserDto userDto) {
         try {
@@ -60,12 +61,14 @@ public class UserController {
         }
     }
 
+    @Secured(UserRole.AsString.ADMIN)
     @DeleteMapping(OpenAPI30Configuration.API_PREFIX + "/user/{id}")
     public UserDto removeUser(@PathVariable Long id) {
         User user = userService.deleteUser(id);
         return new UserDto(user);
     }
 
+    @Secured(UserRole.AsString.ADMIN)
     @GetMapping(OpenAPI30Configuration.API_PREFIX + "/users")
     public Pair<Page<UserDto>, List<Integer>> getUsers(@RequestParam(defaultValue = "1") int page,
                            @RequestParam(defaultValue = "5") int size) {
