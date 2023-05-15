@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.stream.Collectors;
 
-@ControllerAdvice
+/*@ControllerAdvice*/
 public class AdviceController {
     @ExceptionHandler({
             CreatorNotFoundException.class,

@@ -23,8 +23,8 @@ public class UserMvcController {
         this.userService = userService;
     }
 
-    @GetMapping
     @Secured({UserRole.AsString.ADMIN})
+    @GetMapping
     public String getUsers(@RequestParam(defaultValue = "1") int page,
                            @RequestParam(defaultValue = "5") int size,
                            Model model) {

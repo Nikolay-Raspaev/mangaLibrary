@@ -3,6 +3,7 @@ package com.LabWork.app.MangaStore.configuration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {

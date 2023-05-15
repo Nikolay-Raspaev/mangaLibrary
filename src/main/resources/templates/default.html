@@ -34,7 +34,7 @@
                 <!--(login=${#authentication.name})-->
                 <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/creatorAction(login=${#authentication.name})}">CreatorAction</a>
                 <a class="nav-link" sec:authorize="hasRole('ROLE_USER')" th:href="@{/readerAction(readerLogin=${#authentication.name})}">ReaderAction</a>
-                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/users">Users</a>
+                <a sec:authorize="hasRole('ROLE_USER')" class="nav-link" href="/users">Users</a>
                 <a class="nav-link" href="/manga">Catalog</a>
                 <a class="nav-link" href="/swagger-ui/index.html">Документация REST API</a>
                 <a class="nav-link" href="/h2-console/">Консоль H2</a>
