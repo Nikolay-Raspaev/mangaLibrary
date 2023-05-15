@@ -60,7 +60,7 @@ const UsersPage = function () {
     return (
         <>
             <div className="table-shell mb-3">
-                <table className="table">
+                <table className="table text-white">
                     <thead>
                     <tr>
                         <th style={{ width: "10%" }} scope="col">#</th>

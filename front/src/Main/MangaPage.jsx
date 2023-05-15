@@ -78,7 +78,6 @@ export default function MangaPage() {
       <div className="container d-flex" >
         <div className="d-flex flex-column">
           <img className="img_style01" style={{borderRadius: "3%"}}src={mangaModel.image} alt={mangaModel.mangaName}/>
-          <button type="button" onClick={addMangaButton} className="btn btn-primary mt-3">Добавить в избранное</button>
         </div>
         <div className="container table text-white fs-4 ms-4">
           <div className="row text-white fw-bold fs-3">О манге</div>
