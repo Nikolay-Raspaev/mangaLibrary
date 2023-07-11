@@ -18,8 +18,8 @@ export default function App() {
   const links = [
     { path: 'catalog', label: "Catalog", userGroup: "AUTH" },
     { path: 'readerAction', label: "ReaderAction", userGroup: "USER" },
-    { path: 'creatorAction', label: "CreatorAction", userGroup: "USER" },
-    { path: 'users', label: "Users", userGroup: "USER" }
+    { path: 'creatorAction', label: "CreatorAction", userGroup: "ADMIN" },
+    { path: 'users', label: "Users", userGroup: "ADMIN" }
   ];
   return (
       <>
@@ -37,7 +37,7 @@ export default function App() {
               <Route element={<PrivateRoutes userGroup="USER" />}>
                 <Route element={<ReaderAction />} path="/readerAction" />
               </Route>
-              <Route element={<PrivateRoutes userGroup="USER" />}>
+              <Route element={<PrivateRoutes userGroup="ADMIN" />}>
                 <Route element={<UsersPage />} path="/users" />
                 <Route element={<CreatorAction />} path="/creatorAction" />
               </Route>
